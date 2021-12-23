@@ -30,10 +30,11 @@ app.use(jsonMiddleware);
 //     .catch(err => next(err))
 // })
 
-app.use(staticMiddleware);
-
 app.get('/api/chefs/:chefId', (req, res) => {
   const chefId = Number(req.params.chefId);
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    res.status(400).json({ error: 'grade must be a positive integer' });
+  }
   const sql = `
     select *
     from "chefs"
@@ -42,10 +43,15 @@ app.get('/api/chefs/:chefId', (req, res) => {
   const params = [chefId];
   db.query(sql, params)
     .then(result => {
+      if (!result.rows.chefId) {
+        res.status(404).json({ error: `cannot find chef with chefId ${chefId}` });
+      }
       res.json(result.rows);
     })
     .catch(err => console.error(err));
 });
+
+app.use(staticMiddleware);
 
 app.use(errorMiddleware);
 
