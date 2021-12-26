@@ -18,18 +18,6 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
-// app.get('/api/chefs', (req, res) => {
-//   const sql = `
-//     select *
-//     from "chefs"
-//   `
-//   db.query(sql)
-//     .then(result => {
-//       res.json(result.rows)
-//     })
-//     .catch(err => next(err))
-// })
-
 app.get('/api/chefs/:chefId', (req, res) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
@@ -43,10 +31,12 @@ app.get('/api/chefs/:chefId', (req, res) => {
   const params = [chefId];
   db.query(sql, params)
     .then(result => {
-      if (!result.rows.chefId) {
+      const [chefs] = result.rows;
+      if (!chefs) {
         res.status(404).json({ error: `cannot find chef with chefId ${chefId}` });
+      } else {
+        res.json(result.rows);
       }
-      res.json(result.rows);
     })
     .catch(err => console.error(err));
 });

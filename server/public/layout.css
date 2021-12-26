@@ -1,0 +1,28 @@
+#root {
+  background-color: #c4c4c4;
+  height: 100vh;
+}
+
+.row {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.height-500 {
+  height: 500px;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.padding {
+  padding: 4rem;
+}

@@ -1,20 +1,20 @@
 import React from 'react';
-// import Home from './pages/home';
-import ChefProfile from './pages/chef-profile';
+import ProfilePicture from './pages/profile-picture';
+import ProfileName from './pages/profile-name';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chefs: []
+      chef: []
     };
   }
 
   componentDidMount() {
-    fetch('api/chefs')
+    fetch('/api/chefs/1')
       .then(response => response.json())
       .then(data => {
-        this.setState({ chefs: data });
+        this.setState({ chef: data });
       })
       .catch(err => {
         console.error(err);
@@ -22,6 +22,19 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <ChefProfile />;
+    return (
+      <div>
+        {
+          this.state.chef.map(chef => {
+            return (
+              <div key={chef.name} className='mobile-row text-align-center height-500 padding'>
+                <ProfilePicture className='profile-picture' photoUrl={chef.photoUrl} />
+                <ProfileName className='profile-name' name={chef.name} />
+              </div>
+            );
+          })
+        }
+      </div>
+    );
   }
 }
