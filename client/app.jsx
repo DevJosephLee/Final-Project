@@ -28,8 +28,8 @@ export default class App extends React.Component {
           this.state.chef.map(chef => {
             return (
               <div key={chef.name} className='mobile-row text-align-center height-500 padding'>
-                <ProfilePicture className='profile-picture' photoUrl={chef.photoUrl} />
-                <ProfileName className='profile-name' name={chef.name} />
+                <ProfilePicture photoUrl={chef.photoUrl} />
+                <ProfileName name={chef.name} />
               </div>
             );
           })

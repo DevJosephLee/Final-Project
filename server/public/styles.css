@@ -1,3 +1,8 @@
+.profile-picture {
+  width: 225px;
+  height: 225px;
+}
+
 @media only screen and (min-width: 725px) {
   .text-align-center {
     text-align: start;
@@ -5,5 +10,9 @@
 
   .mobile-row {
     display: flex;
+  }
+
+  .profile-picture {
+    margin-right: 1.5rem;
   }
 }

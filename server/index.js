@@ -3,7 +3,6 @@ const pg = require('pg');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
-// const { json } = require('express');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
