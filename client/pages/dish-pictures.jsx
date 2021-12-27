@@ -19,17 +19,20 @@ class DishPictures extends React.Component {
 
   render() {
     return (
-      <div>
-        {
-          this.state.dishes.map(dishes => {
-            return (
-              <div key={dishes.dishId}>
-                <img className='dish-photos' src={dishes.photoUrl} ></img>
-                <h3>{dishes.name}</h3>
-              </div>
-            );
-          })
-        }
+      <div className='background-color width-400'>
+        <h1 className='column-adj'>Dishes</h1>
+        <div className='row flex-wrap text-align-center justify-between'>
+          {
+            this.state.dishes.map(dishes => {
+              return (
+                <div className='width' key={dishes.dishId}>
+                  <img className='dish-pictures' src={dishes.photoUrl} ></img>
+                  <h3>{dishes.name}</h3>
+                </div>
+              );
+            })
+          }
+        </div>
       </div>
     );
   }
