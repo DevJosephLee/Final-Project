@@ -25,6 +25,7 @@ app.get('/api/chefs/:chefId', (req, res) => {
   const sql = `
     select *
     from "chefs"
+    join "dishes" using("chefId")
     where "chefId" = $1
   `;
   const params = [chefId];
