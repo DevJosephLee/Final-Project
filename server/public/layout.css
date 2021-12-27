@@ -1,16 +1,26 @@
 #root {
-  background-color: #c4c4c4;
   height: 100vh;
 }
 
-.height-500 {
-  height: 500px;
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .text-align-center {
   text-align: center;
 }
 
-.padding {
-  padding: 4rem;
+.padding-top-bottom {
+  padding: 5rem 0;
+}
+
+@media only screen and (min-width: 728px) {
+  .mobile-row {
+    display: flex;
+  }
+
+  .mobile-margin-right {
+    margin-right: 1rem;
+  }
 }

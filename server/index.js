@@ -30,8 +30,8 @@ app.get('/api/chefs/:chefId', (req, res) => {
   const params = [chefId];
   db.query(sql, params)
     .then(result => {
-      const [chefs] = result.rows;
-      if (!chefs) {
+      const [chef] = result.rows;
+      if (!chef) {
         res.status(404).json({ error: `cannot find chef with chefId ${chefId}` });
       } else {
         res.json(result.rows);
