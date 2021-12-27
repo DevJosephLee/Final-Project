@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfilePicture from './pages/profile-picture';
 import ProfileName from './pages/profile-name';
+import DishPictures from './pages/dish-pictures';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ export default class App extends React.Component {
             );
           })
         }
+        <DishPictures />
       </div>
     );
   }
