@@ -1,10 +1,10 @@
-#root {
-  height: 100vh;
+.container {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
+.row {
+  display: flex;
 }
 
 .text-align-center {
@@ -15,12 +15,33 @@
   padding: 5rem 0;
 }
 
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.width-adj {
+  width: 430px;
+  margin: 0 auto;
+}
+
 @media only screen and (min-width: 728px) {
+  .container {
+    max-width: 1000px;
+  }
+
   .mobile-row {
     display: flex;
   }
 
   .mobile-margin-right {
     margin-right: 1rem;
+  }
+
+  .width-adj {
+    width: auto;
   }
 }

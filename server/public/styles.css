@@ -1,5 +1,6 @@
 #root {
   background-color: #c4c4c4;
+  height: 100vh;
 }
 
 body {
@@ -9,4 +10,13 @@ body {
 .profile-picture {
   width: 225px;
   height: 225px;
+}
+
+.dish-pictures {
+  width: 150px;
+  height: 150px;
+}
+
+.width-150 {
+  width: 150px;
 }
