@@ -23,7 +23,7 @@
   flex-wrap: wrap;
 }
 
-.width-400 {
+.width-adj {
   width: 430px;
   margin: 0 auto;
 }
@@ -41,7 +41,7 @@
     margin-right: 1rem;
   }
 
-  .width-400 {
+  .width-adj {
     width: auto;
   }
 }
