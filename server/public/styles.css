@@ -1,0 +1,12 @@
+#root {
+  background-color: #c4c4c4;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+}
+
+.profile-picture {
+  width: 225px;
+  height: 225px;
+}

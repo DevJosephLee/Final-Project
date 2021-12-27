@@ -1,0 +1,26 @@
+#root {
+  height: 100vh;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.padding-top-bottom {
+  padding: 5rem 0;
+}
+
+@media only screen and (min-width: 728px) {
+  .mobile-row {
+    display: flex;
+  }
+
+  .mobile-margin-right {
+    margin-right: 1rem;
+  }
+}
