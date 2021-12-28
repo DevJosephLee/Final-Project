@@ -71,6 +71,7 @@ app.get('/api/reviews/:chefId', (req, res) => {
   const sql = `
   select *
   from "reviews"
+  join "users" using ("userId")
   where "chefId" = $1
   `;
 

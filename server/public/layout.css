@@ -19,6 +19,14 @@
   justify-content: space-between;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -26,6 +34,14 @@
 .width-adj {
   width: 430px;
   margin: 0 auto;
+}
+
+.margin-right {
+  margin-right: 2rem;
+}
+
+.margin-bottom {
+  margin-bottom: 2rem;
 }
 
 @media only screen and (min-width: 728px) {

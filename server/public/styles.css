@@ -1,6 +1,5 @@
 #root {
   background-color: #c4c4c4;
-  height: 100vh;
 }
 
 body {
@@ -19,4 +18,27 @@ body {
 
 .width-150 {
   width: 150px;
+}
+
+.bg-c4 {
+  background-color: #c4c4c4;
+}
+
+.fa-grin {
+  font-size: 5rem;
+}
+
+.user-icon-container {
+  width: 6rem;
+  height: 6rem;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.review-content {
+  font-size: 1.2rem;
+}
+
+.fa-star {
+  color: #ff8e00;
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import DishPictures from '../components/dish-pictures';
 import ProfileName from '../components/profile-name';
 import ProfilePicture from '../components/profile-picture';
+import Reviews from '../components/reviews';
 
 export default class ChefProfile extends React.Component {
   constructor(props) {
@@ -36,6 +37,7 @@ export default class ChefProfile extends React.Component {
           })
         }
         <DishPictures />
+        <Reviews />
       </div>
     );
   }
