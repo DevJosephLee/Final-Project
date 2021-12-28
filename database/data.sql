@@ -12,3 +12,20 @@ values('User1', 'testing123', current_timestamp)
 
 insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
 values (3, 1, 'testing', 5, current_timestamp)
+
+insert into "cuisines" ("name")
+values ("Italian"),
+       ("French"),
+       ("Chinese"),
+       ("Japanese"),
+       ("Greek"),
+       ("Spanish"),
+       ("Mediterranean"),
+       ("Korean"),
+       ("Indian"),
+       ("American"),
+       ("Mexican")
+
+insert into "chefCuisines" ("chefId", "cuisineId")
+values (1, 1),
+       (1, 2)
