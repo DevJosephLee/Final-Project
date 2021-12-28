@@ -23,9 +23,11 @@ app.get('/api/chefs/:chefId', (req, res) => {
     res.status(400).json({ error: 'grade must be a positive integer' });
   }
   const sql = `
-    select *
-    from "chefs"
-    where "chefId" = $1
+    select   "chefId", "name", "photoUrl", avg("rating")
+    from     "chefs"
+    join     "reviews" using ("chefId")
+    where    "chefId" = $1
+    group by "chefs"."chefId"
   `;
   const params = [chefId];
   db.query(sql, params)
