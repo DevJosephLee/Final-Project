@@ -4,6 +4,7 @@ import ProfileName from '../components/profile-name';
 import ProfilePicture from '../components/profile-picture';
 import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
+import CuisineTypes from '../components/cuisine-types';
 
 export default class ChefProfile extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export default class ChefProfile extends React.Component {
                     <StarRating rating={chef.avg} />
                     <p className='margin-left'>{chef.count} reviews</p>
                   </div>
+                  <CuisineTypes cuisineType={chef.cuisineType} />
                 </div>
               </div>
             );
