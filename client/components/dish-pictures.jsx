@@ -25,7 +25,7 @@ class DishPictures extends React.Component {
           {
             this.state.dishes.map(dishes => {
               return (
-                <div className='width-150' key={dishes.dishId}>
+                <div className='width-150 text-align-center' key={dishes.dishId}>
                   <img className='dish-pictures' src={dishes.photoUrl} ></img>
                   <h4>{dishes.name}</h4>
                 </div>
