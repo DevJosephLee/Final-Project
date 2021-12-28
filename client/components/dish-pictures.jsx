@@ -19,15 +19,15 @@ class DishPictures extends React.Component {
 
   render() {
     return (
-      <div className='width-adj'>
-        <h1 className='column-adj'>Dishes</h1>
+      <div className='width-adj margin-bottom'>
+        <h1>Dishes</h1>
         <div className='row flex-wrap text-align-center justify-between'>
           {
             this.state.dishes.map(dishes => {
               return (
                 <div className='width-150' key={dishes.dishId}>
                   <img className='dish-pictures' src={dishes.photoUrl} ></img>
-                  <h3>{dishes.name}</h3>
+                  <h4>{dishes.name}</h4>
                 </div>
               );
             })
