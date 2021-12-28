@@ -30,10 +30,12 @@ export default class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className='mobile-row text-align-center padding-top-bottom'>
+              <div key={chef.name} className='mobile-row mobile-text-align-center padding-top-bottom'>
                 <ProfilePicture photoUrl={chef.photoUrl} />
-                <ProfileName name={chef.name} />
-                <StarRating rating={chef.avg} />
+                <div>
+                  <ProfileName name={chef.name} />
+                  <StarRating rating={chef.avg} />
+                </div>
               </div>
             );
           })

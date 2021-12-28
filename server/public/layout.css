@@ -7,7 +7,7 @@
   display: flex;
 }
 
-.text-align-center {
+.mobile-text-align-center {
   text-align: center;
 }
 
@@ -59,6 +59,10 @@
 
   .mobile-margin-right {
     margin-right: 1rem;
+  }
+
+  .mobile-text-align-center {
+    text-align: start;
   }
 
   .width-adj {
