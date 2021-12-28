@@ -32,7 +32,7 @@ export default class ChefProfile extends React.Component {
             return (
               <div key={chef.name} className='mobile-row mobile-text-align-center padding-top-bottom'>
                 <ProfilePicture photoUrl={chef.photoUrl} />
-                <div>
+                <div className='line-height'>
                   <ProfileName name={chef.name} />
                   <div className="row align-center justify-center">
                     <StarRating rating={chef.avg} />
