@@ -1,5 +1,6 @@
 require('dotenv/config');
 const pg = require('pg');
+const argon2 = require('argon2');//eslint-disable-line
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
