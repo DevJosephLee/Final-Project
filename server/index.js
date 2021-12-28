@@ -93,6 +93,8 @@ app.get('/api/reviews/:chefId', (req, res) => {
     .catch(err => console.error(err));
 });
 
+app.post('/api/auth/sign-up', (req, res, next) => { }) //eslint-disable-line
+
 app.use(staticMiddleware);
 
 app.use(errorMiddleware);
