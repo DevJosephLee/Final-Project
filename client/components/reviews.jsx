@@ -28,7 +28,7 @@ class Reviews extends React.Component {
               <div key={reviews.reviewId}>
                 <div className='row align-center'>
                   <div className='row user-icon-container align-center justify-center margin-right'>
-                    <i className='far fa-grin'></i>
+                    <i className='far fa-grin user-icon'></i>
                   </div>
                   <div>
                     <h3>{reviews.username}</h3>

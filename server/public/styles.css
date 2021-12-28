@@ -20,10 +20,6 @@ body {
   width: 150px;
 }
 
-.fa-grin {
-  font-size: 5rem;
-}
-
 .user-icon-container {
   width: 6rem;
   height: 6rem;
@@ -35,6 +31,10 @@ body {
   font-size: 1.2rem;
 }
 
-.fa-star {
+.orange {
   color: #ff8e00;
+}
+
+.user-icon {
+  font-size: 5rem;
 }
