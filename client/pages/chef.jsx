@@ -34,7 +34,10 @@ export default class ChefProfile extends React.Component {
                 <ProfilePicture photoUrl={chef.photoUrl} />
                 <div>
                   <ProfileName name={chef.name} />
-                  <StarRating rating={chef.avg} />
+                  <div className="row align-center justify-center">
+                    <StarRating rating={chef.avg} />
+                    <p className='margin-left'>{chef.count} reviews</p>
+                  </div>
                 </div>
               </div>
             );
