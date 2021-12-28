@@ -20,7 +20,7 @@ class Reviews extends React.Component {
 
   render() {
     return (
-      <div className='width-adj margin-bottom'>
+      <div className='width-adj padding-bottom'>
         <h1>Reviews</h1>
         <div className='align-center'>
           {
