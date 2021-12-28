@@ -78,7 +78,7 @@ CREATE TABLE "public"."cuisines" (
 
 CREATE TABLE "public"."chefCuisines" (
 	"chefId" int NOT NULL,
-	"cuisine" int NOT NULL
+	"cuisineId" int NOT NULL
 ) WITH (
   OIDS=FALSE
 );
