@@ -8,6 +8,7 @@ function authorizationMiddleware(req, res, next) {
   }
   const payload = jwt.verify(token, process.env.TOKEN_SECRET);
   req.user = payload;
+  next();
 }
 
 export default authorizationMiddleware;
