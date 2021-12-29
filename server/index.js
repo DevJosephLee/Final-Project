@@ -141,7 +141,9 @@ app.post('/api/auth/sign-up', (req, res, next) => {
       return argon2
         .verify(password, req.body.password)
         .then(isMatching => {
-
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
         });
     });
 });
