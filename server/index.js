@@ -2,7 +2,7 @@ require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
 const express = require('express');
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');//eslint-disable-line
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
@@ -137,13 +137,15 @@ app.post('/api/auth/sign-up', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, password } = user; //eslint-disable-line
+      const { userId, password } = user;
       return argon2
         .verify(password, req.body.password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
+          const payload = { userId, username }; //eslint-disable-line
+          // const token = jwt.sign(payload, process.env.TOKEN_SECRET);
         });
     });
 });
