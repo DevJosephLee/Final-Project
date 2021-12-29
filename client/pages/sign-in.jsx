@@ -1,7 +1,9 @@
 import React from 'react';
 
-class SignInPage extends React.Component {
-
+function SignInPage(props) {
+  return (
+    <h1>Testing!</h1>
+  );
 }
 
 export default SignInPage;

@@ -94,23 +94,6 @@ app.get('/api/reviews/:chefId', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.get('/api/users', (req, res) => {
-  const sql = `
-  select *
-  from "users"
-  `;
-  db.query(sql)
-    .then(result => {
-      const [users] = result.rows;
-      if (!users) {
-        res.status(404).json({ error: 'cannot find any users' });
-      } else {
-        res.json(result.rows);
-      }
-    })
-    .catch(err => console.error(err));
-});
-
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {

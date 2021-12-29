@@ -10,15 +10,6 @@ class SignUpPage extends React.Component {
     this.addNewUser = this.addNewUser.bind(this);
   }
 
-  componentDidMount() {
-    fetch('/api/users')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ users: data });
-      })
-      .catch(err => console.error(err));
-  }
-
   addNewUser(newUser) {
     fetch('/api/auth/sign-up', {
       method: 'POST',
@@ -30,9 +21,9 @@ class SignUpPage extends React.Component {
       .then(response => response.json())
       .then(newUser => {
         this.setState({ users: [].concat(this.state.users, newUser) });
+        window.location.hash = 'sign-in';
       })
       .catch(err => console.error(err));
-    window.location.hash = 'sign-in';
   }
 
   render() {
