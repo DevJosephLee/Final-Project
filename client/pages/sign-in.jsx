@@ -1,4 +1,5 @@
 import React from 'react';
+import SignupForm from '../components/signup-form';
 
 class SignInPage extends React.Component {
   constructor(props) {
@@ -33,7 +34,13 @@ class SignInPage extends React.Component {
       .catch(err => console.error(err));
   }
 
-  render() { } //eslint-disable-line
+  render() {
+    return (
+      <div>
+        <SignupForm onSubmit={this.addNewUser} />
+      </div>
+    );
+  }
 }
 
 export default SignInPage;
