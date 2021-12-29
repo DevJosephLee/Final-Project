@@ -1,6 +1,6 @@
 require('dotenv/config');
 const pg = require('pg');
-const argon2 = require('argon2');//eslint-disable-line
+const argon2 = require('argon2');
 const express = require('express');
 const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
@@ -87,6 +87,23 @@ app.get('/api/reviews/:chefId', (req, res) => {
       const [reviews] = result.rows;
       if (!reviews) {
         res.status(404).json({ error: `cannot find dishes with chefId ${chefId}` });
+      } else {
+        res.json(result.rows);
+      }
+    })
+    .catch(err => console.error(err));
+});
+
+app.get('/api/users', (req, res) => {
+  const sql = `
+  select *
+  from "users"
+  `;
+  db.query(sql)
+    .then(result => {
+      const [users] = result.rows;
+      if (!users) {
+        res.status(404).json({ error: 'cannot find any users' });
       } else {
         res.json(result.rows);
       }
