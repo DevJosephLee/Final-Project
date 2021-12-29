@@ -47,7 +47,7 @@ class SignupForm extends React.Component {
           value={usernameValue}
           onChange={this.handleUserNameChange}
           id='username' />
-        <label htmlFor='password'></label>
+        <label htmlFor='password'>Password</label>
         <input
           required
           autoFocus

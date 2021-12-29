@@ -19,6 +19,10 @@
   padding: 5rem 0;
 }
 
+.padding-top-bottom-2 {
+  padding: 0.1rem 0;
+}
+
 .justify-between {
   justify-content: space-between;
 }

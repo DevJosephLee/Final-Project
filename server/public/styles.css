@@ -38,3 +38,11 @@ body {
 .user-icon {
   font-size: 5rem;
 }
+
+.nav-bar {
+  background-color: #343a40;
+}
+
+.logo-text {
+  color: white;
+}
