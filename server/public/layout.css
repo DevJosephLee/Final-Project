@@ -20,7 +20,11 @@
 }
 
 .padding-top-bottom-2 {
-  padding: 0.1rem 0;
+  padding: 1rem 0;
+}
+
+.padding-top-bottom-3 {
+  padding: 10rem 0;
 }
 
 .justify-between {
@@ -29,6 +33,10 @@
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-end {
+  justify-content: end;
 }
 
 .align-center {

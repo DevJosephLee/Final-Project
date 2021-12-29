@@ -37,7 +37,7 @@ class SignInPage extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="text-align-center">Sign-Up</h1>
+        <h1 className="text-align-center padding-top-bottom-3">Sign-Up</h1>
         <SignupForm onSubmit={this.addNewUser} />
       </div>
     );

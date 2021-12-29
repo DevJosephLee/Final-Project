@@ -38,35 +38,41 @@ class SignupForm extends React.Component {
     const usernameValue = this.state.username;
     const passwordValue = this.state.password;
     return (
-      <form className="text-align-center" onSubmit={this.handleSubmit}>
-        <div>
-          <label htmlFor='username'>Username</label>
-          <div>
-            <input
-              required
-              autoFocus
-              type="text"
-              value={usernameValue}
-              onChange={this.handleUserNameChange}
-              id='username' />
-          </div>
+      <div className="container">
+        <div className="row justify-center">
+          <form onSubmit={this.handleSubmit}>
+            <div className='margin-bottom'>
+              <label className="label" htmlFor='username'>Username</label>
+              <div>
+                <input
+                  className="inputs"
+                  required
+                  autoFocus
+                  type="text"
+                  value={usernameValue}
+                  onChange={this.handleUserNameChange}
+                  id='username' />
+              </div>
+            </div>
+            <div className="margin-bottom">
+              <label className="label" htmlFor='password'>Password</label>
+              <div>
+                <input
+                  className="inputs"
+                  required
+                  autoFocus
+                  type="password"
+                  value={passwordValue}
+                  onChange={this.handlePasswordChange}
+                  id='password' />
+              </div>
+            </div>
+            <div className="row justify-end">
+              <button className='submit-buttom' type="submit">Submit</button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor='password'>Password</label>
-          <div>
-            <input
-              required
-              autoFocus
-              type="password"
-              value={passwordValue}
-              onChange={this.handlePasswordChange}
-              id='password' />
-          </div>
-        </div>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
+      </div>
     );
   }
 }
