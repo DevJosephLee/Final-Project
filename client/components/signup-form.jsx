@@ -38,23 +38,31 @@ class SignupForm extends React.Component {
     const usernameValue = this.state.username;
     const passwordValue = this.state.password;
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor='username'>Username</label>
-        <input
-          required
-          autoFocus
-          type="text"
-          value={usernameValue}
-          onChange={this.handleUserNameChange}
-          id='username' />
-        <label htmlFor='password'>Password</label>
-        <input
-          required
-          autoFocus
-          type="password"
-          value={passwordValue}
-          onChange={this.handlePasswordChange}
-          id='password' />
+      <form className="text-align-center" onSubmit={this.handleSubmit}>
+        <div>
+          <label htmlFor='username'>Username</label>
+          <div>
+            <input
+              required
+              autoFocus
+              type="text"
+              value={usernameValue}
+              onChange={this.handleUserNameChange}
+              id='username' />
+          </div>
+        </div>
+        <div>
+          <label htmlFor='password'>Password</label>
+          <div>
+            <input
+              required
+              autoFocus
+              type="password"
+              value={passwordValue}
+              onChange={this.handlePasswordChange}
+              id='password' />
+          </div>
+        </div>
         <div>
           <button type="submit">Submit</button>
         </div>
