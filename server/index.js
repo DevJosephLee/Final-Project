@@ -119,13 +119,13 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/auth/sign-up', (req, res, next) => {
+app.post('/api/auth/sign-in', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
     throw new ClientError(400, 'username and password are required fields');
   }
   const sql = `
-    select "userId"
+    select "userId",
            "password"
     from   "users"
     where  "username" = $1
@@ -137,9 +137,9 @@ app.post('/api/auth/sign-up', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      const { userId, password } = user;
-      return argon2
-        .verify(password, req.body.password)
+      const { userId } = user;
+      argon2
+        .verify(user.password, req.body.password)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
@@ -147,7 +147,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
           const payload = { userId, username };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
-        });
+        })
+        .catch(err => next(err));
     })
     .catch(err => next(err));
 });
