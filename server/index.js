@@ -148,7 +148,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
-    });
+    })
+    .catch(err => next(err));
 });
 
 app.use(staticMiddleware);
