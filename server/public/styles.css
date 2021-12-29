@@ -57,14 +57,14 @@ input {
   font-size: 1rem;
 }
 
-.inputs {
+.inputs-signin {
   width: 400px;
   height: 40px;
   padding: 0.5rem;
   border-radius: 5px;
 }
 
-.label {
+.label-signin {
   font-size: 1.3rem;
   text-align: start;
 }

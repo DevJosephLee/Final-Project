@@ -42,10 +42,10 @@ class SignupForm extends React.Component {
         <div className="row justify-center">
           <form onSubmit={this.handleSubmit}>
             <div className='margin-bottom'>
-              <label className="label" htmlFor='username'>Username</label>
+              <label className="label-signin" htmlFor='username'>Username</label>
               <div>
                 <input
-                  className="inputs"
+                  className="inputs-signin"
                   required
                   autoFocus
                   type="text"
@@ -55,10 +55,10 @@ class SignupForm extends React.Component {
               </div>
             </div>
             <div className="margin-bottom">
-              <label className="label" htmlFor='password'>Password</label>
+              <label className="label-signin" htmlFor='password'>Password</label>
               <div>
                 <input
-                  className="inputs"
+                  className="inputs-signin"
                   required
                   autoFocus
                   type="password"
