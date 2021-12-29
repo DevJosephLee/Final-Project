@@ -6,7 +6,7 @@ import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 
-export default class ChefProfile extends React.Component {
+class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,3 +51,5 @@ export default class ChefProfile extends React.Component {
     );
   }
 }
+
+export default ChefProfile;

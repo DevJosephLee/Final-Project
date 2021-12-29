@@ -38,3 +38,41 @@ body {
 .user-icon {
   font-size: 5rem;
 }
+
+.nav-bar {
+  background-color: #343a40;
+  height: 50px;
+}
+
+.logo-text {
+  color: white;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+input {
+  font-size: 1rem;
+}
+
+.inputs-signin {
+  width: 400px;
+  height: 40px;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.label-signin {
+  font-size: 1.3rem;
+  text-align: start;
+}
+
+.submit-buttom {
+  width: 85px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  background-color: #c4c4c4;
+}
