@@ -118,6 +118,10 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/auth/sign-up', (req, res, next) => {
+
+});
+
 app.use(staticMiddleware);
 
 app.use(errorMiddleware);
