@@ -6,7 +6,8 @@ function authorizationMiddleware(req, res, next) {
   if (!token) {
     throw new ClientError(401, 'authentication required');
   }
-  const payload = jwt.verify(token, process.env.TOKEN_SECRET);//eslint-disable-line
+  const payload = jwt.verify(token, process.env.TOKEN_SECRET);
+  req.user = payload;
 }
 
 export default authorizationMiddleware;
