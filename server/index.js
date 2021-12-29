@@ -123,6 +123,15 @@ app.post('/api/auth/sign-up', (req, res, next) => {
   if (!username || !password) {
     throw new ClientError(400, 'username and password are required fields');
   }
+  const sql = `
+    select "userId"
+           "password"
+    from   "users"
+    where  "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params);
+
 });
 
 app.use(staticMiddleware);
