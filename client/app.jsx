@@ -40,14 +40,4 @@ class App extends React.Component {
   }
 }
 
-// function App(props) {
-//   return (
-//     <div>
-//       <NavBar />
-//       <SignUpPage />
-//       <ChefProfile />
-//     </div>
-//   );
-// }
-
 export default App;
