@@ -15,7 +15,7 @@ class ChefProfile extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/chefs/1')
+    fetch('/api/chefs/2')
       .then(response => response.json())
       .then(data => {
         this.setState({ chef: data });

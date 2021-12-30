@@ -9,7 +9,7 @@ class DishPictures extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/dishes/1')
+    fetch('/api/dishes/2')
       .then(response => response.json())
       .then(data => {
         this.setState({ dishes: data });

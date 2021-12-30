@@ -21,6 +21,64 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
+app.post('/api/auth/sign-up', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(400, 'username and password are required fields');
+  }
+  argon2
+    .hash(password)
+    .then(password => {
+      const sql = `
+      insert into "users" ("username", "password", "createdAt")
+      values ($1, $2, current_timestamp)
+      returning "username", "createdAt", "userId"
+      `;
+      const params = [username, password];
+      db.query(sql, params)
+        .then(result => {
+          const [newUser] = result.rows;
+          res.status(201).json(newUser);
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/auth/sign-in', (req, res, next) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    throw new ClientError(400, 'username and password are required fields');
+  }
+  const sql = `
+    select "userId",
+           "password"
+    from   "users"
+    where  "username" = $1
+  `;
+  const params = [username];
+  db.query(sql, params)
+    .then(result => {
+      const [user] = result.rows;
+      if (!user) {
+        throw new ClientError(401, 'invalid login');
+      }
+      const { userId } = user;
+      argon2
+        .verify(user.password, req.body.password)
+        .then(isMatching => {
+          if (!isMatching) {
+            throw new ClientError(401, 'invalid login');
+          }
+          const payload = { userId, username };
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
+          res.json({ token, user: payload });
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/chefs/:chefId', (req, res) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
@@ -94,64 +152,6 @@ app.get('/api/reviews/:chefId', (req, res) => {
       }
     })
     .catch(err => console.error(err));
-});
-
-app.post('/api/auth/sign-up', (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    throw new ClientError(400, 'username and password are required fields');
-  }
-  argon2
-    .hash(password)
-    .then(password => {
-      const sql = `
-      insert into "users" ("username", "password", "createdAt")
-      values ($1, $2, current_timestamp)
-      returning "username", "createdAt", "userId"
-      `;
-      const params = [username, password];
-      db.query(sql, params)
-        .then(result => {
-          const [newUser] = result.rows;
-          res.status(201).json(newUser);
-        })
-        .catch(err => next(err));
-    })
-    .catch(err => next(err));
-});
-
-app.post('/api/auth/sign-in', (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    throw new ClientError(400, 'username and password are required fields');
-  }
-  const sql = `
-    select "userId",
-           "password"
-    from   "users"
-    where  "username" = $1
-  `;
-  const params = [username];
-  db.query(sql, params)
-    .then(result => {
-      const [user] = result.rows;
-      if (!user) {
-        throw new ClientError(401, 'invalid login');
-      }
-      const { userId } = user;
-      argon2
-        .verify(user.password, req.body.password)
-        .then(isMatching => {
-          if (!isMatching) {
-            throw new ClientError(401, 'invalid login');
-          }
-          const payload = { userId, username };
-          const token = jwt.sign(payload, process.env.TOKEN_SECRET);
-          res.json({ token, user: payload });
-        })
-        .catch(err => next(err));
-    })
-    .catch(err => next(err));
 });
 
 app.use(authorizationMiddleware);
