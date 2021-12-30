@@ -27,6 +27,18 @@
   padding: 10rem 0;
 }
 
+.padding-top-bottom-4 {
+  padding: 7rem 0;
+}
+
+.padding-bottom {
+  padding-bottom: 3rem;
+}
+
+.padding-bottom-2 {
+  padding-bottom: 6rem;
+}
+
 .justify-between {
   justify-content: space-between;
 }
@@ -64,8 +76,8 @@
   margin-bottom: 3rem;
 }
 
-.padding-bottom {
-  padding-bottom: 3rem;
+.margin-top-bottom {
+  margin: 10rem 0;
 }
 
 .line-height {
