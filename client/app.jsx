@@ -9,6 +9,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      isAuthorizing: true,
       route: parseRoute(window.location.hash)
     };
   }
