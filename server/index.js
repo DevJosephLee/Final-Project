@@ -173,8 +173,11 @@ app.get('/api/search/:cuisineType', (req, res) => {
       const [cuisines] = result.rows;
       if (!cuisines) {
         res.json({ error: `cannot find chefs with ${cuisineType} cuisine type` });
+      } else {
+        res.json(result.rows);
       }
-    });
+    })
+    .catch(err => console.error(err));
 });
 
 app.use(authorizationMiddleware);
