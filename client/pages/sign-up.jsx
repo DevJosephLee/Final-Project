@@ -8,6 +8,7 @@ class SignUpPage extends React.Component {
       users: []
     };
     this.addNewUser = this.addNewUser.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   addNewUser(newUser) {
@@ -26,11 +27,16 @@ class SignUpPage extends React.Component {
       .catch(err => console.error(err));
   }
 
+  handleClick() {
+    window.location.hash = 'sign-in';
+  }
+
   render() {
     return (
       <div>
         <h1 className="text-align-center padding-top-bottom-3">Sign-Up</h1>
-        <SignupForm onSubmit={this.addNewUser} />
+        <SignupForm className="margin-bottom" onSubmit={this.addNewUser} />
+        <h4 className="text-align-center">Already have an account? <a onClick={this.handleClick}>Sign-in</a></h4>
       </div>
     );
   }
