@@ -168,8 +168,13 @@ app.get('/api/search/:cuisineType', (req, res) => {
     group by "chefs"."chefId"
   `;
   const params = [cuisineType];
-  db.query(sql, params);
-
+  db.query(sql, params)
+    .then(result => {
+      const [cuisines] = result.rows;
+      if (!cuisines) {
+        res.json({ error: `cannot find chefs with ${cuisineType} cuisine type` });
+      }
+    });
 });
 
 app.use(authorizationMiddleware);
