@@ -154,6 +154,8 @@ app.get('/api/reviews/:chefId', (req, res) => {
     .catch(err => console.error(err));
 });
 
+app.get();
+
 app.use(authorizationMiddleware);
 
 app.use(staticMiddleware);
