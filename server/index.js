@@ -154,7 +154,9 @@ app.get('/api/reviews/:chefId', (req, res) => {
     .catch(err => console.error(err));
 });
 
-app.get();
+app.get('/api/search/:cuisineType', (req, res) => {
+
+});
 
 app.use(authorizationMiddleware);
 
