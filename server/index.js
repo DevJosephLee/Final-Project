@@ -140,7 +140,6 @@ app.get('/api/reviews/:chefId', (req, res) => {
   join "users" using ("userId")
   where "chefId" = $1
   `;
-
   const params = [chefId];
   db.query(sql, params)
     .then(result => {
@@ -159,6 +158,18 @@ app.get('/api/search/:cuisineType', (req, res) => {
   if (Number.isInteger(cuisineType)) {
     res.status(400).json({ error: 'cuisineType must be letters' });
   }
+  const sql = `
+    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    from     "chefs"
+    join     "reviews" using ("chefId")
+    join     "chefCuisines" using ("chefId")
+    join     "cuisines" using ("cuisineId")
+    where    "cuisines"."name" = $1
+    group by "chefs"."chefId"
+  `;
+  const params = [cuisineType];
+  db.query(sql, params);
+
 });
 
 app.use(authorizationMiddleware);
