@@ -50,7 +50,7 @@ export default class App extends React.Component {
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, handleSignIn, handleSignOut };
     return (
-      <div className="">
+      <div>
         <AppContext.Provider value={contextValue}>
           <>
             <NavBar />
