@@ -155,7 +155,10 @@ app.get('/api/reviews/:chefId', (req, res) => {
 });
 
 app.get('/api/search/:cuisineType', (req, res) => {
-
+  const cuisineType = req.params.cuisineType;
+  if (Number.isInteger(cuisineType)) {
+    res.status(400).json({ error: 'cuisineType must be letters' });
+  }
 });
 
 app.use(authorizationMiddleware);
