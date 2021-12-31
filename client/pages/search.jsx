@@ -52,22 +52,3 @@ class SearchPage extends React.Component {
 }
 
 export default SearchPage;
-
-// { `#search?chefId=${chefId}` }
-/* <a href={`#search?cuisineType=${selectedCuisine}`} type='submit'>Search</a> */
-//   <div key={chef.chefId}>
-//     <h1>{chef.avg}</h1>
-//     <h1>{chef.count}</h1>
-//     <h1>{chef.name}</h1>
-//     <img src={chef.photoUrl} />
-//   </div>
-
-// const { selectedCuisine } = this.state;
-// fetch(`/api/search/${selectedCuisine}`)
-//   .then(response => response.json())
-//   .then(result => {
-//     this.setState({ chefs: result });
-//     window.location.hash = 'searchResult';
-//     console.log(this.state.chefs);
-//   })
-//   .catch(err => console.error(err));
