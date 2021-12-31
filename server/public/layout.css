@@ -47,6 +47,10 @@
   justify-content: center;
 }
 
+.mobile-justify-center {
+  justify-content: center;
+}
+
 .justify-end {
   justify-content: end;
 }
@@ -84,6 +88,10 @@
   line-height: 5px;
 }
 
+.line-height-2 {
+  line-height: 50px;
+}
+
 @media only screen and (min-width: 728px) {
   .container {
     max-width: 1000px;
@@ -103,5 +111,9 @@
 
   .width-adj {
     width: auto;
+  }
+
+  .mobile-justify-center {
+    justify-content: start;
   }
 }

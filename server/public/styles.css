@@ -50,6 +50,7 @@ body {
 
 .logo-text {
   color: white;
+  text-decoration: none;
 }
 
 a,
@@ -73,7 +74,7 @@ input {
   text-align: start;
 }
 
-.submit-buttom {
+.submit-button {
   width: 85px;
   padding: 0.5rem;
   font-size: 1rem;
@@ -82,6 +83,16 @@ input {
 }
 
 .cuisine-dropdown {
-  width: 50%;
+  width: 75%;
   padding: 0.5rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+
+.info-button {
+  width: 100px;
+  padding: 0.5rem;
+  border-radius: 5px;
 }

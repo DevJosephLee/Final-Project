@@ -28,9 +28,9 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="text-align-center">
-        <h1>Hello</h1>
-        <form onSubmit={this.handleSubmit} >
+      <div className="text-align-center height-100">
+        <h1 className="margin-top-bottom">Welcome!</h1>
+        <form className="line-height-2" onSubmit={this.handleSubmit} >
           <div>
             <p>Please select a cuisine type</p>
             <select className="cuisine-dropdown" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
@@ -44,7 +44,7 @@ class SearchPage extends React.Component {
               }
             </select>
           </div>
-          <button type="submit">Search</button>
+          <button className="submit-button" type="submit">Search</button>
         </form>
       </div>
     );
