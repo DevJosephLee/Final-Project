@@ -15,7 +15,7 @@ class ChefProfile extends React.Component {
   }
 
   componentDidMount() {
-    fetch('/api/chefs/2')
+    fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
         this.setState({ chef: data });
@@ -31,22 +31,26 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className='mobile-row mobile-text-align-center padding-top-bottom'>
-                <ProfilePicture photoUrl={chef.photoUrl} />
-                <div className='line-height'>
-                  <ProfileName name={chef.name} />
-                  <div className="row align-center justify-center">
-                    <StarRating rating={chef.avg} />
-                    <p className='margin-left'>{chef.count} reviews</p>
+              <div key={chef.name} className='mobile-row padding-top-bottom'>
+                <div className="text-align-center">
+                  <ProfilePicture chefId={chef.chefId} photoUrl={chef.photoUrl} />
+                  <div className='line-height'>
+                    <ProfileName name={chef.name} />
+                    <div className="row align-center justify-center">
+                      <StarRating rating={chef.avg} />
+                      <p className='margin-left'>{chef.count} reviews</p>
+                    </div>
+                    <CuisineTypes cuisineType={chef.cuisineType} />
                   </div>
-                  <CuisineTypes cuisineType={chef.cuisineType} />
+                </div>
+                <div>
+                  <DishPictures chefId={chef.chefId}/>
+                  <Reviews chefId={chef.chefId} />
                 </div>
               </div>
             );
           })
         }
-        <DishPictures />
-        <Reviews />
       </div>
     );
   }

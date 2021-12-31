@@ -7,6 +7,7 @@ class SearchResultPage extends React.Component {
     this.state = {
       chefs: []
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -15,6 +16,15 @@ class SearchResultPage extends React.Component {
       .then(data => {
         this.setState({ chefs: data });
       });
+  }
+
+  handleClick(event) {
+    const chefid = event.target.getAttribute('chefid');
+    this.state.chefs.map(chef => {
+      return (
+        window.location.hash = 'chefProfile?chefId=' + chefid
+      );
+    });
   }
 
   render() {
@@ -34,7 +44,7 @@ class SearchResultPage extends React.Component {
                       <p className='margin-left'>{chef.count} reviews</p>
                     </div>
                     <div className="margin-top">
-                      <button className="info-button">INFO</button>
+                      <button chefid={chef.chefId} className="info-button" onClick={this.handleClick}>INFO</button>
                     </div>
                   </div>
                 </div>
