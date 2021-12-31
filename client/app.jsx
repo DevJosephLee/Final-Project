@@ -6,6 +6,7 @@ import AuthPage from './pages/auth';
 import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
 import SearchPage from './pages/search';
+import SearchResultPage from './pages/search-result';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,15 +37,19 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { path } = this.state.route;
-    if (path === '') {
+    const { route } = this.state;
+    if (route.path === '') {
       return <ChefProfile />;
     }
-    if (path === 'sign-in' || path === 'sign-up') {
+    if (route.path === 'sign-in' || route.path === 'sign-up') {
       return <AuthPage />;
     }
-    if (path === 'search') {
+    if (route.path === 'search') {
       return <SearchPage />;
+    }
+    if (route.path === 'searchResults') {
+      const selectedCuisine = route.params.get('cuisine');
+      return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
   }
 

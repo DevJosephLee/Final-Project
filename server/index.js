@@ -172,7 +172,7 @@ app.get('/api/search/:cuisineType', (req, res) => {
     .then(result => {
       const [cuisines] = result.rows;
       if (!cuisines) {
-        res.json({ error: `cannot find chefs with ${cuisineType} cuisine type` });
+        res.json([]);
       } else {
         res.json(result.rows);
       }
