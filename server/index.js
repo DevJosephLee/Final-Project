@@ -159,7 +159,7 @@ app.get('/api/search/:cuisineType', (req, res) => {
     res.status(400).json({ error: 'cuisineType must be letters' });
   }
   const sql = `
-    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId")
     from     "chefs"
     join     "reviews" using ("chefId")
     join     "chefCuisines" using ("chefId")
@@ -176,6 +176,18 @@ app.get('/api/search/:cuisineType', (req, res) => {
       } else {
         res.json(result.rows);
       }
+    })
+    .catch(err => console.error(err));
+});
+
+app.get('/api/cuisines/', (req, res) => {
+  const sql = `
+  select *
+  from "cuisines"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
     })
     .catch(err => console.error(err));
 });

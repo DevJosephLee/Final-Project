@@ -80,3 +80,8 @@ input {
   border-radius: 5px;
   background-color: #c4c4c4;
 }
+
+.cuisine-dropdown {
+  width: 50%;
+  padding: 0.5rem;
+}

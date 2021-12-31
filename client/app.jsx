@@ -2,9 +2,10 @@ import React from 'react';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 import decodeToken from './lib/decode-token';
-import Auth from './pages/auth';
+import AuthPage from './pages/auth';
 import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
+import SearchPage from './pages/search';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -40,7 +41,10 @@ export default class App extends React.Component {
       return <ChefProfile />;
     }
     if (path === 'sign-in' || path === 'sign-up') {
-      return <Auth />;
+      return <AuthPage />;
+    }
+    if (path === 'search') {
+      return <SearchPage />;
     }
   }
 

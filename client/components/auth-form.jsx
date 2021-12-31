@@ -34,6 +34,7 @@ export default class AuthForm extends React.Component {
         } else if (result.user && result.token) {
           this.props.onSignIn(result);
         }
+        window.location.hash = 'search';
       });
   }
 
