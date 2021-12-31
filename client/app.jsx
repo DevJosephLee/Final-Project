@@ -63,7 +63,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar />
+            <NavBar user={this.state.user} />
             {this.renderPage()}
           </>
         </AppContext.Provider>
