@@ -43,6 +43,12 @@ body {
   font-size: 5rem;
 }
 
+.profile-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #c2c2c2;
+}
+
 .nav-bar {
   background-color: #343a40;
   height: 50px;

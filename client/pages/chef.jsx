@@ -31,7 +31,7 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className='mobile-row padding-top-bottom'>
+              <div key={chef.name} className='padding-top-bottom'>
                 <div className="text-align-center">
                   <ProfilePicture chefId={chef.chefId} photoUrl={chef.photoUrl} />
                   <div className='line-height'>

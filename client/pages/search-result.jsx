@@ -20,11 +20,7 @@ class SearchResultPage extends React.Component {
 
   handleClick(event) {
     const chefid = event.target.getAttribute('chefid');
-    this.state.chefs.map(chef => {
-      return (
-        window.location.hash = 'chefProfile?chefId=' + chefid
-      );
-    });
+    window.location.hash = 'chefProfile?chefId=' + chefid;
   }
 
   render() {
