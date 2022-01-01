@@ -10,7 +10,7 @@ class Reviews extends React.Component {
   }
 
   componentDidMount() {
-    fetch('api/reviews/1')
+    fetch(`api/reviews/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
         this.setState({ reviews: data });

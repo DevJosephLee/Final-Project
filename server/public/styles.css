@@ -43,6 +43,12 @@ body {
   font-size: 5rem;
 }
 
+.profile-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #c4c4c4;
+}
+
 .nav-bar {
   background-color: #343a40;
   height: 50px;
@@ -50,6 +56,7 @@ body {
 
 .logo-text {
   color: white;
+  text-decoration: none;
 }
 
 a,
@@ -73,10 +80,25 @@ input {
   text-align: start;
 }
 
-.submit-buttom {
+.submit-button {
   width: 85px;
   padding: 0.5rem;
   font-size: 1rem;
   border-radius: 5px;
   background-color: #c4c4c4;
+}
+
+.cuisine-dropdown {
+  width: 75%;
+  padding: 0.5rem;
+}
+
+.border-bottom {
+  border-bottom: 1px solid black;
+}
+
+.info-button {
+  padding: 0.5rem 3rem;
+  border-radius: 5px;
+  border: 1px solid black;
 }

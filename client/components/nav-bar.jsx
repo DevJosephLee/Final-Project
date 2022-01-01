@@ -1,15 +1,22 @@
 import React from 'react';
 
-function NavBar(props) {
-  return (
-    <div className="nav-bar">
-      <div className="container">
-        <div className="width-adj padding-top-bottom-2">
-          <a className="logo-text">ChefConnect</a>
+class NavBar extends React.Component {
+  render() {
+    const { user } = this.props;
+    const removeProfileIcon = user !== null
+      ? <i className="fas fa-user-alt profile-icon"></i>
+      : '';
+    return (
+      <div className="nav-bar">
+        <div className="container">
+          <div className="row justify-between width-adj padding-top-bottom-2">
+            <a href="#search" className="logo-text">ChefConnect</a>
+            {removeProfileIcon}
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default NavBar;

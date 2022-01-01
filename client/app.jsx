@@ -2,9 +2,11 @@ import React from 'react';
 import AppContext from './lib/app-context';
 import parseRoute from './lib/parse-route';
 import decodeToken from './lib/decode-token';
-import Auth from './pages/auth';
+import AuthPage from './pages/auth';
 import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
+import SearchPage from './pages/search';
+import SearchResultPage from './pages/search-result';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -35,12 +37,20 @@ export default class App extends React.Component {
   }
 
   renderPage() {
-    const { path } = this.state.route;
-    if (path === '') {
-      return <ChefProfile />;
+    const { route } = this.state;
+    if (route.path === 'chefProfile') {
+      const chefId = route.params.get('chefId');
+      return <ChefProfile chefId={chefId} />;
     }
-    if (path === 'sign-in' || path === 'sign-up') {
-      return <Auth />;
+    if (route.path === 'sign-in' || route.path === 'sign-up') {
+      return <AuthPage />;
+    }
+    if (route.path === 'search') {
+      return <SearchPage />;
+    }
+    if (route.path === 'searchResults') {
+      const selectedCuisine = route.params.get('cuisine');
+      return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
   }
 
@@ -53,7 +63,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar />
+            <NavBar user={this.state.user} />
             {this.renderPage()}
           </>
         </AppContext.Provider>

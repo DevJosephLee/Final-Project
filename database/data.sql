@@ -29,3 +29,11 @@ values ("Italian"),
 insert into "chefCuisines" ("chefId", "cuisineId")
 values (1, 1),
        (1, 2)
+
+select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    from     "chefs"
+    join     "reviews" using ("chefId")
+    join     "chefCuisines" using ("chefId")
+    join     "cuisines" using ("cuisineId")
+    where    "cuisines"."name" = 'Italian'
+    group by "chefs"."chefId"
