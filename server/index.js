@@ -79,10 +79,10 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/chefs/:chefId', (req, res) => {
+app.get('/api/chefs/:chefId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
-    res.status(400).json({ error: 'grade must be a positive integer' });
+    throw new ClientError(400, 'grade must be a positive integer');
   }
   const sql = `
     select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
@@ -98,18 +98,18 @@ app.get('/api/chefs/:chefId', (req, res) => {
     .then(result => {
       const [chef] = result.rows;
       if (!chef) {
-        res.status(404).json({ error: `cannot find chef with chefId ${chefId}` });
+        throw new ClientError(404, `cannot find chef with chefId ${chefId}`);
       } else {
         res.json(result.rows);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
-app.get('/api/dishes/:chefId', (req, res) => {
+app.get('/api/dishes/:chefId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
-    res.status(400).json({ error: 'grade must be a positive integer' });
+    throw new ClientError(400, 'grade must be a positive integer');
   }
   const sql = `
   select *
@@ -121,18 +121,18 @@ app.get('/api/dishes/:chefId', (req, res) => {
     .then(result => {
       const [dishes] = result.rows;
       if (!dishes) {
-        res.status(404).json({ error: `cannot find dishes with chefId ${chefId}` });
+        throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
       } else {
         res.json(result.rows);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
-app.get('/api/reviews/:chefId', (req, res) => {
+app.get('/api/reviews/:chefId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
-    res.status(400).json({ error: 'grade must be a positive integer' });
+    throw new ClientError(400, 'grade must be a positive integer');
   }
   const sql = `
   select *
@@ -145,18 +145,18 @@ app.get('/api/reviews/:chefId', (req, res) => {
     .then(result => {
       const [reviews] = result.rows;
       if (!reviews) {
-        res.status(404).json({ error: `cannot find dishes with chefId ${chefId}` });
+        throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
       } else {
         res.json(result.rows);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
-app.get('/api/search/:cuisineType', (req, res) => {
+app.get('/api/search/:cuisineType', (req, res, next) => {
   const cuisineType = req.params.cuisineType;
   if (Number.isInteger(cuisineType)) {
-    res.status(400).json({ error: 'cuisineType must be letters' });
+    throw new ClientError(400, 'cuisineType must be letters');
   }
   const sql = `
     select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId")
@@ -177,10 +177,10 @@ app.get('/api/search/:cuisineType', (req, res) => {
         res.json(result.rows);
       }
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
 
-app.get('/api/cuisines/', (req, res) => {
+app.get('/api/cuisines/', (req, res, next) => {
   const sql = `
   select *
   from "cuisines"
@@ -189,14 +189,14 @@ app.get('/api/cuisines/', (req, res) => {
     .then(result => {
       res.json(result.rows);
     })
-    .catch(err => console.error(err));
+    .catch(err => next(err));
 });
+
+app.use(errorMiddleware);
 
 app.use(authorizationMiddleware);
 
 app.use(staticMiddleware);
-
-app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console

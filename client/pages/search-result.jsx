@@ -35,12 +35,12 @@ class SearchResultPage extends React.Component {
                   <img className="profile-picture margin-right" src={chef.photoUrl} />
                   <div>
                     <h2>{chef.name}</h2>
-                    <div className="row align-center">
+                    <div className="row align-center margin-bottom">
                       <StarRating rating={chef.avg} />
                       <p className='margin-left'>{chef.count} reviews</p>
                     </div>
                     <div className="margin-top">
-                      <button chefid={chef.chefId} className="info-button" onClick={this.handleClick}>INFO</button>
+                      <a chefid={chef.chefId} className="info-button" onClick={this.handleClick}>INFO</a>
                     </div>
                   </div>
                 </div>
