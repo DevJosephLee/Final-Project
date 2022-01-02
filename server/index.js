@@ -196,6 +196,13 @@ app.get('/api/cuisines/', (req, res, next) => {
 app.post('/api/review/:chefId/:userId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   const userId = Number(req.params.userId);
+  const content = req.body.content;
+  const rating = Number(req.body.rating);
+  if (!chefId || !userId) {
+    throw new ClientError(400, 'chefId and userId are required fields');
+  } else if (!content || !rating) {
+    throw new ClientError(400, 'content and rating are required fields');
+  }
   if (!Number.isInteger(chefId) || chefId < 1) {
     throw new ClientError(400, 'chefId must be a positive integer');
   } else if (!Number.isInteger(userId) || userId < 1) {
