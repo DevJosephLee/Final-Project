@@ -194,7 +194,13 @@ app.get('/api/cuisines/', (req, res, next) => {
 });
 
 app.post('/api/review/:chefId/:userId', (req, res, next) => {
-
+  const chefId = Number(req.params.chefId);
+  const userId = Number(req.params.userId);
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    throw new ClientError(400, 'chefId must be a positive integer');
+  } else if (!Number.isInteger(userId) || userId < 1) {
+    throw new ClientError(400, 'userId must be a positive integer');
+  }
 });
 
 app.use(errorMiddleware);
