@@ -7,6 +7,7 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
+// const { Client } = require('pg/lib');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -190,6 +191,10 @@ app.get('/api/cuisines/', (req, res, next) => {
       res.json(result.rows);
     })
     .catch(err => next(err));
+});
+
+app.post('/api/review/:chefId/:userId', (req, res, next) => {
+
 });
 
 app.use(errorMiddleware);
