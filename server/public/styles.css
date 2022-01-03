@@ -110,3 +110,34 @@ input {
   background-color: #ff8e00;
   font-size: 1rem;
 }
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  background-color: #c4c4c4;
+  width: 400px;
+  height: 400px;
+  border: 1px black solid;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.modal-x-button {
+  font-size: 1.5rem;
+  cursor: pointer;
+}

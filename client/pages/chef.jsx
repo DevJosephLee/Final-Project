@@ -5,15 +5,18 @@ import ProfilePicture from '../components/profile-picture';
 import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
-import ReviewButton from '../components/review-button';
+import ReviewModal from '../components/review-modal';
+// import ReviewButton from '../components/review-button';
 
 class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chef: []
+      chef: [],
+      modalOpened: false
     };
-    this.clickReviewButton = this.clickReviewButton.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -27,11 +30,22 @@ class ChefProfile extends React.Component {
       });
   }
 
-  clickReviewButton(event) {
+  openModal() {
+    if (!this.state.modalOpened) {
+      this.setState({ modalOpened: true });
+    }
+  }
 
+  closeModal() {
+    if (this.state.modalOpened) {
+      this.setState({ modalOpened: false });
+    }
   }
 
   render() {
+    const modalClass = this.state.modalOpened
+      ? 'show'
+      : 'hidden';
     return (
       <div className='container'>
         {
@@ -50,16 +64,22 @@ class ChefProfile extends React.Component {
                   </div>
                 </div>
                 <div className="margin-bottom">
-                  <ReviewButton onClick={this.clickReviewButton} />
+                  <div className="width-adj">
+                    <button className="review-button" onClick={this.openModal}>Write a Review</button>
+                  </div>
                 </div>
                 <div>
-                  <DishPictures chefId={chef.chefId}/>
+                  <DishPictures chefId={chef.chefId} />
                   <Reviews chefId={chef.chefId} />
+                </div>
+                <div className={`height-100 overlay ${modalClass}`} >
+                  <ReviewModal name={chef.name} />
                 </div>
               </div>
             );
           })
         }
+
       </div>
     );
   }
