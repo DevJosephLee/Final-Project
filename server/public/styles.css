@@ -173,3 +173,8 @@ input {
 .modal-stars {
   cursor: pointer;
 }
+
+.thumbs-up {
+  font-size: 3.5rem;
+  color: #ff8e00;
+}

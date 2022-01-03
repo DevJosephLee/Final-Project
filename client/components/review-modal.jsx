@@ -66,7 +66,7 @@ class ReviewModal extends React.Component {
             </div>
             <div className="height-modal row align-center justify-between">
               <button className="cancel-button" onClick={this.props.closeModal}>Cancel</button>
-              <button className="post-button" onClick={this.props.closeModal}>Post Review</button>
+              <button className="post-button" onClick={this.props.openConfModal}>Post Review</button>
             </div>
           </form>
         </div>

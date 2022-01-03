@@ -15,6 +15,10 @@
   text-align: center;
 }
 
+.text-align-end {
+  text-align: end;
+}
+
 .padding-top-bottom {
   padding: 5rem 0;
 }
@@ -78,6 +82,14 @@
 
 .margin-top-bottom {
   margin: 10rem 0;
+}
+
+.margin-top-bottom-2 {
+  margin: 1rem 0;
+}
+
+.margin-top {
+  margin: 3rem 0;
 }
 
 .line-height {

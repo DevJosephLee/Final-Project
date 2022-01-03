@@ -7,16 +7,20 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
+import ReviewConfModal from '../components/review-conf-modal';
 
 class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       chef: [],
-      modalOpened: false
+      modalOpened: false,
+      confModalOpened: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.openConfModal = this.openConfModal.bind(this);
+    this.closeConfModal = this.closeConfModal.bind(this);
   }
 
   componentDidMount() {
@@ -42,10 +46,21 @@ class ChefProfile extends React.Component {
     }
   }
 
+  openConfModal() {
+    this.setState({ modalOpened: false, confModalOpened: true });
+  }
+
+  closeConfModal() {
+    this.setState({ confModalOpened: false });
+  }
+
   render() {
     const token = window.localStorage.getItem('final-project-jwt');
     const payload = decodeToken(token);
     const modalClass = this.state.modalOpened
+      ? 'show'
+      : 'hidden';
+    const ConfModalClass = this.state.confModalOpened
       ? 'show'
       : 'hidden';
     return (
@@ -75,7 +90,10 @@ class ChefProfile extends React.Component {
                   <Reviews chefId={chef.chefId} />
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal name={chef.name} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} />
+                  <ReviewModal name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} />
+                </div>
+                <div className={`height-100 overlay ${ConfModalClass}`}>
+                  <ReviewConfModal closeConfModal={this.closeConfModal} />
                 </div>
               </div>
             );
