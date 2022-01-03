@@ -6,7 +6,6 @@ import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
-// import ReviewButton from '../components/review-button';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -73,13 +72,12 @@ class ChefProfile extends React.Component {
                   <Reviews chefId={chef.chefId} />
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal name={chef.name} />
+                  <ReviewModal name={chef.name} closeModal={this.closeModal} />
                 </div>
               </div>
             );
           })
         }
-
       </div>
     );
   }

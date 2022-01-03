@@ -24,6 +24,10 @@ body {
   height: 100vh;
 }
 
+.height-modal {
+  height: 75px;
+}
+
 .user-icon-container {
   width: 6rem;
   height: 6rem;
@@ -139,5 +143,33 @@ input {
 
 .modal-x-button {
   font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.review-star {
+  cursor: pointer;
+}
+
+.review-input {
+  padding: 0.5rem;
+  width: 100%;
+  height: 200px;
+}
+
+.cancel-button {
+  padding: 0.5rem;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #c2c2c2;
+}
+
+.post-button {
+  padding: 0.5rem;
+  width: 100px;
+  border-radius: 5px;
+  background-color: #ff8e00;
+}
+
+.modal-stars {
   cursor: pointer;
 }
