@@ -1,6 +1,4 @@
 import React from 'react';
-// import StarRating from './star-rating';
-// import ReviewStar from './review-star';
 
 class ReviewModal extends React.Component {
   constructor(props) {
@@ -9,15 +7,13 @@ class ReviewModal extends React.Component {
       rating: 1,
       content: ''
     };
-    this.handleChange = this.handleTextChange.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleTextChange(event) {
-    const { value } = event.target;
-    // this.setState = { rating, content: value };
-    this.setState({ content: value });
+    this.setState({ content: event.target.value });
   }
 
   handleStarClick() {
@@ -26,6 +22,15 @@ class ReviewModal extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const { chefId, userId } = this.props;
+    fetch(`/api/review/${chefId}/${userId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json());
   }
 
   render() {
@@ -44,7 +49,7 @@ class ReviewModal extends React.Component {
                   index += 1;
                   return (
                     <div key={index}>
-                      <i rating={index} className={this.state.rating < index ? 'far fa-star modal-stars' : 'fas fa-star modal-stars'} onClick={this.handleStarClick}></i>
+                      <i rating={index} className={this.state.rating < index ? 'far fa-star modal-stars orange' : 'fas fa-star modal-stars orange'} onClick={this.handleStarClick}></i>
                     </div>
                   );
                 })
@@ -61,7 +66,7 @@ class ReviewModal extends React.Component {
             </div>
             <div className="height-modal row align-center justify-between">
               <button className="cancel-button" onClick={this.props.closeModal}>Cancel</button>
-              <button className="post-button">Post Review</button>
+              <button className="post-button" onClick={this.props.closeModal}>Post Review</button>
             </div>
           </form>
         </div>

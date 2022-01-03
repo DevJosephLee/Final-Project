@@ -6,6 +6,7 @@ import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
+import decodeToken from '../lib/decode-token';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -42,6 +43,8 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    const token = window.localStorage.getItem('final-project-jwt');
+    const payload = decodeToken(token);
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
@@ -72,7 +75,7 @@ class ChefProfile extends React.Component {
                   <Reviews chefId={chef.chefId} />
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal name={chef.name} closeModal={this.closeModal} />
+                  <ReviewModal name={chef.name} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} />
                 </div>
               </div>
             );
