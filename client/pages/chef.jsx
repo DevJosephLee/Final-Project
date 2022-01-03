@@ -5,6 +5,7 @@ import ProfilePicture from '../components/profile-picture';
 import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
+import ReviewButton from '../components/review-button';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class ChefProfile extends React.Component {
     this.state = {
       chef: []
     };
+    this.clickReviewButton = this.clickReviewButton.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +27,10 @@ class ChefProfile extends React.Component {
       });
   }
 
+  clickReviewButton(event) {
+
+  }
+
   render() {
     return (
       <div className='container'>
@@ -32,7 +38,7 @@ class ChefProfile extends React.Component {
           this.state.chef.map(chef => {
             return (
               <div key={chef.name} className='padding-top-bottom'>
-                <div className="text-align-center">
+                <div className="text-align-center margin-bottom">
                   <ProfilePicture chefId={chef.chefId} photoUrl={chef.photoUrl} />
                   <div className='line-height'>
                     <ProfileName name={chef.name} />
@@ -42,6 +48,9 @@ class ChefProfile extends React.Component {
                     </div>
                     <CuisineTypes cuisineType={chef.cuisineType} />
                   </div>
+                </div>
+                <div className="margin-bottom">
+                  <ReviewButton onClick={this.clickReviewButton} />
                 </div>
                 <div>
                   <DishPictures chefId={chef.chefId}/>
