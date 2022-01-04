@@ -4,7 +4,7 @@ class NavBar extends React.Component {
   render() {
     const { goToProfile, user, route, handleSignOut } = this.props;
     let profileIcon = user !== null
-      ? <i className="fas fa-user-alt profile-icon" onClick={goToProfile}></i>
+      ? <a href={'#userProfile?userId=' + user.userId} className="fas fa-user-alt profile-icon" onClick={goToProfile}></a>
       : '';
     if (route === 'userProfile') {
       profileIcon = <button className="signout-button" onClick={handleSignOut}>Sign out</button>;

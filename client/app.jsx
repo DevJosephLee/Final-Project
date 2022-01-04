@@ -44,13 +44,6 @@ export default class App extends React.Component {
     window.location.hash = 'sign-in';
   }
 
-  handleProfileClick() {
-    const token = window.localStorage.getItem('final-project-jwt');
-    const payload = decodeToken(token);
-    const userId = payload.userId;
-    window.location.hash = 'userProfile?userId=' + userId;
-  }
-
   renderPage() {
     const { route } = this.state;
     if (route.path === 'chefProfile') {
