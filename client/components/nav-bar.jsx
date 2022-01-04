@@ -1,13 +1,15 @@
 import React from 'react';
+// import AppContext from '../lib/app-context';
 
 class NavBar extends React.Component {
   render() {
-    const { user, route } = this.props;
+    const { goToProfile, user, route, handleSignOut } = this.props;
+    // const { user, route, handleSignOut } = this.context;
     let profileIcon = user !== null
-      ? <i className="fas fa-user-alt profile-icon" onClick={this.props.goToProfile}></i>
+      ? <i className="fas fa-user-alt profile-icon" onClick={goToProfile}></i>
       : '';
     if (route === 'userProfile') {
-      profileIcon = <button className="signout-button" onClick={this.props.signOut}>Sign out</button>;
+      profileIcon = <button className="signout-button" onClick={handleSignOut}>Sign out</button>;
     }
     return (
       <div className="nav-bar">
@@ -23,3 +25,5 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
+
+// NavBar.contextType = AppContext;

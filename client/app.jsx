@@ -68,7 +68,8 @@ export default class App extends React.Component {
       return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
     if (route.path === 'userProfile') {
-      return <UserPage />;
+      const userId = route.params.get('userId');
+      return <UserPage userId={userId} />;
     }
   }
 
@@ -81,7 +82,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar user={this.state.user} goToProfile={this.handleProfileClick} route={this.state.route.path} signOut={handleSignOut}/>
+            <NavBar goToProfile={this.handleProfileClick} user={this.state.user} route={this.state.route.path} handleSignOut={this.handleSignOut} />
             {this.renderPage()}
           </>
         </AppContext.Provider>
