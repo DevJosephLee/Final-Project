@@ -297,7 +297,8 @@ app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
-    });
+    })
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
