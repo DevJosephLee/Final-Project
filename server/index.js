@@ -272,7 +272,10 @@ app.post('/api/userProfile/:chefId/:userId', (req, res, next) => {
 });
 
 app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
-  const userId = Number(req.params.userId);//eslint-disable-line
+  const userId = Number(req.params.userId);
+  if (!userId) {
+    throw new ClientError(400, 'userId is a required field');
+  }
 
 });
 
