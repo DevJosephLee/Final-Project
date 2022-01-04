@@ -247,6 +247,10 @@ app.get('/api/userProfile/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
+
+});
+
 app.use(errorMiddleware);
 
 app.use(authorizationMiddleware);
