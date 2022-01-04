@@ -7,6 +7,7 @@ import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
 import SearchPage from './pages/search';
 import SearchResultPage from './pages/search-result';
+import UserPage from './pages/user-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class App extends React.Component {
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,12 @@ export default class App extends React.Component {
     this.setState({ user });
   }
 
+  handleSignOut() {
+    window.localStorage.removeItem('final-project-jwt');
+    this.setState({ user: null });
+    window.location.hash = 'sign-in';
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === 'chefProfile') {
@@ -52,6 +60,10 @@ export default class App extends React.Component {
       const selectedCuisine = route.params.get('cuisine');
       return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
+    if (route.path === 'userProfile') {
+      const userId = route.params.get('userId');
+      return <UserPage userId={userId} />;
+    }
   }
 
   render() {
@@ -63,7 +75,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar user={this.state.user} />
+            <NavBar goToProfile={this.handleProfileClick} user={this.state.user} route={this.state.route.path} handleSignOut={this.handleSignOut} />
             {this.renderPage()}
           </>
         </AppContext.Provider>

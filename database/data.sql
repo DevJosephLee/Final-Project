@@ -37,3 +37,26 @@ select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(dis
     join     "cuisines" using ("cuisineId")
     where    "cuisines"."name" = 'Italian'
     group by "chefs"."chefId"
+
+insert into "favorites" ("userId", "chefId")
+values (3, 1)
+
+
+
+
+select *
+from "favorites"
+join "users" using ("userId")
+join "chefs" using ("chefId")
+
+select "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+from "favorites"
+join "users" using ("userId")
+join "chefs" using ("chefId")
+join "chefCuisines" using ("chefId")
+join "cuisines" using ("cuisineId")
+join "reviews" using ("chefId")
+group by "favorites"."chefId",
+         "chefs"."name",
+         "chefs"."photoUrl",
+         "users"."username"
