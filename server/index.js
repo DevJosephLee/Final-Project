@@ -226,6 +226,27 @@ app.post('/api/review/:chefId/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/userProfile/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
+  if (!userId) {
+    throw new ClientError(400, 'userId is a required field');
+  }
+  if (!Number.isInteger(userId) || userId < 1) {
+    throw new ClientError(400, 'userId must be a positive integer');
+  }
+  const sql = `
+    select "username"
+    from   "users"
+    where  "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.use(authorizationMiddleware);

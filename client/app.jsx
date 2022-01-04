@@ -39,7 +39,7 @@ export default class App extends React.Component {
   }
 
   handleSignOut() {
-    window.localStorage.removeItem('final-project-token');
+    window.localStorage.removeItem('final-project-jwt');
     this.setState({ user: null });
     window.location.hash = 'sign-in';
   }
@@ -81,7 +81,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar user={this.state.user} goToProfile={this.handleProfileClick} route={this.state.route.path} />
+            <NavBar user={this.state.user} goToProfile={this.handleProfileClick} route={this.state.route.path} signOut={handleSignOut}/>
             {this.renderPage()}
           </>
         </AppContext.Provider>
