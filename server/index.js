@@ -248,7 +248,8 @@ app.get('/api/userProfile/:userId', (req, res, next) => {
 });
 
 app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
-
+  const userId = Number(req.params.userId);//eslint-disable-line
+  const chefId = Number(req.params.chefId);//eslint-disable-line
 });
 
 app.use(errorMiddleware);
