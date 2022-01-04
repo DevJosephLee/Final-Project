@@ -279,6 +279,22 @@ app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
   if (!Number.isInteger(userId) || userId < 1) {
     throw new ClientError(400, 'userId must be a positive integer');
   }
+  const sql = `
+    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    from     "favorites"
+    join     "users" using ("userId")
+    join     "chefs" using ("chefId")
+    join     "chefCuisines" using ("chefId")
+    join     "cuisines" using ("cuisineId")
+    join     "reviews" using ("chefId")
+    where    "users"."userId" = $1
+    group by "favorites"."chefId",
+             "chefs"."name",
+             "chefs"."photoUrl",
+             "users"."username"
+  `;
+  const params = [userId];
+  db.query(sql, params);
 });
 
 app.use(errorMiddleware);
