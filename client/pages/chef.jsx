@@ -120,7 +120,8 @@ class ChefProfile extends React.Component {
                     </div>
                     <CuisineTypes cuisineType={chef.cuisineType} />
                     <div className="width-adj margin-bottom">
-                      <button className="review-button" onClick={this.openModal}>Write a Review</button>
+                      <button className="review-button margin-right" onClick={this.openModal}>Write a Review</button>
+                      <button className="save-button"><i className="far fa-bookmark margin-right"></i>Save</button>
                     </div>
                   </div>
                 </div>
