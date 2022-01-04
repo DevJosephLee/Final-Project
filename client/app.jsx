@@ -48,7 +48,7 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === 'chefProfile') {
       const chefId = route.params.get('chefId');
-      return <ChefProfile chefId={chefId} />;
+      return <ChefProfile chefId={chefId} userId={this.state.user.userId} />;
     }
     if (route.path === 'sign-in' || route.path === 'sign-up') {
       return <AuthPage />;

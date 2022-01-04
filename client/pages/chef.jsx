@@ -26,6 +26,7 @@ class ChefProfile extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
@@ -95,6 +96,15 @@ class ChefProfile extends React.Component {
       });
   }
 
+  handleClickSave() {
+    fetch(`/api/userProfile/${this.props.chefId}/${this.props.userId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
   render() {
     const token = window.localStorage.getItem('final-project-jwt');
     const payload = decodeToken(token);
@@ -121,7 +131,7 @@ class ChefProfile extends React.Component {
                     <CuisineTypes cuisineType={chef.cuisineType} />
                     <div className="width-adj margin-bottom">
                       <button className="review-button margin-right" onClick={this.openModal}>Write a Review</button>
-                      <button className="save-button"><i className="far fa-bookmark margin-right"></i>Save</button>
+                      <button className="save-button" onClick={this.handleClickSave}><i className="far fa-bookmark margin-right"></i>Save</button>
                     </div>
                   </div>
                 </div>
