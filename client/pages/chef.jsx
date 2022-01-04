@@ -14,6 +14,8 @@ class ChefProfile extends React.Component {
     super(props);
     this.state = {
       chef: [],
+      reviews: [],
+      rating: 1,
       modalOpened: false,
       confModalOpened: false
     };
@@ -21,6 +23,9 @@ class ChefProfile extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.openConfModal = this.openConfModal.bind(this);
     this.closeConfModal = this.closeConfModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleStarClick = this.handleStarClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +37,13 @@ class ChefProfile extends React.Component {
       .catch(err => {
         console.error(err);
       });
+
+    fetch(`/api/reviews/${this.props.chefId}`)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ reviews: data });
+      })
+      .catch(err => console.error(err));
   }
 
   openModal() {
@@ -52,6 +64,35 @@ class ChefProfile extends React.Component {
 
   closeConfModal() {
     this.setState({ confModalOpened: false });
+  }
+
+  handleTextChange(event) {
+    this.setState({ content: event.target.value });
+  }
+
+  handleStarClick() {
+    this.setState({ rating: event.target.getAttribute('rating') });
+  }
+
+  handleSubmit(newReview) {
+    event.preventDefault();
+    const token = window.localStorage.getItem('final-project-jwt');
+    const payload = decodeToken(token);
+    const userId = payload.userId;
+    fetch(`/api/review/${this.props.chefId}/${userId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(response => response.json())
+      .then(newReview => {
+        this.setState({ reviews: [].concat(this.state.reviews, newReview) });
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   render() {
@@ -87,10 +128,9 @@ class ChefProfile extends React.Component {
                 </div>
                 <div>
                   <DishPictures chefId={chef.chefId} />
-                  <Reviews chefId={chef.chefId} />
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} />
+                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
                 <div className={`height-100 overlay ${ConfModalClass}`}>
                   <ReviewConfModal closeConfModal={this.closeConfModal} />
@@ -99,6 +139,10 @@ class ChefProfile extends React.Component {
             );
           })
         }
+        <div className='width-adj padding-bottom'>
+          <h1>Reviews</h1>
+          <Reviews reviews={this.state.reviews} />
+        </div>
       </div>
     );
   }
