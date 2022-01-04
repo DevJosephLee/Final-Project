@@ -74,7 +74,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar user={this.state.user} goToProfile={this.handleProfileClick}/>
+            <NavBar user={this.state.user} goToProfile={this.handleProfileClick} route={this.state.route.path} />
             {this.renderPage()}
           </>
         </AppContext.Provider>
