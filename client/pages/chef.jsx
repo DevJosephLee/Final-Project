@@ -129,6 +129,10 @@ class ChefProfile extends React.Component {
                 <div>
                   <DishPictures chefId={chef.chefId} />
                 </div>
+                <div className="width-adj line-height-3">
+                  <h1>About</h1>
+                  <p>{chef.bio}</p>
+                </div>
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
