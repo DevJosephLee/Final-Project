@@ -41,6 +41,7 @@ export default class App extends React.Component {
   handleSignOut() {
     window.localStorage.removeItem('final-project-token');
     this.setState({ user: null });
+    window.location.hash = 'sign-in';
   }
 
   handleProfileClick() {
