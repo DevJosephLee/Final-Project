@@ -253,6 +253,11 @@ app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
   if (!chefId || !userId) {
     throw new ClientError(400, 'chefId and userId are required fields');
   }
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    throw new ClientError(400, 'chefId must be a positive integer');
+  } else if (!Number.isInteger(userId) || userId < 1) {
+    throw new ClientError(400, 'userId must be a positive integer');
+  }
 });
 
 app.use(errorMiddleware);
