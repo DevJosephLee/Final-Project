@@ -21,7 +21,7 @@ function ReviewModal(props) {
                 );
               })
             }
-            <p>select your rating</p>
+            <p className="margin-left">select your rating</p>
           </div>
           <div>
             <textarea
