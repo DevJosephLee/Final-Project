@@ -276,7 +276,9 @@ app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
   if (!userId) {
     throw new ClientError(400, 'userId is a required field');
   }
-
+  if (!Number.isInteger(userId) || userId < 1) {
+    throw new ClientError(400, 'userId must be a positive integer');
+  }
 });
 
 app.use(errorMiddleware);
