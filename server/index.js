@@ -262,9 +262,13 @@ app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
   insert into "favorites"
   where "chefId" = $1,
         "userId" = $2
+  returning *
   `;
   const params = [chefId, userId];
-  db.query(sql, params);
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    });
 });
 
 app.use(errorMiddleware);
