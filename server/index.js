@@ -294,7 +294,10 @@ app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
              "users"."username"
   `;
   const params = [userId];
-  db.query(sql, params);
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    });
 });
 
 app.use(errorMiddleware);
