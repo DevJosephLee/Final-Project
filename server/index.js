@@ -272,6 +272,7 @@ app.post('/api/userProfile/:chefId/:userId', (req, res, next) => {
 });
 
 app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);//eslint-disable-line
 
 });
 
