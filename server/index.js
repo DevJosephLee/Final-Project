@@ -7,6 +7,7 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
+// const { Client } = require('pg/lib');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -85,7 +86,7 @@ app.get('/api/chefs/:chefId', (req, res, next) => {
     throw new ClientError(400, 'grade must be a positive integer');
   }
   const sql = `
-    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType", "bio"
     from     "chefs"
     join     "reviews" using ("chefId")
     join     "chefCuisines" using ("chefId")
@@ -188,6 +189,39 @@ app.get('/api/cuisines/', (req, res, next) => {
   db.query(sql)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/review/:chefId/:userId', (req, res, next) => {
+  const chefId = Number(req.params.chefId);
+  const userId = Number(req.params.userId);
+  const content = req.body.content;
+  const rating = Number(req.body.rating);
+  if (!chefId || !userId) {
+    throw new ClientError(400, 'chefId and userId are required fields');
+  } else if (!content || !rating) {
+    throw new ClientError(400, 'content and rating are required fields');
+  }
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    throw new ClientError(400, 'chefId must be a positive integer');
+  } else if (!Number.isInteger(userId) || userId < 1) {
+    throw new ClientError(400, 'userId must be a positive integer');
+  } else if (Number.isInteger(content)) {
+    throw new ClientError(400, 'review content must be letters');
+  } else if (!Number.isInteger(rating) || rating < 1) {
+    throw new ClientError(400, 'rating must be a positive integer');
+  }
+  const sql = `
+    insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
+    values ($1, $2, $3, $4, current_timestamp)
+    returning "userId", "chefId", "content", "rating", "createdAt" , "reviewId"
+  `;
+  const params = [userId, chefId, content, rating];
+  db.query(sql, params)
+    .then(result => {
+      const [review] = result.rows;
+      res.json(review);
     })
     .catch(err => next(err));
 });
