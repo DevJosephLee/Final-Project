@@ -8,6 +8,7 @@ import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
 import ReviewConfModal from '../components/review-conf-modal';
+import SaveConfModal from '../components/save-conf-modal';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -17,12 +18,14 @@ class ChefProfile extends React.Component {
       reviews: [],
       rating: 1,
       modalOpened: false,
-      confModalOpened: false
+      confModalOpened: false,
+      saveConfModalOpened: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openConfModal = this.openConfModal.bind(this);
     this.closeConfModal = this.closeConfModal.bind(this);
+    this.closeSaveConfModal = this.closeSaveConfModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
@@ -67,6 +70,10 @@ class ChefProfile extends React.Component {
     this.setState({ confModalOpened: false });
   }
 
+  closeSaveConfModal() {
+    this.setState({ saveConfModalOpened: false });
+  }
+
   handleTextChange(event) {
     this.setState({ content: event.target.value });
   }
@@ -103,6 +110,7 @@ class ChefProfile extends React.Component {
         'Content-Type': 'application/json'
       }
     });
+    this.setState({ saveConfModalOpened: true });
   }
 
   render() {
@@ -111,7 +119,10 @@ class ChefProfile extends React.Component {
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
-    const ConfModalClass = this.state.confModalOpened
+    const confModalClass = this.state.confModalOpened
+      ? 'show'
+      : 'hidden';
+    const saveConfModalClass = this.state.saveConfModalOpened
       ? 'show'
       : 'hidden';
     return (
@@ -149,8 +160,11 @@ class ChefProfile extends React.Component {
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
-                <div className={`height-100 overlay ${ConfModalClass}`}>
+                <div className={`height-100 overlay ${confModalClass}`}>
                   <ReviewConfModal closeConfModal={this.closeConfModal} />
+                </div>
+                <div className={`height-100 overlay ${saveConfModalClass}`}>
+                  <SaveConfModal closeSaveConfModal={this.closeSaveConfModal} />
                 </div>
               </div>
             );

@@ -174,7 +174,8 @@ input {
   cursor: pointer;
 }
 
-.thumbs-up {
+.thumbs-up,
+.checkmark {
   font-size: 3.5rem;
   color: #ff8e00;
 }
