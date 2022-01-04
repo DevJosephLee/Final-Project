@@ -4,7 +4,7 @@ class NavBar extends React.Component {
   render() {
     const { user } = this.props;
     const removeProfileIcon = user !== null
-      ? <i className="fas fa-user-alt profile-icon"></i>
+      ? <i className="fas fa-user-alt profile-icon" onClick={this.props.goToProfile}></i>
       : '';
     return (
       <div className="nav-bar">

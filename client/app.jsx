@@ -7,6 +7,7 @@ import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
 import SearchPage from './pages/search';
 import SearchResultPage from './pages/search-result';
+import UserPage from './pages/user-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,6 +37,13 @@ export default class App extends React.Component {
     this.setState({ user });
   }
 
+  handleProfileClick() {
+    const token = window.localStorage.getItem('final-project-jwt');
+    const payload = decodeToken(token);
+    const userId = payload.userId;
+    window.location.hash = 'userProfile?userId=' + userId;
+  }
+
   renderPage() {
     const { route } = this.state;
     if (route.path === 'chefProfile') {
@@ -52,6 +60,9 @@ export default class App extends React.Component {
       const selectedCuisine = route.params.get('cuisine');
       return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
+    if (route.path === 'userProfile') {
+      return <UserPage />;
+    }
   }
 
   render() {
@@ -63,7 +74,7 @@ export default class App extends React.Component {
       <div>
         <AppContext.Provider value={contextValue}>
           <>
-            <NavBar user={this.state.user} />
+            <NavBar user={this.state.user} goToProfile={this.handleProfileClick}/>
             {this.renderPage()}
           </>
         </AppContext.Provider>
