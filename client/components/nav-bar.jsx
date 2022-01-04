@@ -1,10 +1,8 @@
 import React from 'react';
-// import AppContext from '../lib/app-context';
 
 class NavBar extends React.Component {
   render() {
     const { goToProfile, user, route, handleSignOut } = this.props;
-    // const { user, route, handleSignOut } = this.context;
     let profileIcon = user !== null
       ? <i className="fas fa-user-alt profile-icon" onClick={goToProfile}></i>
       : '';
@@ -25,5 +23,3 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
-
-// NavBar.contextType = AppContext;

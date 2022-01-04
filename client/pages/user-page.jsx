@@ -1,6 +1,4 @@
 import React from 'react';
-// import AppContext from '../lib/app-context';
-// import decodeToken from '../lib/decode-token';
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -14,8 +12,8 @@ class UserPage extends React.Component {
     fetch(`/api/userProfile/${this.props.userId}`)
       .then(response => response.json())
       .then(result => {
-        const [username] = result;
-        this.setState({ username: username.username });
+        const [user] = result;
+        this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
   }
@@ -39,8 +37,3 @@ class UserPage extends React.Component {
 }
 
 export default UserPage;
-
-// what to fetch for profile page
-// username
-// watchlist
-// reviews
