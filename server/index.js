@@ -258,6 +258,13 @@ app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
   } else if (!Number.isInteger(userId) || userId < 1) {
     throw new ClientError(400, 'userId must be a positive integer');
   }
+  const sql = `
+  insert into "favorites"
+  where "chefId" = $1,
+        "userId" = $2
+  `;
+  const params = [chefId, userId];
+  db.query(sql, params);
 });
 
 app.use(errorMiddleware);
