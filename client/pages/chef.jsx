@@ -110,28 +110,30 @@ class ChefProfile extends React.Component {
           this.state.chef.map(chef => {
             return (
               <div key={chef.name} className='padding-top-bottom'>
-                <div className="text-align-center margin-bottom">
+                <div className="mobile-row mobile-text-align-center margin-bottom">
                   <ProfilePicture chefId={chef.chefId} photoUrl={chef.photoUrl} />
-                  <div className='line-height'>
+                  <div className="margin-left">
                     <ProfileName name={chef.name} />
-                    <div className="row align-center justify-center">
+                    <div className="row mobile-justify-center align-center">
                       <StarRating rating={chef.avg} />
                       <p className='margin-left'>{chef.count} reviews</p>
                     </div>
                     <CuisineTypes cuisineType={chef.cuisineType} />
-                  </div>
-                </div>
-                <div className="margin-bottom">
-                  <div className="width-adj">
-                    <button className="review-button" onClick={this.openModal}>Write a Review</button>
+                    <div className="width-adj margin-bottom">
+                      <button className="review-button" onClick={this.openModal}>Write a Review</button>
+                    </div>
                   </div>
                 </div>
                 <div>
                   <DishPictures chefId={chef.chefId} />
                 </div>
-                <div className="width-adj line-height-3">
+                <div className="width-adj line-height-3 margin-bottom">
                   <h1>About</h1>
                   <p>{chef.bio}</p>
+                </div>
+                <div className='width-adj padding-bottom'>
+                  <h1>Reviews</h1>
+                  <Reviews reviews={this.state.reviews} />
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
@@ -143,10 +145,6 @@ class ChefProfile extends React.Component {
             );
           })
         }
-        <div className='width-adj padding-bottom'>
-          <h1>Reviews</h1>
-          <Reviews reviews={this.state.reviews} />
-        </div>
       </div>
     );
   }
