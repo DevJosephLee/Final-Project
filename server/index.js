@@ -247,7 +247,7 @@ app.get('/api/userProfile/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
+app.post('/api/userProfile/:chefId/:userId', (req, res, next) => {
   const userId = Number(req.params.userId);
   const chefId = Number(req.params.chefId);
   if (!chefId || !userId) {
@@ -259,9 +259,8 @@ app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
     throw new ClientError(400, 'userId must be a positive integer');
   }
   const sql = `
-  insert into "favorites"
-  where "chefId" = $1,
-        "userId" = $2
+  insert into "favorites" ("chefId", "userId")
+  values ($1, $2)
   returning *
   `;
   const params = [chefId, userId];
@@ -270,6 +269,10 @@ app.post('api/userProfile/:chefId/:userId', (req, res, next) => {
       res.json(result.rows);
     })
     .catch(err => next(err));
+});
+
+app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
+
 });
 
 app.use(errorMiddleware);
