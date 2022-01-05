@@ -31,14 +31,16 @@ class UserPage extends React.Component {
   render() {
     return (
       <div className="container height-100">
-        <div className="width-adj padding-top-bottom">
-          <div className="row justify-center">
-            <div className="row user-icon-container align-center justify-center">
-              <i className="far fa-grin user-icon"></i>
+        <div className="width-adj">
+          <div className="margin-top-bottom">
+            <div className="row justify-center">
+              <div className="row user-icon-container align-center justify-center">
+                <i className="far fa-grin user-icon"></i>
+              </div>
             </div>
-          </div>
-          <div className="text-align-center">
-            <h3>{this.state.username}</h3>
+            <div className="text-align-center">
+              <h3>{this.state.username}</h3>
+            </div>
           </div>
           <div className="margin-top-bottom">
             <h1>Saved Chefs</h1>
