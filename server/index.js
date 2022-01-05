@@ -286,7 +286,7 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.delete('api/userProfile/delete/:chefId', (req, res, next) => {
+app.delete('/api/userProfile/:chefId', (req, res, next) => {
   const { userId } = req.user;
   const chefId = Number(req.params.chefId);
   if (!chefId) {
@@ -301,6 +301,22 @@ app.delete('api/userProfile/delete/:chefId', (req, res, next) => {
       and   "userId" = $2
   `;
   const params = [chefId, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/userProfile/reviews', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select *
+    from   "reviews"
+    join   "chefs" using ("chefId")
+    where  "reviews"."userId" = $1
+  `;
+  const params = [userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
