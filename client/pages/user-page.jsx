@@ -18,6 +18,13 @@ class UserPage extends React.Component {
         this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
+
+    fetch(`/api/userProfile/chefs/${this.props.userId}`)
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ chefs: result });
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -31,6 +38,17 @@ class UserPage extends React.Component {
           </div>
           <div className="text-align-center">
             <h3>{this.state.username}</h3>
+          </div>
+          <div>
+            {
+              this.state.chefs.map(chef => {
+                return (
+                  <div key={chef.chefId}>
+                    <h1>{chef.name}</h1>
+                  </div>
+                );
+              })
+            }
           </div>
         </div>
       </div>
