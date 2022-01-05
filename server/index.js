@@ -287,6 +287,7 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
 });
 
 app.delete('api/userProfile/chefs', (req, res, next) => {
+  const { userId } = req.user;//eslint-disable-line
 
 });
 
