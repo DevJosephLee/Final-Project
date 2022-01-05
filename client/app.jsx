@@ -61,8 +61,7 @@ export default class App extends React.Component {
       return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
     if (route.path === 'userProfile') {
-      const userId = route.params.get('userId');
-      return <UserPage userId={userId} />;
+      return <UserPage />;
     }
   }
 

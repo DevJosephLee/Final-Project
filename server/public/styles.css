@@ -109,7 +109,7 @@ input {
 
 .review-button {
   padding: 0.5rem;
-  width: 50%;
+  width: 40%;
   border-radius: 5px;
   background-color: #ff8e00;
   font-size: 1rem;
@@ -174,7 +174,8 @@ input {
   cursor: pointer;
 }
 
-.thumbs-up {
+.thumbs-up,
+.checkmark {
   font-size: 3.5rem;
   color: #ff8e00;
 }
@@ -182,6 +183,29 @@ input {
 .signout-button {
   width: 75px;
   font-size: 1rem;
+}
+
+.save-button {
+  padding: 0.5rem;
+  width: 40%;
+  border-radius: 5px;
+  background-color: #c4c4c4;
+  font-size: 1rem;
+}
+
+.profile-picture-favorites {
+  width: 150px;
+  height: 150px;
+}
+
+.favorites-container {
+  background-color: #343a40;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.saved-chefs-text {
+  color: white;
 }
 
 @media only screen and (min-width: 728px) {

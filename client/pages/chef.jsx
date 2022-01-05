@@ -8,6 +8,7 @@ import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
 import ReviewConfModal from '../components/review-conf-modal';
+import SaveConfModal from '../components/save-conf-modal';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -17,15 +18,18 @@ class ChefProfile extends React.Component {
       reviews: [],
       rating: 1,
       modalOpened: false,
-      confModalOpened: false
+      confModalOpened: false,
+      saveConfModalOpened: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.openConfModal = this.openConfModal.bind(this);
     this.closeConfModal = this.closeConfModal.bind(this);
+    this.closeSaveConfModal = this.closeSaveConfModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
@@ -66,6 +70,10 @@ class ChefProfile extends React.Component {
     this.setState({ confModalOpened: false });
   }
 
+  closeSaveConfModal() {
+    this.setState({ saveConfModalOpened: false });
+  }
+
   handleTextChange(event) {
     this.setState({ content: event.target.value });
   }
@@ -77,12 +85,11 @@ class ChefProfile extends React.Component {
   handleSubmit(newReview) {
     event.preventDefault();
     const token = window.localStorage.getItem('final-project-jwt');
-    const payload = decodeToken(token);
-    const userId = payload.userId;
-    fetch(`/api/review/${this.props.chefId}/${userId}`, {
+    fetch(`/api/review/${this.props.chefId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': token
       },
       body: JSON.stringify(this.state)
     })
@@ -95,13 +102,28 @@ class ChefProfile extends React.Component {
       });
   }
 
+  handleClickSave() {
+    const token = window.localStorage.getItem('final-project-jwt');
+    fetch(`/api/userProfile/${this.props.chefId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': token
+      }
+    });
+    this.setState({ saveConfModalOpened: true });
+  }
+
   render() {
     const token = window.localStorage.getItem('final-project-jwt');
     const payload = decodeToken(token);
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
-    const ConfModalClass = this.state.confModalOpened
+    const confModalClass = this.state.confModalOpened
+      ? 'show'
+      : 'hidden';
+    const saveConfModalClass = this.state.saveConfModalOpened
       ? 'show'
       : 'hidden';
     return (
@@ -120,7 +142,8 @@ class ChefProfile extends React.Component {
                     </div>
                     <CuisineTypes cuisineType={chef.cuisineType} />
                     <div className="width-adj margin-bottom">
-                      <button className="review-button" onClick={this.openModal}>Write a Review</button>
+                      <button className="review-button margin-right" onClick={this.openModal}>Write a Review</button>
+                      <button className="save-button" onClick={this.handleClickSave}><i className="far fa-bookmark margin-right"></i>Save</button>
                     </div>
                   </div>
                 </div>
@@ -138,8 +161,11 @@ class ChefProfile extends React.Component {
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
-                <div className={`height-100 overlay ${ConfModalClass}`}>
+                <div className={`height-100 overlay ${confModalClass}`}>
                   <ReviewConfModal closeConfModal={this.closeConfModal} />
+                </div>
+                <div className={`height-100 overlay ${saveConfModalClass}`}>
+                  <SaveConfModal closeSaveConfModal={this.closeSaveConfModal} />
                 </div>
               </div>
             );
