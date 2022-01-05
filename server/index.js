@@ -286,6 +286,10 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('api/userProfile/chefs', (req, res, next) => {
+
+});
+
 app.use(errorMiddleware);
 
 app.use(staticMiddleware);
