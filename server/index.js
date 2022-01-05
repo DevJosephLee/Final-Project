@@ -286,8 +286,22 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.delete('api/userProfile/chefs', (req, res, next) => {
-  const { userId } = req.user;//eslint-disable-line
+app.delete('api/userProfile/:chefId', (req, res, next) => {
+  const chefId = Number(req.params.chefId);
+  if (!chefId) {
+    throw new ClientError(400, 'chefId is a required field');
+  }
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    throw new ClientError(400, 'chefId must be a positive integer');
+  }
+  const { userId } = req.user;
+  const sql = `
+    delete from "favorites"
+      where "chefId" = $1
+      and   "userId" = $2
+  `;
+  const params = [chefId, userId];
+  db.query(sql, params);
 
 });
 
