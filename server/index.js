@@ -301,8 +301,10 @@ app.delete('api/userProfile/:chefId', (req, res, next) => {
       and   "userId" = $2
   `;
   const params = [chefId, userId];
-  db.query(sql, params);
-
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    });
 });
 
 app.use(errorMiddleware);
