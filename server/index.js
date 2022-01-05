@@ -7,7 +7,6 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
-// const { Client } = require('pg/lib');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -193,20 +192,20 @@ app.get('/api/cuisines/', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/review/:chefId/:userId', (req, res, next) => {
+app.use(authorizationMiddleware);
+
+app.post('/api/review/:chefId/', (req, res, next) => {
   const chefId = Number(req.params.chefId);
-  const userId = Number(req.params.userId);
+  const { userId } = req.user;
   const content = req.body.content;
   const rating = Number(req.body.rating);
-  if (!chefId || !userId) {
-    throw new ClientError(400, 'chefId and userId are required fields');
+  if (!chefId) {
+    throw new ClientError(400, 'chefId is a required field');
   } else if (!content || !rating) {
     throw new ClientError(400, 'content and rating are required fields');
   }
   if (!Number.isInteger(chefId) || chefId < 1) {
     throw new ClientError(400, 'chefId must be a positive integer');
-  } else if (!Number.isInteger(userId) || userId < 1) {
-    throw new ClientError(400, 'userId must be a positive integer');
   } else if (Number.isInteger(content)) {
     throw new ClientError(400, 'review content must be letters');
   } else if (!Number.isInteger(rating) || rating < 1) {
@@ -226,14 +225,8 @@ app.post('/api/review/:chefId/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/userProfile/:userId', (req, res, next) => {
-  const userId = Number(req.params.userId);
-  if (!userId) {
-    throw new ClientError(400, 'userId is a required field');
-  }
-  if (!Number.isInteger(userId) || userId < 1) {
-    throw new ClientError(400, 'userId must be a positive integer');
-  }
+app.get('/api/userProfile/', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
     select "username"
     from   "users"
@@ -247,16 +240,14 @@ app.get('/api/userProfile/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/userProfile/:chefId/:userId', (req, res, next) => {
-  const userId = Number(req.params.userId);
+app.post('/api/userProfile/:chefId', (req, res, next) => {
+  const { userId } = req.user;
   const chefId = Number(req.params.chefId);
-  if (!chefId || !userId) {
-    throw new ClientError(400, 'chefId and userId are required fields');
+  if (!chefId) {
+    throw new ClientError(400, 'chefId is a required field');
   }
   if (!Number.isInteger(chefId) || chefId < 1) {
     throw new ClientError(400, 'chefId must be a positive integer');
-  } else if (!Number.isInteger(userId) || userId < 1) {
-    throw new ClientError(400, 'userId must be a positive integer');
   }
   const sql = `
   insert into "favorites" ("chefId", "userId")
@@ -271,14 +262,8 @@ app.post('/api/userProfile/:chefId/:userId', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
-  const userId = Number(req.params.userId);
-  if (!userId) {
-    throw new ClientError(400, 'userId is a required field');
-  }
-  if (!Number.isInteger(userId) || userId < 1) {
-    throw new ClientError(400, 'userId must be a positive integer');
-  }
+app.get('/api/userProfile/chefs', (req, res, next) => {
+  const { userId } = req.user;
   const sql = `
     select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
     from     "favorites"
@@ -302,8 +287,6 @@ app.get('/api/userProfile/chefs/:userId', (req, res, next) => {
 });
 
 app.use(errorMiddleware);
-
-app.use(authorizationMiddleware);
 
 app.use(staticMiddleware);
 

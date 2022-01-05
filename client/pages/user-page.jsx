@@ -12,7 +12,12 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`/api/userProfile/${this.props.userId}`)
+    const token = window.localStorage.getItem('final-project-jwt');
+    fetch('/api/userProfile', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
       .then(response => response.json())
       .then(result => {
         const [user] = result;
@@ -20,7 +25,11 @@ class UserPage extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch(`/api/userProfile/chefs/${this.props.userId}`)
+    fetch('/api/userProfile/chefs', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
       .then(response => response.json())
       .then(result => {
         this.setState({ chefs: result });

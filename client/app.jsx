@@ -48,7 +48,7 @@ export default class App extends React.Component {
     const { route } = this.state;
     if (route.path === 'chefProfile') {
       const chefId = route.params.get('chefId');
-      return <ChefProfile chefId={chefId} userId={this.state.user.userId} />;
+      return <ChefProfile chefId={chefId} />;
     }
     if (route.path === 'sign-in' || route.path === 'sign-up') {
       return <AuthPage />;
@@ -61,8 +61,7 @@ export default class App extends React.Component {
       return <SearchResultPage selectedCuisine={selectedCuisine} />;
     }
     if (route.path === 'userProfile') {
-      const userId = route.params.get('userId');
-      return <UserPage userId={userId} />;
+      return <UserPage />;
     }
   }
 

@@ -85,12 +85,11 @@ class ChefProfile extends React.Component {
   handleSubmit(newReview) {
     event.preventDefault();
     const token = window.localStorage.getItem('final-project-jwt');
-    const payload = decodeToken(token);
-    const userId = payload.userId;
-    fetch(`/api/review/${this.props.chefId}/${userId}`, {
+    fetch(`/api/review/${this.props.chefId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': token
       },
       body: JSON.stringify(this.state)
     })
@@ -104,10 +103,12 @@ class ChefProfile extends React.Component {
   }
 
   handleClickSave() {
-    fetch(`/api/userProfile/${this.props.chefId}/${this.props.userId}`, {
+    const token = window.localStorage.getItem('final-project-jwt');
+    fetch(`/api/userProfile/${this.props.chefId}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-Access-Token': token
       }
     });
     this.setState({ saveConfModalOpened: true });
