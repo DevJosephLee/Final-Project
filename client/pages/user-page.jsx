@@ -1,4 +1,5 @@
 import React from 'react';
+import StarRating from '../components/star-rating';
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -39,12 +40,25 @@ class UserPage extends React.Component {
           <div className="text-align-center">
             <h3>{this.state.username}</h3>
           </div>
-          <div>
+          <div className="margin-top-bottom">
+            <h1>Saved Chefs</h1>
             {
               this.state.chefs.map(chef => {
                 return (
-                  <div key={chef.chefId}>
-                    <h1>{chef.name}</h1>
+                  <div key={chef.chefId} className="margin-top-bottom-2">
+                    <div className="favorites-container">
+                      <div className="row">
+                        <img className="profile-picture-favorites" src={chef.photoUrl} />
+                        <div className="margin-left">
+                          <h3 className="saved-chefs-text">{chef.name}</h3>
+                          <div className="row align-center">
+                            <StarRating rating={chef.avg} />
+                            <p className="margin-left saved-chefs-text">{chef.count} Reviews</p>
+                          </div>
+                          <p className="saved-chefs-text">{chef.cuisineType}</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 );
               })

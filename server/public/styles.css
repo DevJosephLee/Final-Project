@@ -193,6 +193,21 @@ input {
   font-size: 1rem;
 }
 
+.profile-picture-favorites {
+  width: 150px;
+  height: 150px;
+}
+
+.favorites-container {
+  background-color: #343a40;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+
+.saved-chefs-text {
+  color: white;
+}
+
 @media only screen and (min-width: 728px) {
   .review-button {
     width: 200px;
