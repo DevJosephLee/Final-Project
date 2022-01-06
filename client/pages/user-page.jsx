@@ -54,7 +54,7 @@ class UserPage extends React.Component {
 
   handleDeleteClick(event) {
     const token = window.localStorage.getItem('final-project-jwt');
-    const chefId = event.target.getAttribute('chefId');
+    const chefId = Number(event.target.getAttribute('chefId'));
     fetch(`/api/userProfile/${chefId}`, {
       method: 'DELETE',
       headers: {
@@ -65,7 +65,7 @@ class UserPage extends React.Component {
       .then(response => response.json())
       .then(() => {
         const newChefArray = this.state.chefs.filter(chef => {
-          return !chefId.includes(chef.chefId);
+          return chefId !== chef.chefId;
         });
         this.setState({ chefs: newChefArray });
       })
