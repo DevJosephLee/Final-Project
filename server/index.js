@@ -286,6 +286,44 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/userProfile/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  if (!chefId) {
+    throw new ClientError(400, 'chefId is a required field');
+  }
+  if (!Number.isInteger(chefId) || chefId < 1) {
+    throw new ClientError(400, 'chefId must be a positive integer');
+  }
+  const sql = `
+    delete from "favorites"
+      where "chefId" = $1
+      and   "userId" = $2
+  `;
+  const params = [chefId, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/userProfile/reviews', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select *
+    from   "reviews"
+    join   "chefs" using ("chefId")
+    where  "reviews"."userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.use(staticMiddleware);

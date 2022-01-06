@@ -202,10 +202,18 @@ input {
   background-color: #343a40;
   padding: 0.5rem;
   border-radius: 5px;
+  position: relative;
 }
 
 .saved-chefs-text {
   color: white;
+}
+
+.trash-button {
+  color: red;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
 }
 
 @media only screen and (min-width: 728px) {
