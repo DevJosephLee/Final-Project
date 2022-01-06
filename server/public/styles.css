@@ -1,9 +1,9 @@
 #root {
-  background-color: #c4c4c4;
+  background-color: #fefbf3;
 }
 
 body {
-  font-family: Roboto, sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
 .profile-picture {
@@ -54,7 +54,7 @@ body {
 }
 
 .nav-bar {
-  background-color: #343a40;
+  background-color: #9d9d9d;
   height: 50px;
 }
 

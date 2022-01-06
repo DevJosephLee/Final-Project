@@ -67,9 +67,13 @@ export default class App extends React.Component {
 
   render() {
     if (this.state.isAuthorizing) return null;
+    // let navBarClass = 'hidden';
     const { user, route } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, handleSignIn, handleSignOut };
+    // if (route.path !== 'sign-in' || route.path !== 'sign-up') {
+    //   navBarClass = 'show';
+    // }
     return (
       <div>
         <AppContext.Provider value={contextValue}>
