@@ -63,8 +63,11 @@ class UserPage extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(result => {
-        this.setState({ chefs: this.state.chefs });
+      .then(() => {
+        const newChefArray = this.state.chefs.filter(chef => {
+          return !chefId.includes(chef.chefId);
+        });
+        this.setState({ chefs: newChefArray });
       })
       .catch(err => console.error(err));
     this.setState({ confModalOpened: true });
@@ -79,7 +82,7 @@ class UserPage extends React.Component {
       ? 'show'
       : 'hidden';
     return (
-      <div className="container height-100">
+      <div className="container">
         <div className="width-adj">
           <div className="margin-top-bottom">
             <div className="row justify-center">
@@ -91,7 +94,7 @@ class UserPage extends React.Component {
               <h3>{this.state.username}</h3>
             </div>
           </div>
-          <div className="margin-top-bottom">
+          <div className="margin-top">
             <h1>Saved Chefs</h1>
             {
               this.state.chefs.map(chef => {
@@ -121,15 +124,15 @@ class UserPage extends React.Component {
               })
             }
           </div>
-          <div>
+          <div className="padding-bottom">
             <h1>My Reviews</h1>
             {
               this.state.reviews.map(review => {
                 return (
-                  <div key={review.reviewId}>
+                  <div key={review.reviewId} className="margin-top-bottom-2">
                     <div className="row">
                       <img src={review.photoUrl} className="profile-picture-favorites" />
-                      <div>
+                      <div className="margin-left">
                         <h3>{review.name}</h3>
                         <StarRating rating={review.rating} />
                         <p>{review.content}</p>
