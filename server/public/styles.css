@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.profile-picture {
+  height: 190px;
+}
+
 /*
 
 body {

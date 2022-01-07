@@ -27,20 +27,26 @@ class SearchResultPage extends React.Component {
     return (
       <div className="container">
         <div className="">
-          <p>search results for {this.props.selectedCuisine}</p>
+          <p>Search results for {this.props.selectedCuisine}</p>
           {
             this.state.chefs.map(chef => {
               return (
-                <div className="" key={chef.chefId}>
-                  <img className="" src={chef.photoUrl} />
-                  <div>
+                <div className="bg-white p-3 rounded shadow mt-4 d-flex align-items-center" key={chef.chefId}>
+                  <div className="col-5">
+                    <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
+                  </div>
+                  <div className="ms-4">
                     <h2>{chef.name}</h2>
                     <div className="">
-                      <StarRating rating={chef.avg} />
+                      <div className="d-flex">
+                        <StarRating rating={chef.avg} />
+                        <p>({chef.avg.slice(0, 3)})</p>
+                      </div>
+
                       <p className="">{chef.count} reviews</p>
                     </div>
-                    <div className="">
-                      <a chefid={chef.chefId} className="" onClick={this.handleClick}>INFO</a>
+                    <div className="col-7">
+                      <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
                     </div>
                   </div>
                 </div>
