@@ -31,10 +31,10 @@ export default class AuthForm extends React.Component {
       .then(result => {
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
-        } else if (result.user && result.token) {
+        } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
+          window.location.hash = 'search';
         }
-        window.location.hash = 'search';
       });
   }
 
@@ -45,7 +45,7 @@ export default class AuthForm extends React.Component {
       ? '#sign-in'
       : '#sign-up';
     const alternateActionText = action === 'sign-up'
-      ? 'Sign in instead'
+      ? 'Sign in'
       : 'Register now';
     const alternateActionDesc = action === 'sign-up'
       ? 'Already have an account?'
@@ -53,49 +53,73 @@ export default class AuthForm extends React.Component {
     const submitButtonText = action === 'sign-up'
       ? 'Register'
       : 'Log In';
+    const welcomeMessage = action === 'sign-up'
+      ? 'SIGN UP'
+      : 'LOG IN';
     return (
-      <div className="container">
-        <div className="row justify-center padding-bottom-2">
-          <form onSubmit={handleSubmit}>
-            <div className='margin-bottom'>
-              <label className="label-signin" htmlFor='username'>Username</label>
-              <div>
-                <input
-                  className="inputs-signin"
-                  required
-                  autoFocus
-                  type="text"
-                  name="username"
-                  onChange={handleChange}
-                  id='username' />
-              </div>
-            </div>
-            <div className="margin-bottom">
-              <label className="label-signin" htmlFor='password'>Password</label>
-              <div>
-                <input
-                  className="inputs-signin"
-                  required
-                  type="password"
-                  name="password"
-                  onChange={handleChange}
-                  id='password' />
-              </div>
-            </div>
-            <div className="row justify-between align-center padding-top-bottom-4">
-              <p>
-                {alternateActionDesc}&nbsp;&nbsp;
-                <a href={alternateActionHref}>
-                  {alternateActionText}
-                </a>
-              </p>
-              <button className='submit-button' type="submit">{submitButtonText}</button>
-            </div>
-          </form>
-        </div>
+      <div className="container bg-white p-4 rounded shadow mt-4">
+        <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="usernameInput" className="form-label">Username</label>
+            <input onChange={handleChange} type="text" name="username" className="form-control" id="usernameInput" aria-describedby="usernameHelp" required autoFocus/>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="passwordInput" className="form-label">Password</label>
+            <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required/>
+          </div>
+          <div className="mb-4">
+            <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
+          </div>
+          <div className="mb-4">
+            <p>
+              {alternateActionDesc}&nbsp;&nbsp;
+              <a href={alternateActionHref}>
+                {alternateActionText}
+              </a>
+            </p>
+          </div>
+        </form>
       </div>
     );
   }
 }
 
 AuthForm.ContextType = AppContext;
+
+/* <form onSubmit={handleSubmit}>
+          <div className='margin-bottom'>
+            <label className="label-signin" htmlFor='username'>Username</label>
+            <div>
+              <input
+                className="inputs-signin"
+                required
+                autoFocus
+                type="text"
+                name="username"
+                onChange={handleChange}
+                id='username' />
+            </div>
+          </div>
+          <div className="margin-bottom">
+            <label className="label-signin" htmlFor='password'>Password</label>
+            <div>
+              <input
+                className="inputs-signin"
+                required
+                type="password"
+                name="password"
+                onChange={handleChange}
+                id='password' />
+            </div>
+          </div>
+          <div className="row justify-between align-center padding-top-bottom-4">
+            <p>
+              {alternateActionDesc}&nbsp;&nbsp;
+              <a href={alternateActionHref}>
+                {alternateActionText}
+              </a>
+            </p>
+            <button className='submit-button' type="submit">{submitButtonText}</button>
+          </div>
+        </form> */

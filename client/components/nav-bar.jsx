@@ -9,11 +9,15 @@ class NavBar extends React.Component {
     if (route === 'userProfile') {
       profileIcon = <button className="signout-button" onClick={handleSignOut}>Sign out</button>;
     }
+    let navBarClass = 'nav-bar';
+    if (route === 'sign-in' || route === 'sign-up') {
+      navBarClass = 'hidden';
+    }
     return (
-      <div className="nav-bar">
+      <div className={navBarClass}>
         <div className="container">
           <div className="row justify-between align-center width-adj padding-top-bottom-2">
-            <a href="#search" className="logo-text">ChefConnect</a>
+            {/* <a href="#search" className="logo-text">ChefConnect</a> */}
             {profileIcon}
           </div>
         </div>

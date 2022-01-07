@@ -1,9 +1,12 @@
 #root {
-  background-color: #c4c4c4;
+  background-color: #f7f4f2;
+  height: 100vh;
 }
 
+/*
+
 body {
-  font-family: Roboto, sans-serif;
+  font-family: Helvetica, sans-serif;
 }
 
 .profile-picture {
@@ -54,7 +57,7 @@ body {
 }
 
 .nav-bar {
-  background-color: #343a40;
+  background-color: #9d9d9d;
   height: 50px;
 }
 
@@ -220,4 +223,4 @@ input {
   .review-button {
     width: 200px;
   }
-}
+} */
