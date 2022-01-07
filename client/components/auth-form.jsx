@@ -31,10 +31,10 @@ export default class AuthForm extends React.Component {
       .then(result => {
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
-        } else if (result.user && result.token) {
+        } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
+          window.location.hash = 'search';
         }
-        window.location.hash = 'search';
       });
   }
 
@@ -58,7 +58,7 @@ export default class AuthForm extends React.Component {
       : 'LOG IN';
     return (
       <div className="container bg-white p-4 rounded shadow mt-4">
-        <h1 className="text-center mb-5 mt-3">{welcomeMessage}</h1>
+        <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="usernameInput" className="form-label">Username</label>

@@ -7,18 +7,17 @@ export default class AuthPage extends React.Component {
   render() {
     const { user, route, handleSignIn } = this.context;
     if (user) return <Redirect to="" />;
-
-    // const welcomeMessage = route.path === 'sign-in'
-    //   ? 'Sign In'
-    //   : 'Create Account';
     return (
       <div className="container p-5">
-        <div className="">
-          <div className="text-center">
-            <img src='/images/logo.png' className='w-50 m-5' />
+        <div className="row justify-content-center">
+          <div className="col-lg-5">
+            <div className="text-center">
+              <img src='/images/logo.png' className='text-center w-50 m-5' />
+            </div>
           </div>
-          {/* <h1 className="text-align-center margin-top-bottom">{welcomeMessage}</h1> */}
-          <div>
+        </div>
+        <div className="row justify-content-center">
+          <div className="col-lg-5">
             <AuthForm
               key={route.path}
               action={route.path}
