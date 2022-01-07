@@ -98,4 +98,4 @@ ALTER TABLE "dishes" ADD CONSTRAINT "dishes_fk0" FOREIGN KEY ("chefId") REFERENC
 
 
 ALTER TABLE "chefCuisines" ADD CONSTRAINT "chefCuisines_fk0" FOREIGN KEY ("chefId") REFERENCES "chefs"("chefId");
-ALTER TABLE "chefCuisines" ADD CONSTRAINT "chefCuisines_fk1" FOREIGN KEY ("cuisine") REFERENCES "cuisines"("cuisineId");
+ALTER TABLE "chefCuisines" ADD CONSTRAINT "chefCuisines_fk1" FOREIGN KEY ("cuisineId") REFERENCES "cuisines"("cuisineId");
