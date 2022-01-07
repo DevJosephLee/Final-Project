@@ -22,7 +22,9 @@ insert into "users" ("username", "password", "createdAt")
 values('User1', 'testing123', current_timestamp);
 
 insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
-values (1, 1, 'Food is Amazing!', 5, current_timestamp);
+values (1, 1, 'Food is Amazing!', 5, current_timestamp),
+       (1, 2, 'Great food!', 5, current_timestamp),
+       (1, 3, 'Amazing Sushi!', 5, current_timestamp);
 
 
 insert into "cuisines" ("name")
@@ -44,7 +46,13 @@ values (1, 1),
        (2, 1),
        (2, 5),
        (2, 7),
-       (3, 4)
+       (3, 4);
+
+insert into "favorites" ("userId", "chefId")
+values (1, 1)
+
+
+
 
 -- select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
 --     from     "chefs"
@@ -53,10 +61,6 @@ values (1, 1),
 --     join     "cuisines" using ("cuisineId")
 --     where    "cuisines"."name" = 'Italian'
 --     group by "chefs"."chefId"
-
-insert into "favorites" ("userId", "chefId")
-values (1, 1)
-
 
 
 

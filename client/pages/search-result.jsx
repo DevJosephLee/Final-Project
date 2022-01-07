@@ -25,22 +25,22 @@ class SearchResultPage extends React.Component {
 
   render() {
     return (
-      <div className="container height-100">
-        <div className="width-adj">
+      <div className="container">
+        <div className="">
           <p>search results for {this.props.selectedCuisine}</p>
           {
             this.state.chefs.map(chef => {
               return (
-                <div className="row border-bottom padding-top-bottom-2" key={chef.chefId}>
-                  <img className="profile-picture margin-right" src={chef.photoUrl} />
+                <div className="" key={chef.chefId}>
+                  <img className="" src={chef.photoUrl} />
                   <div>
                     <h2>{chef.name}</h2>
-                    <div className="row align-center margin-bottom">
+                    <div className="">
                       <StarRating rating={chef.avg} />
-                      <p className='margin-left'>{chef.count} reviews</p>
+                      <p className="">{chef.count} reviews</p>
                     </div>
-                    <div className="margin-top">
-                      <a chefid={chef.chefId} className="info-button" onClick={this.handleClick}>INFO</a>
+                    <div className="">
+                      <a chefid={chef.chefId} className="" onClick={this.handleClick}>INFO</a>
                     </div>
                   </div>
                 </div>
