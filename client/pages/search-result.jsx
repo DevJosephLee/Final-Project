@@ -25,28 +25,37 @@ class SearchResultPage extends React.Component {
 
   render() {
     return (
-      <div className="container height-100">
-        <div className="width-adj">
-          <p>search results for {this.props.selectedCuisine}</p>
-          {
-            this.state.chefs.map(chef => {
-              return (
-                <div className="row border-bottom padding-top-bottom-2" key={chef.chefId}>
-                  <img className="profile-picture margin-right" src={chef.photoUrl} />
-                  <div>
-                    <h2>{chef.name}</h2>
-                    <div className="row align-center margin-bottom">
-                      <StarRating rating={chef.avg} />
-                      <p className='margin-left'>{chef.count} reviews</p>
-                    </div>
-                    <div className="margin-top">
-                      <a chefid={chef.chefId} className="info-button" onClick={this.handleClick}>INFO</a>
+      <div className="container">
+        <div className="container">
+          <p>Search results for {this.props.selectedCuisine}</p>
+          <div className="d-lg-flex">
+            {
+              this.state.chefs.map(chef => {
+                return (
+                  <div key={chef.chefId}>
+                    <div className="bg-white p-3 rounded shadow mt-4 d-flex d-lg-block align-items-center m-lg-4" key={chef.chefId}>
+                      <div className="col-5 col-lg-12">
+                        <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
+                      </div>
+                      <div className="ms-4 ms-lg-0 mt-lg-5">
+                        <h2 className="mb-lg-3">{chef.name}</h2>
+                        <div className="text-lg-center">
+                          <div className="d-flex justify-content-lg-center">
+                            <StarRating rating={chef.avg} />
+                            <p>({chef.avg.slice(0, 3)})</p>
+                          </div>
+                          <p>{chef.count} reviews</p>
+                        </div>
+                        <div className="col-7 col-lg-12 mt-lg-5">
+                          <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })
-          }
+                );
+              })
+            }
+          </div>
         </div>
       </div>
     );

@@ -63,6 +63,7 @@ export default class App extends React.Component {
     if (route.path === 'userProfile') {
       return <UserPage />;
     }
+    return <AuthPage />;
   }
 
   render() {
