@@ -92,10 +92,10 @@ class DishPictures extends React.Component {
     return (
       <div>
         <h1>Dishes</h1>
-        <div className="container bg-white shadow p-4 rounded">
+        <div className="container bg-white shadow p-4 rounded dish-picture-container">
           <div className="text-center">
-            <div className="d-flex align-items-center justify-content-between">
-              <i className="fas fa-chevron-left arrow-icons" onClick={this.handleLeftClick}></i>
+            <div className="d-flex align-items-center justify-content-center">
+              <i className="fas fa-chevron-left arrow-icon-left" onClick={this.handleLeftClick}></i>
               {this.state.dishes.map((dishes, index) => {
                 return (
                   <div key={dishes.dishId}>
@@ -106,12 +106,14 @@ class DishPictures extends React.Component {
                   </div>
                 );
               })}
-              <i className="fas fa-chevron-right arrow-icons" onClick={this.handleRightClick}></i>
+              <i className="fas fa-chevron-right arrow-icon-right" onClick={this.handleRightClick}></i>
             </div>
-            <div>
+            <div className="gap-2 d-flex justify-content-center">
               {this.state.dishes.map((dishes, index) => {
                 return (
-                  <button onClick={this.handleButtonClick} className={`${index} ${this.state.currentImageIndex === index ? 'text-black' : 'text-white'}`} key={dishes.name} ></button>
+                  <div key={index}>
+                    <button onClick={this.handleButtonClick} className={`${index} ${this.state.currentImageIndex === index ? 'carousel-buttons-black' : 'carousel-buttons'} `} key={dishes.name} ></button>
+                  </div>
                 );
               })}
             </div>

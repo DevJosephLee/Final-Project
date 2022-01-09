@@ -50,13 +50,13 @@ function ReviewModal(props) {
           </div>
           <div className="modal-body">
             <form onSubmit={props.handleSubmit}>
-              <div className="d-flex">
+              <div className="d-flex gap-2">
                 {
                   star.map((_, index) => {
                     index += 1;
                     return (
                       <div key={index}>
-                        <i rating={index} className={props.rating < index ? 'far fa-star modal-stars orange' : 'fas fa-star modal-stars orange'} onClick={props.handleStarClick}></i>
+                        <i rating={index} className={props.rating < index ? 'far fa-star modal-stars star-modal' : 'fas fa-star modal-stars star-modal'} onClick={props.handleStarClick}></i>
                       </div>
                     );
                   })

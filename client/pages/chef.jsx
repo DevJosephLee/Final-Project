@@ -150,9 +150,9 @@ class ChefProfile extends React.Component {
                         </button>
                       </div>
                       <div className="col-6">
-                        <div className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark">
+                        <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark">
                           <i className="far fa-bookmark m-3"></i>
-                          <button type="button" className="btn btn-white" onClick={this.handleClickSave}>Save</button>
+                          <button type="button" className="btn btn-white">Save</button>
                         </div>
                       </div>
                     </div>

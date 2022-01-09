@@ -8,8 +8,8 @@
 }
 
 .profile-page-picture {
-  width: 190px;
-  height: 190px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
   border-radius: 50%;
 }
@@ -30,12 +30,47 @@
   border-radius: 5px;
 }
 
-.arrow-icons {
+.arrow-icon-left {
   font-size: 2rem;
+  position: absolute;
+  left: 15px;
+}
+
+.arrow-icon-right {
+  font-size: 2rem;
+  position: absolute;
+  right: 15px;
 }
 
 .review-modal {
   height: 300px;
+}
+
+.carousel-buttons {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.carousel-buttons-black {
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.dish-picture-container {
+  position: relative;
+}
+
+.user-icon {
+  font-size: 5rem;
+}
+
+.star-modal {
+  font-size: 1.2rem;
+  color: #fecc08;
 }
 
 /*
