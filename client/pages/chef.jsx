@@ -1,7 +1,7 @@
 import React from 'react';
 import DishPictures from '../components/dish-pictures';
 import ProfileName from '../components/profile-name';
-import ProfilePicture from '../components/profile-picture';
+// import ProfilePicture from '../components/profile-picture';
 import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
@@ -131,32 +131,47 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className='padding-top-bottom'>
-                <div className="mobile-row mobile-text-align-center margin-bottom">
-                  <ProfilePicture chefId={chef.chefId} photoUrl={chef.photoUrl} />
-                  <div className="margin-left">
+              <div key={chef.name} className="container">
+                <div className="text-center mb-5">
+                  <img src={chef.photoUrl} className="profile-page-picture shadow" />
+                  <div className="mt-4 mb-4">
                     <ProfileName name={chef.name} />
-                    <div className="row mobile-justify-center align-center">
+                    <div className="d-flex justify-content-center">
                       <StarRating rating={chef.avg} />
-                      <p className='margin-left'>{chef.count} reviews</p>
+                      <p>({chef.avg.slice(0, 3)})</p>
                     </div>
+                    <p>{chef.count} reviews</p>
                     <CuisineTypes cuisineType={chef.cuisineType} />
-                    <div className="width-adj margin-bottom">
-                      <button className="review-button margin-right" onClick={this.openModal}>Write a Review</button>
-                      <button className="save-button" onClick={this.handleClickSave}><i className="far fa-bookmark margin-right"></i>Save</button>
+                    <div className="d-flex align-items-center gap-2 mt-5">
+                      <div className="col-6">
+                        {/* <button type="button" className="btn btn-primary" onClick={this.openModal}>Comment</button> */}
+                        <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#myModal">
+                          Comment
+                        </button>
+                      </div>
+                      <div className="col-6">
+                        <div className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark">
+                          <i className="far fa-bookmark m-3"></i>
+                          <button type="button" className="btn btn-white" onClick={this.handleClickSave}>Save</button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div>
-                  <DishPictures chefId={chef.chefId} />
-                </div>
-                <div className="width-adj line-height-3 margin-bottom">
+                  <div className="mb-5">
+                    <DishPictures chefId={chef.chefId} />
+                  </div>
+                <div className="container mb-5">
                   <h1>About</h1>
-                  <p>{chef.bio}</p>
+                  <div className="bg-white shadow p-4 rounded">
+                    <p>{chef.bio}</p>
+                  </div>
                 </div>
-                <div className='width-adj padding-bottom'>
-                  <h1>Reviews</h1>
-                  <Reviews reviews={this.state.reviews} />
+                <div className="container mb-5">
+                  <h1>Comments</h1>
+                  <div className="bg-white shadow p-4 rounded">
+                    <Reviews reviews={this.state.reviews} />
+                  </div>
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />

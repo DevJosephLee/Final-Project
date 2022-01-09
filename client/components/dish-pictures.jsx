@@ -67,7 +67,7 @@ class DishPictures extends React.Component {
         this.setState({ currentImageIndex: -1 });
       }
       this.setState({ currentImageIndex: this.state.currentImageIndex + 1 });
-    }, 3000);
+    }, 5000);
   }
 
   handleLeftClick() {
@@ -91,23 +91,27 @@ class DishPictures extends React.Component {
   render() {
     return (
       <div>
+        <h1>Dishes</h1>
         <div className="container bg-white shadow p-4 rounded">
           <div className="text-center">
-            <div className="d-flex align-items-center justify-content-center">
-              <i className="fas fa-chevron-left" onClick={this.handleLeftClick}></i>
+            <div className="d-flex align-items-center justify-content-between">
+              <i className="fas fa-chevron-left arrow-icons" onClick={this.handleLeftClick}></i>
               {this.state.dishes.map((dishes, index) => {
                 return (
                   <div key={dishes.dishId}>
-                    <img className={`dish-photos ${this.state.currentImageIndex === index ? 'd-block' : 'd-none'}`} key={dishes.name} src={dishes.photoUrl} />
+                    <img className={`dish-photos ${this.state.currentImageIndex === index ? 'd-block' : 'd-none'} border border-light`} src={dishes.photoUrl} />
+                    <div>
+                      <p className={this.state.currentImageIndex === index ? 'd-block' : 'd-none'}>{dishes.name}</p>
+                    </div>
                   </div>
                 );
               })}
-              <i className="fas fa-chevron-right" onClick={this.handleRightClick}></i>
+              <i className="fas fa-chevron-right arrow-icons" onClick={this.handleRightClick}></i>
             </div>
             <div>
               {this.state.dishes.map((dishes, index) => {
                 return (
-                  <button onClick={this.handleButtonClick} className={`${index} ${this.state.currentImageIndex === index ? 'black' : 'white'}`} key={dishes.name} ></button>
+                  <button onClick={this.handleButtonClick} className={`${index} ${this.state.currentImageIndex === index ? 'text-black' : 'text-white'}`} key={dishes.name} ></button>
                 );
               })}
             </div>
