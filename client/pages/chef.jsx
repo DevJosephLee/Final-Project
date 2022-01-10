@@ -140,7 +140,7 @@ class ChefProfile extends React.Component {
                       <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 justify-content-md-center justify-content-lg-start">
                         <div className="col-6 col-md-5 col-lg-10">
                           <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Comment
+                            Write Review
                           </button>
                         </div>
                         <div className="col-6 col-md-5 col-lg-10">
@@ -167,7 +167,7 @@ class ChefProfile extends React.Component {
                 </div>
                 <div className="d-lg-flex justify-content-lg-center">
                   <div className="col-lg-6">
-                    <h1>Comments</h1>
+                    <h1>Reviews</h1>
                     <div className="bg-white shadow p-4 rounded">
                       <Reviews reviews={this.state.reviews} />
                     </div>
