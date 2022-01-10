@@ -70,6 +70,10 @@ class DishPictures extends React.Component {
     }, 5000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
+
   handleLeftClick() {
     this.setState({ currentImageIndex: this.state.currentImageIndex - 1 });
     if (this.state.currentImageIndex === 0) {
