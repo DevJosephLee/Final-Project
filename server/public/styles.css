@@ -73,6 +73,14 @@
   color: #fecc08;
 }
 
+.review-section {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.review-section:last-child {
+  border-bottom: none;
+}
+
 /*
 
 body {

@@ -41,7 +41,7 @@ function ReviewModal(props) {
   // );
   const star = Array(5).fill();
   return (
-    <div className="modal fade" id="myModal">
+    <div className="modal fade" id="reviewModal">
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
@@ -72,7 +72,7 @@ function ReviewModal(props) {
                   type="text" />
               </div>
               <div className="modal-footer">
-                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">Save</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#confModal" data-bs-toggle="modal" >Save</button>
                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
               </div>
             </form>

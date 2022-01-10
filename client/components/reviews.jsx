@@ -5,7 +5,7 @@ function Reviews(props) {
   return (
     props.reviews.map(reviews => {
       return (
-        <div key={reviews.reviewId}>
+        <div key={reviews.reviewId} className="review-section mt-3">
           <div className="d-flex align-items-center mb-2">
             <div className="col-4 text-center">
               <i className="far fa-grin user-icon"></i>
@@ -16,9 +16,7 @@ function Reviews(props) {
               <StarRating rating={reviews.rating} />
             </div>
           </div>
-          <div className="">
-            <p className="">{reviews.content}</p>
-          </div>
+            <p>{reviews.content}</p>
         </div>
       );
     })

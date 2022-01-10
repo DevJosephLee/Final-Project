@@ -7,7 +7,7 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
-import ReviewConfModal from '../components/review-conf-modal';
+// import ReviewConfModal from '../components/review-conf-modal';
 import SaveConfModal from '../components/save-conf-modal';
 
 class ChefProfile extends React.Component {
@@ -95,6 +95,9 @@ class ChefProfile extends React.Component {
     })
       .then(response => response.json())
       .then(newReview => {
+        const token = window.localStorage.getItem('final-project-jwt');
+        const payload = decodeToken(token);
+        newReview.username = payload.username;
         this.setState({ reviews: [].concat(this.state.reviews, newReview) });
       })
       .catch(err => {
@@ -120,9 +123,9 @@ class ChefProfile extends React.Component {
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
-    const confModalClass = this.state.confModalOpened
-      ? 'show'
-      : 'hidden';
+    // const confModalClass = this.state.confModalOpened
+    //   ? 'show'
+    //   : 'hidden';
     const saveConfModalClass = this.state.saveConfModalOpened
       ? 'show'
       : 'hidden';
@@ -145,14 +148,14 @@ class ChefProfile extends React.Component {
                     <div className="d-flex align-items-center gap-2 mt-5">
                       <div className="col-6">
                         {/* <button type="button" className="btn btn-primary" onClick={this.openModal}>Comment</button> */}
-                        <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reviewModal">
                           Comment
                         </button>
                       </div>
                       <div className="col-6">
-                        <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark">
+                        <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark" data-bs-toggle="modal" data-bs-target="#saveConfModal">
                           <i className="far fa-bookmark m-3"></i>
-                          <button type="button" className="btn btn-white">Save</button>
+                          <span>Save</span>
                         </div>
                       </div>
                     </div>
@@ -167,7 +170,7 @@ class ChefProfile extends React.Component {
                     <p>{chef.bio}</p>
                   </div>
                 </div>
-                <div className="container mb-5">
+                <div className="mb-5">
                   <h1>Comments</h1>
                   <div className="bg-white shadow p-4 rounded">
                     <Reviews reviews={this.state.reviews} />
@@ -176,8 +179,40 @@ class ChefProfile extends React.Component {
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
-                <div className={`height-100 overlay ${confModalClass}`}>
+                {/* <div className={`height-100 overlay ${confModalClass}`}>
                   <ReviewConfModal closeConfModal={this.closeConfModal} />
+                </div> */}
+                <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                  <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                        Your Comment has been Posted
+                      </div>
+                      <div className="modal-footer">
+                        <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="modal fade" id="saveConfModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                  <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body">
+                        Chef has been added
+                      </div>
+                      <div className="modal-footer">
+                        <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div className={`height-100 overlay ${saveConfModalClass}`}>
                   <SaveConfModal closeSaveConfModal={this.closeSaveConfModal} />

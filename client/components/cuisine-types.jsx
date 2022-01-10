@@ -3,7 +3,7 @@ import React from 'react';
 function CuisineTypes(props) {
   return (
     <div>
-      <p>{props.cuisineType}</p>
+      <h5>{props.cuisineType}</h5>
     </div>
   );
 }

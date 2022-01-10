@@ -38,7 +38,7 @@ class SearchPage extends React.Component {
               <p className="mb-5 fs-4 pt-5">Please Select a Cuisine Type</p>
               <form onSubmit={this.handleSubmit} >
                 <div className="d-flex justify-content-center">
-                  <div className="col-7">
+                  <div className="col-12">
                     <select className="w-100 p-2" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
                       <option>Select Cuisine</option>
                       {
