@@ -1,6 +1,5 @@
 import React from 'react';
 import StarRating from '../components/star-rating';
-import DeleteConfModal from '../components/delete-conf-modal';
 
 class UserPage extends React.Component {
   constructor(props) {
@@ -78,70 +77,89 @@ class UserPage extends React.Component {
   }
 
   render() {
-    const confModalClass = this.state.confModalOpened
-      ? 'show'
-      : 'hidden';
     return (
-      <div className="container">
-        <div className="width-adj">
-          <div className="margin-top-bottom">
-            <div className="row justify-center">
-              <div className="row user-icon-container align-center justify-center">
-                <i className="far fa-grin user-icon"></i>
-              </div>
-            </div>
-            <div className="text-align-center">
+      <div className="container pb-5">
+        <div className="">
+          <div className="text-center mb-5">
+            <i className="far fa-grin user-icon"></i>
+            <div className="">
               <h3>{this.state.username}</h3>
             </div>
           </div>
-          <div className="margin-top">
+          <div className="container mb-5 col-md-10 col-lg-6">
             <h1>Saved Chefs</h1>
             {
               this.state.chefs.map(chef => {
                 return (
-                  <div key={chef.chefId} className="margin-top-bottom-2">
-                    <div className="favorites-container">
-                      <div className="row">
-                        <img className="profile-picture-favorites" src={chef.photoUrl} />
-                        <div className="margin-left">
-                          <div className="row justify-between align-center">
-                            <h3 className="saved-chefs-text">{chef.name}</h3>
-                            <i chefid={chef.chefId} className="far fa-trash-alt trash-button" onClick={this.handleDeleteClick}></i>
+                  <div key={chef.chefId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
+                    <div className="">
+                      <div className="d-flex align-items-center">
+                        <div className="d-flex justify-content-center col-5">
+                          <img className="profile-picture rounded" src={chef.photoUrl} />
+                        </div>
+                        <div className="col-7">
+                          <div className="ms-4">
+                            <div className="d-flex align-items-center">
+                              <h3 className="saved-chefs-text">{chef.name}</h3>
+                            </div>
+                            <div className="d-flex">
+                              <StarRating rating={chef.avg} />
+                              <p>({chef.avg.slice(0, 3)})</p>
+                            </div>
+                            <p className="">{chef.count} Reviews</p>
+                            <p className="saved-chefs-text">{chef.cuisineType}</p>
+                            <div className="col-12">
+                              <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
+                                Delete
+                              </button>
+                            </div>
                           </div>
-                          <div className="row align-center">
-                            <StarRating rating={chef.avg} />
-                            <p className="margin-left saved-chefs-text">{chef.count} Reviews</p>
-                          </div>
-                          <p className="saved-chefs-text">{chef.cuisineType}</p>
                         </div>
                       </div>
-                    </div>
-                    <div className={`height-100 overlay ${confModalClass}`}>
-                      <DeleteConfModal closeConfModal={this.closeConfModal} />
                     </div>
                   </div>
                 );
               })
             }
           </div>
-          <div className="padding-bottom">
+          <div className="container mb-5 col-md-10 col-lg-6">
             <h1>My Reviews</h1>
             {
               this.state.reviews.map(review => {
                 return (
-                  <div key={review.reviewId} className="margin-top-bottom-2">
-                    <div className="row">
-                      <img src={review.photoUrl} className="profile-picture-favorites" />
-                      <div className="margin-left">
-                        <h3>{review.name}</h3>
-                        <StarRating rating={review.rating} />
-                        <p>{review.content}</p>
+                  <div key={review.reviewId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
+                    <div className="d-flex">
+                      <div className="d-flex justify-content-center col-5">
+                        <img src={review.photoUrl} className="profile-picture rounded" />
+                      </div>
+                      <div className="col-6">
+                        <div className="ms-4">
+                          <h3>{review.name}</h3>
+                          <StarRating rating={review.rating} />
+                          <p>{review.content}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 );
               })
             }
+          </div>
+          <div className="modal fade" id="deleteChefModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  Chef has been deleted
+                </div>
+                <div className="modal-footer">
+                  <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

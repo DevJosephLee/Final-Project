@@ -8,7 +8,7 @@ import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
 // import ReviewConfModal from '../components/review-conf-modal';
-import SaveConfModal from '../components/save-conf-modal';
+// import SaveConfModal from '../components/save-conf-modal';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -122,12 +122,6 @@ class ChefProfile extends React.Component {
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
-    // const confModalClass = this.state.confModalOpened
-    //   ? 'show'
-    //   : 'hidden';
-    const saveConfModalClass = this.state.saveConfModalOpened
-      ? 'show'
-      : 'hidden';
     return (
       <div className='container'>
         {
@@ -147,7 +141,6 @@ class ChefProfile extends React.Component {
                       <CuisineTypes cuisineType={chef.cuisineType} />
                       <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 justify-content-md-center justify-content-lg-start">
                         <div className="col-6 col-md-5 col-lg-10">
-                          {/* <button type="button" className="btn btn-primary" onClick={this.openModal}>Comment</button> */}
                           <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reviewModal">
                             Comment
                           </button>
@@ -186,9 +179,6 @@ class ChefProfile extends React.Component {
                 <div className={`height-100 overlay ${modalClass}`} >
                   <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
                 </div>
-                {/* <div className={`height-100 overlay ${confModalClass}`}>
-                  <ReviewConfModal closeConfModal={this.closeConfModal} />
-                </div> */}
                 <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                   <div className="modal-dialog modal-dialog-centered">
                     <div className="modal-content">
@@ -220,9 +210,6 @@ class ChefProfile extends React.Component {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className={`height-100 overlay ${saveConfModalClass}`}>
-                  <SaveConfModal closeSaveConfModal={this.closeSaveConfModal} />
                 </div>
               </div>
             );
