@@ -81,6 +81,15 @@
   border-bottom: none;
 }
 
+@media screen and (min-width: 768px) {
+  .dish-photos {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 5px;
+  }
+}
+
 /*
 
 body {

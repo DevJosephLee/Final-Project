@@ -16,7 +16,9 @@ function Reviews(props) {
               <StarRating rating={reviews.rating} />
             </div>
           </div>
+          <div className="ps-md-5">
             <p>{reviews.content}</p>
+          </div>
         </div>
       );
     })

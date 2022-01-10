@@ -25,7 +25,7 @@ class SearchResultPage extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container vh-100">
         <div className="container">
           <p>Search results for {this.props.selectedCuisine}</p>
           <div className="d-lg-flex">

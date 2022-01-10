@@ -14,6 +14,7 @@ class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       chef: [],
       reviews: [],
       rating: 1,
@@ -95,9 +96,7 @@ class ChefProfile extends React.Component {
     })
       .then(response => response.json())
       .then(newReview => {
-        const token = window.localStorage.getItem('final-project-jwt');
-        const payload = decodeToken(token);
-        newReview.username = payload.username;
+        newReview.username = this.state.username;
         this.setState({ reviews: [].concat(this.state.reviews, newReview) });
       })
       .catch(err => {
@@ -135,45 +134,53 @@ class ChefProfile extends React.Component {
           this.state.chef.map(chef => {
             return (
               <div key={chef.name} className="container">
-                <div className="text-center mb-5">
-                  <img src={chef.photoUrl} className="profile-page-picture shadow" />
-                  <div className="mt-4 mb-4">
-                    <ProfileName name={chef.name} />
-                    <div className="d-flex justify-content-center">
-                      <StarRating rating={chef.avg} />
-                      <p>({chef.avg.slice(0, 3)})</p>
-                    </div>
-                    <p>{chef.count} reviews</p>
-                    <CuisineTypes cuisineType={chef.cuisineType} />
-                    <div className="d-flex align-items-center gap-2 mt-5">
-                      <div className="col-6">
-                        {/* <button type="button" className="btn btn-primary" onClick={this.openModal}>Comment</button> */}
-                        <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                          Comment
-                        </button>
+                <div className="text-center text-lg-start mb-5 col-lg-6 ms-lg-auto me-lg-auto">
+                  <div className="d-lg-flex align-items-lg-center">
+                    <img src={chef.photoUrl} className="profile-page-picture shadow" />
+                    <div className="mt-4 mb-4 ms-lg-5">
+                      <ProfileName name={chef.name} />
+                      <div className="d-flex justify-content-center justify-content-lg-start">
+                        <StarRating rating={chef.avg} />
+                        <p>({chef.avg.slice(0, 3)})</p>
                       </div>
-                      <div className="col-6">
-                        <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark" data-bs-toggle="modal" data-bs-target="#saveConfModal">
-                          <i className="far fa-bookmark m-3"></i>
-                          <span>Save</span>
+                      <p>{chef.count} reviews</p>
+                      <CuisineTypes cuisineType={chef.cuisineType} />
+                      <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 justify-content-md-center justify-content-lg-start">
+                        <div className="col-6 col-md-5 col-lg-10">
+                          {/* <button type="button" className="btn btn-primary" onClick={this.openModal}>Comment</button> */}
+                          <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                            Comment
+                          </button>
+                        </div>
+                        <div className="col-6 col-md-5 col-lg-10">
+                          <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark" data-bs-toggle="modal" data-bs-target="#saveConfModal">
+                            <i className="far fa-bookmark m-3"></i>
+                            <span>Save</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                  <div className="mb-5">
+                <div className="d-flex justify-content-center">
+                  <div className="mb-5 col-12 col-md-8 col-lg-6">
                     <DishPictures chefId={chef.chefId} />
                   </div>
-                <div className="container mb-5">
-                  <h1>About</h1>
-                  <div className="bg-white shadow p-4 rounded">
-                    <p>{chef.bio}</p>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <div className="mb-5 col-lg-6">
+                    <h1>About</h1>
+                    <div className="bg-white shadow p-4 rounded">
+                      <p>{chef.bio}</p>
+                    </div>
                   </div>
                 </div>
-                <div className="mb-5">
-                  <h1>Comments</h1>
-                  <div className="bg-white shadow p-4 rounded">
-                    <Reviews reviews={this.state.reviews} />
+                <div className="d-flex justify-content-center">
+                  <div className="mb-5 col-lg-6">
+                    <h1>Comments</h1>
+                    <div className="bg-white shadow p-4 rounded">
+                      <Reviews reviews={this.state.reviews} />
+                    </div>
                   </div>
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
