@@ -93,7 +93,6 @@ class ChefProfile extends React.Component {
     })
       .then(response => response.json())
       .then(newReview => {
-        // const token = window.localStorage.getItem('final-project-jwt');
         const payload = decodeToken(token);
         newReview.username = payload.username;
         this.setState({ reviews: [].concat(this.state.reviews, newReview) });
