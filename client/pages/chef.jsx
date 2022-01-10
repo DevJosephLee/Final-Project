@@ -1,14 +1,11 @@
 import React from 'react';
 import DishPictures from '../components/dish-pictures';
 import ProfileName from '../components/profile-name';
-// import ProfilePicture from '../components/profile-picture';
 import Reviews from '../components/reviews';
 import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
-// import ReviewConfModal from '../components/review-conf-modal';
-// import SaveConfModal from '../components/save-conf-modal';
 
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -96,7 +93,9 @@ class ChefProfile extends React.Component {
     })
       .then(response => response.json())
       .then(newReview => {
-        newReview.username = this.state.username;
+        // const token = window.localStorage.getItem('final-project-jwt');
+        const payload = decodeToken(token);
+        newReview.username = payload.username;
         this.setState({ reviews: [].concat(this.state.reviews, newReview) });
       })
       .catch(err => {
@@ -127,7 +126,7 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className="container">
+              <div key={chef.name} className="container pb-5">
                 <div className="text-center text-lg-start mb-5 col-lg-6 ms-lg-auto me-lg-auto">
                   <div className="d-lg-flex align-items-lg-center">
                     <img src={chef.photoUrl} className="profile-page-picture shadow" />
@@ -141,15 +140,14 @@ class ChefProfile extends React.Component {
                       <CuisineTypes cuisineType={chef.cuisineType} />
                       <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 justify-content-md-center justify-content-lg-start">
                         <div className="col-6 col-md-5 col-lg-10">
-                          <button type="button" className="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                          <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
                             Comment
                           </button>
                         </div>
                         <div className="col-6 col-md-5 col-lg-10">
-                          <div type="button" onClick={this.handleClickSave} className="d-flex align-items-center justify-content-center save-button bg-white w-100 border border-dark" data-bs-toggle="modal" data-bs-target="#saveConfModal">
-                            <i className="far fa-bookmark m-3"></i>
-                            <span>Save</span>
-                          </div>
+                          <button type="button" onClick={this.handleClickSave} className="w-100 btn btn-outline-secondary save-button" data-bs-toggle="modal" data-bs-target="#saveConfModal">
+                            <i className="far fa-bookmark"></i> Save
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -168,8 +166,8 @@ class ChefProfile extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="d-flex justify-content-center">
-                  <div className="mb-5 col-lg-6">
+                <div className="d-lg-flex justify-content-lg-center">
+                  <div className="col-lg-6">
                     <h1>Comments</h1>
                     <div className="bg-white shadow p-4 rounded">
                       <Reviews reviews={this.state.reviews} />

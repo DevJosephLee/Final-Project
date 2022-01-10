@@ -71,6 +71,7 @@
 .star-modal {
   font-size: 1.2rem;
   color: #fecc08;
+  cursor: pointer;
 }
 
 .review-section {
@@ -79,6 +80,11 @@
 
 .review-section:last-child {
   border-bottom: none;
+}
+
+.arrow-icon-left,
+.arrow-icon-right {
+  cursor: pointer;
 }
 
 @media screen and (min-width: 768px) {
