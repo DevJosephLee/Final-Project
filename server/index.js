@@ -17,6 +17,8 @@ const db = new pg.Pool({
 
 const app = express();
 
+app.use(staticMiddleware);
+
 const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
@@ -325,8 +327,6 @@ app.get('/api/userProfile/reviews', (req, res, next) => {
 });
 
 app.use(errorMiddleware);
-
-app.use(staticMiddleware);
 
 app.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
