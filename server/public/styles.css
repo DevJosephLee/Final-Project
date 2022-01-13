@@ -1,6 +1,5 @@
 #root {
   background-color: #f7f4f2;
-  height: 100vh;
 }
 
 .profile-picture {
@@ -8,8 +7,93 @@
   object-fit: contain;
 }
 
+.profile-page-picture {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.dish-photos {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
 .star {
   color: #fecc08;
+}
+
+.save-button {
+  height: 40px;
+  border-radius: 5px;
+}
+
+.arrow-icon-left {
+  font-size: 2rem;
+  position: absolute;
+  left: 15px;
+}
+
+.arrow-icon-right {
+  font-size: 2rem;
+  position: absolute;
+  right: 15px;
+}
+
+.review-modal {
+  height: 300px;
+}
+
+.carousel-buttons {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.carousel-buttons-black {
+  width: 15px;
+  height: 15px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+.dish-picture-container {
+  position: relative;
+}
+
+.user-icon {
+  font-size: 5rem;
+}
+
+.star-modal {
+  font-size: 1.2rem;
+  color: #fecc08;
+  cursor: pointer;
+}
+
+.review-section {
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.review-section:last-child {
+  border-bottom: none;
+}
+
+.arrow-icon-left,
+.arrow-icon-right {
+  cursor: pointer;
+}
+
+@media screen and (min-width: 768px) {
+  .dish-photos {
+    width: 250px;
+    height: 250px;
+    object-fit: contain;
+    border-radius: 5px;
+  }
 }
 
 /*

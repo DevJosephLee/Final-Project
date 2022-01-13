@@ -28,17 +28,17 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container vh-100">
         <div className="mt-5 mb-5 text-center">
           <div className="p-5">
             <h1 className="mb-5">Welcome!</h1>
           </div>
           <div className="d-flex justify-content-center">
-            <div className="col-10 bg-white p-4 rounded shadow mt-4">
+            <div className="col-10 col-lg-6 bg-white p-4 rounded shadow mt-4">
               <p className="mb-5 fs-4 pt-5">Please Select a Cuisine Type</p>
               <form onSubmit={this.handleSubmit} >
                 <div className="d-flex justify-content-center">
-                  <div className="col-7">
+                  <div className="col-12">
                     <select className="w-100 p-2" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
                       <option>Select Cuisine</option>
                       {

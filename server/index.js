@@ -214,7 +214,7 @@ app.post('/api/review/:chefId/', (req, res, next) => {
   const sql = `
     insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
     values ($1, $2, $3, $4, current_timestamp)
-    returning "userId", "chefId", "content", "rating", "createdAt" , "reviewId"
+    returning "userId", "chefId", "content", "rating", "createdAt", "reviewId"
   `;
   const params = [userId, chefId, content, rating];
   db.query(sql, params)

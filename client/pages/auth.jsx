@@ -8,11 +8,11 @@ export default class AuthPage extends React.Component {
     const { user, route, handleSignIn } = this.context;
     if (user) return <Redirect to="" />;
     return (
-      <div className="container p-6">
+      <div className="container p-6 vh-100">
         <div className="row justify-content-center">
           <div className="col-lg-5">
             <div className="text-center">
-              <img src='/images/logo.png' className='text-center w-50 m-5' />
+              <img src='/images/logo.png' className='text-center w-50 m-5 auth-logo' />
             </div>
           </div>
         </div>

@@ -5,18 +5,20 @@ function Reviews(props) {
   return (
     props.reviews.map(reviews => {
       return (
-        <div key={reviews.reviewId}>
-          <div className='row align-center'>
-            <div className='row user-icon-container align-center justify-center margin-right'>
-              <i className='far fa-grin user-icon'></i>
+        <div key={reviews.reviewId} className="review-section mt-3">
+          <div className="d-flex align-items-center mb-2">
+            <div className="col-4 text-center">
+              <i className="far fa-grin user-icon"></i>
             </div>
-            <div>
+            <div className="col-8">
               <h3>{reviews.username}</h3>
-              <h3>{reviews.createdAt.slice(0, 10)}</h3>
+              <h5>{reviews.createdAt.slice(0, 10)}</h5>
               <StarRating rating={reviews.rating} />
             </div>
           </div>
-          <p className='review-content'>{reviews.content}</p>
+          <div className="ps-md-5">
+            <p>{reviews.content}</p>
+          </div>
         </div>
       );
     })
