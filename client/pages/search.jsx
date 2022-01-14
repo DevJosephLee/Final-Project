@@ -39,7 +39,7 @@ class SearchPage extends React.Component {
               <form onSubmit={this.handleSubmit} >
                 <div className="d-flex justify-content-center">
                   <div className="col-12">
-                    <select className="w-100 p-2" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
+                    <select className="w-100 p-2 search-dropdown" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
                       <option>Select Cuisine</option>
                       {
                         this.state.cuisines.map(cuisine => {
