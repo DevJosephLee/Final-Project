@@ -25,14 +25,14 @@ class SearchResultPage extends React.Component {
 
   render() {
     return (
-      <div className="container vh-100">
+      <div className="container pb-5">
         <div className="container">
           <p>Search results for {this.props.selectedCuisine}</p>
-          <div className="d-lg-flex">
+          <div className="d-lg-flex flex-wrap">
             {
               this.state.chefs.map(chef => {
                 return (
-                  <div key={chef.chefId}>
+                  <div key={chef.chefId} className="text-lg-center search-result-cards">
                     <div className="bg-white p-3 rounded shadow mt-4 d-flex d-lg-block align-items-center m-lg-4" key={chef.chefId}>
                       <div className="col-5 col-lg-12">
                         <img className="rounded w-100 profile-picture" src={chef.photoUrl} />

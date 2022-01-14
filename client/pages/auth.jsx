@@ -10,14 +10,14 @@ export default class AuthPage extends React.Component {
     return (
       <div className="container p-6 vh-100">
         <div className="row justify-content-center">
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <div className="text-center">
               <img src='/images/logo.png' className='text-center w-50 m-5 auth-logo' />
             </div>
           </div>
         </div>
         <div className="row justify-content-center">
-          <div className="col-lg-5">
+          <div className="col-lg-6">
             <AuthForm
               key={route.path}
               action={route.path}

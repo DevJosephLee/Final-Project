@@ -100,6 +100,19 @@
   }
 }
 
+@media screen and (min-width: 992px) {
+  .search-result-cards {
+    width: 25%;
+    white-space: initial;
+  }
+}
+
+@media screen and (min-width: 1398px) {
+  .search-result-cards {
+    white-space: nowrap;
+  }
+}
+
 /*
 
 body {
