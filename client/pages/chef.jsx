@@ -125,8 +125,8 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className="container pb-5">
-                <div className="text-center text-lg-start mb-5 col-lg-6 ms-lg-auto me-lg-auto">
+              <div key={chef.name} className="pb-5">
+                <div className="text-center text-lg-start mb-5 col-md-6 ms-md-auto me-md-auto">
                   <div className="d-lg-flex align-items-lg-center">
                     <img src={chef.photoUrl} className="profile-page-picture shadow" />
                     <div className="mt-4 mb-4 ms-lg-5">
@@ -137,19 +137,19 @@ class ChefProfile extends React.Component {
                       </div>
                       <p>{chef.count} reviews</p>
                       <CuisineTypes cuisineType={chef.cuisineType} />
-                      <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 justify-content-md-center justify-content-lg-start">
-                        <div className="col-6 col-md-5 col-lg-10">
-                          <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                            Write Review
-                          </button>
-                        </div>
-                        <div className="col-6 col-md-5 col-lg-10">
-                          <button type="button" onClick={this.handleClickSave} className="w-100 btn btn-outline-secondary save-button" data-bs-toggle="modal" data-bs-target="#saveConfModal">
-                            <i className="far fa-bookmark"></i> Save
-                          </button>
-                        </div>
-                      </div>
                     </div>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 mb-5 col-lg-6 me-auto ms-auto">
+                  <div className="w-50">
+                    <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                      Write Review
+                    </button>
+                  </div>
+                  <div className="w-50">
+                    <button type="button" onClick={this.handleClickSave} className="w-100 btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveConfModal">
+                      <i className="far fa-bookmark"></i> Save
+                    </button>
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
@@ -218,3 +218,5 @@ class ChefProfile extends React.Component {
 }
 
 export default ChefProfile;
+
+// col - 6 col - md - 5 col - lg - 10
