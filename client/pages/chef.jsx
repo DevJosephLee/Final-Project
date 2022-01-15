@@ -153,7 +153,7 @@ class ChefProfile extends React.Component {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <div className="mb-5 col-12 col-md-8 col-lg-6">
+                  <div className="mb-5 col-12 col-lg-6">
                     <DishPictures chefId={chef.chefId} />
                   </div>
                 </div>

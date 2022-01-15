@@ -78,7 +78,7 @@ class UserPage extends React.Component {
 
   render() {
     return (
-      <div className="container pb-5 vh-100">
+      <div className="container pb-5">
         <div className="">
           <div className="text-center mb-5">
             <i className="far fa-grin user-icon"></i>

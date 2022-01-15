@@ -8,7 +8,7 @@ export default class AuthPage extends React.Component {
     const { user, route, handleSignIn } = this.context;
     if (user) return <Redirect to="" />;
     return (
-      <div className="container p-6 vh-100">
+      <div className="container p-6">
         <div className="row justify-content-center">
           <div className="col-lg-6">
             <div className="text-center">

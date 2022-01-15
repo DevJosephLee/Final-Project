@@ -28,7 +28,7 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="container vh-100">
+      <div className="container">
         <div className="mt-5 mb-5 text-center">
           <div className="p-5">
             <h1 className="mb-5">Welcome!</h1>

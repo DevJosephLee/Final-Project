@@ -1,5 +1,6 @@
-#root {
-  background-color: #f7f4f2;
+body {
+  height: 100%;
+  background: linear-gradient(90deg, #f7f4f2 100%, white 100%);
 }
 
 .profile-picture {
