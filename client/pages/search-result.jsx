@@ -61,8 +61,13 @@ class SearchResultPage extends React.Component {
               </div>
               )
             : (
-              <div className="d-flex justify-content-center mt-5">
-                  <h1>testing!</h1>
+              <div>
+                <div className="d-flex justify-content-center mt-5">
+                  <i className="fas fa-not-equal not-equal"></i>
+                </div>
+                <div className="d-flex justify-content-center mt-5">
+                  <h2>Sorry, we couldn&apos;t finy any chefs...</h2>
+                </div>
               </div>
               )
           }
