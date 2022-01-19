@@ -128,7 +128,7 @@ class UserPage extends React.Component {
               this.state.reviews.map(review => {
                 return (
                   <div key={review.reviewId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
-                    <div className="d-flex">
+                    <div className="d-flex align-items-center">
                       <div className="d-flex justify-content-center align-items-center col-5">
                         <img src={review.photoUrl} className="profile-picture rounded" />
                       </div>

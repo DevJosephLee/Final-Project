@@ -14,6 +14,7 @@ class ChefProfile extends React.Component {
       username: '',
       chef: [],
       reviews: [],
+      savedChefs: [],
       rating: 1,
       modalOpened: false,
       confModalOpened: false,
@@ -32,6 +33,7 @@ class ChefProfile extends React.Component {
   }
 
   componentDidMount() {
+    const token = window.localStorage.getItem('final-project-jwt');
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
@@ -45,6 +47,17 @@ class ChefProfile extends React.Component {
       .then(response => response.json())
       .then(data => {
         this.setState({ reviews: data });
+      })
+      .catch(err => console.error(err));
+
+    fetch('/api/userProfile/chefs', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ savedChefs: data });
       })
       .catch(err => console.error(err));
   }
@@ -117,11 +130,31 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    const savedChefIdsArray = [];
+    let currentChefId = '';
+    for (let i = 0; i < this.state.savedChefs.length; i++) {
+      const savedChefIds = this.state.savedChefs[i].chefId;
+      savedChefIdsArray.push(savedChefIds);
+    }
+    for (let j = 0; j < this.state.chef.length; j++) {
+      currentChefId = this.state.chef[j].chefId;
+    }
     const token = window.localStorage.getItem('final-project-jwt');
     const payload = decodeToken(token);
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
+    const saveButton = savedChefIdsArray.includes(currentChefId) || this.state.isSaved
+      ? (
+        <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">
+          <i className="fas fa-check f6f4f2"></i> Saved
+        </div>
+        )
+      : (
+        <button type="button" onClick={this.handleClickSave} className="w-100 btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveConfModal">
+          <i className="far fa-bookmark"></i> Save
+        </button>
+        );
     return (
       <div className='container'>
         {
@@ -149,9 +182,7 @@ class ChefProfile extends React.Component {
                     </button>
                   </div>
                   <div className="w-50">
-                    <button type="button" onClick={this.handleClickSave} className="w-100 btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#saveConfModal">
-                      <i className="far fa-bookmark"></i> Save
-                    </button>
+                    {saveButton}
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
@@ -220,5 +251,3 @@ class ChefProfile extends React.Component {
 }
 
 export default ChefProfile;
-
-// col - 6 col - md - 5 col - lg - 10
