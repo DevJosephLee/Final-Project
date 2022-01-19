@@ -117,6 +117,10 @@ body {
   font-size: 4rem;
 }
 
+.folder {
+  font-size: 2.5rem;
+}
+
 @media screen and (min-width: 768px) {
   .dish-photos {
     width: 250px;
