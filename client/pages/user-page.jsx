@@ -129,12 +129,13 @@ class UserPage extends React.Component {
                 return (
                   <div key={review.reviewId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
                     <div className="d-flex">
-                      <div className="d-flex justify-content-center col-5">
+                      <div className="d-flex justify-content-center align-items-center col-5">
                         <img src={review.photoUrl} className="profile-picture rounded" />
                       </div>
                       <div className="col-6">
                         <div className="ms-4">
                           <h3>{review.name}</h3>
+                          <h5>{review.createdAt.slice(0, 10)}</h5>
                           <StarRating rating={review.rating} />
                           <p>{review.content}</p>
                         </div>

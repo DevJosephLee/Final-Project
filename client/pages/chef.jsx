@@ -17,7 +17,8 @@ class ChefProfile extends React.Component {
       rating: 1,
       modalOpened: false,
       confModalOpened: false,
-      saveConfModalOpened: false
+      saveConfModalOpened: false,
+      isSaved: false
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -112,6 +113,7 @@ class ChefProfile extends React.Component {
       }
     });
     this.setState({ saveConfModalOpened: true });
+    this.setState({ isSaved: true });
   }
 
   render() {
