@@ -11,7 +11,7 @@ class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: null,
       chef: [],
       reviews: [],
       savedChefs: [],
@@ -139,8 +139,6 @@ class ChefProfile extends React.Component {
     for (let j = 0; j < this.state.chef.length; j++) {
       currentChefId = this.state.chef[j].chefId;
     }
-    const token = window.localStorage.getItem('final-project-jwt');
-    const payload = decodeToken(token);
     const modalClass = this.state.modalOpened
       ? 'show'
       : 'hidden';
@@ -207,7 +205,7 @@ class ChefProfile extends React.Component {
                   </div>
                 </div>
                 <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} userId={payload.userId} handleSubmit={this.handleSubmit} />
+                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
                 </div>
                 <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                   <div className="modal-dialog modal-dialog-centered">
@@ -251,3 +249,8 @@ class ChefProfile extends React.Component {
 }
 
 export default ChefProfile;
+
+// when user logs out of this page, user property is set to null
+// when decoding token, at log out the user is set to null, so throws error
+//  do something during component unmount
+//
