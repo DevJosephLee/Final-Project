@@ -47,6 +47,20 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .catch(err => next(err));
 });
 
+// app.post('/api/auth/guest', (req, res, next) => {
+//   const sql = `
+//     insert into "users" ("username", "password", "createdAt")
+//     values ('Guest', 'testing123', current_timestamp)
+//     returning "username", "createdAt", "userId"
+//     `;
+//   db.query(sql)
+//     .then(result => {
+//       const [guestUser] = result.rows;
+//       res.status(201).json(guestUser);
+//     })
+//     .catch(err => next(err));
+// });
+
 app.post('/api/auth/sign-in', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {

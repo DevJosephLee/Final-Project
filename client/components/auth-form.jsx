@@ -10,6 +10,7 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGuestLogin = this.handleGuestLogin.bind(this);
   }
 
   handleChange(event) {
@@ -32,6 +33,23 @@ export default class AuthForm extends React.Component {
         if (action === 'sign-up') {
           window.location.hash = 'sign-in';
         } else if (action === 'sign-in' && result.user && result.token) {
+          this.props.onSignIn(result);
+          window.location.hash = 'search';
+        }
+      });
+  }
+
+  handleGuestLogin() {
+    fetch('/api/auth/sign-in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
         }
@@ -80,7 +98,13 @@ export default class AuthForm extends React.Component {
                 </a>
               </p>
             </div>
+            <div className="d-flex justify-content-center">
+              <a type="submit" >Continue as Guest</a>
+            </div>
           </form>
+          {/* <form onSubmit={this.handleGuestLogin}>
+
+          </form> */}
         </div>
       </div>
     );
@@ -88,3 +112,5 @@ export default class AuthForm extends React.Component {
 }
 
 AuthForm.ContextType = AppContext;
+
+// when user clicks guest button, make a post request for a "guest"
