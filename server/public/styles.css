@@ -1,5 +1,6 @@
-#root {
-  background-color: #f7f4f2;
+body {
+  height: 100%;
+  background: linear-gradient(90deg, #f7f4f2 100%, white 100%);
 }
 
 .profile-picture {
@@ -23,11 +24,6 @@
 
 .star {
   color: #fecc08;
-}
-
-.save-button {
-  height: 40px;
-  border-radius: 5px;
 }
 
 .arrow-icon-left {
@@ -87,12 +83,130 @@
   cursor: pointer;
 }
 
+.search-dropdown {
+  cursor: pointer;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1);
+}
+
+.carousel-indicators li {
+  background-color: #999;
+  width: 1rem;
+  height: 0.25rem;
+  cursor: pointer;
+}
+
+.carousel-indicators .active {
+  background-color: #d3d3d3;
+}
+
+.f6f4f2 {
+  color: #f6f4f2;
+}
+
+.saved-button {
+  background-color: #6c757d;
+  color: white;
+  height: 38px;
+}
+
+.not-equal {
+  font-size: 4rem;
+}
+
+.folder {
+  font-size: 2.5rem;
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: black;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.lds-ellipsis div:nth-child(1) {
+  left: 8px;
+  animation: lds-ellipsis1 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(2) {
+  left: 8px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(3) {
+  left: 32px;
+  animation: lds-ellipsis2 0.6s infinite;
+}
+
+.lds-ellipsis div:nth-child(4) {
+  left: 56px;
+  animation: lds-ellipsis3 0.6s infinite;
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
 @media screen and (min-width: 768px) {
   .dish-photos {
     width: 250px;
     height: 250px;
     object-fit: contain;
     border-radius: 5px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .search-result-cards {
+    width: 25%;
+    white-space: initial;
+  }
+}
+
+@media screen and (min-width: 1398px) {
+  .search-result-cards {
+    white-space: nowrap;
   }
 }
 

@@ -28,7 +28,7 @@ class SearchPage extends React.Component {
 
   render() {
     return (
-      <div className="container vh-100">
+      <div className="container">
         <div className="mt-5 mb-5 text-center">
           <div className="p-5">
             <h1 className="mb-5">Welcome!</h1>
@@ -39,7 +39,7 @@ class SearchPage extends React.Component {
               <form onSubmit={this.handleSubmit} >
                 <div className="d-flex justify-content-center">
                   <div className="col-12">
-                    <select className="w-100 p-2" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
+                    <select className="w-100 p-2 search-dropdown" name="cuisineList" id="cuisineList" value={this.state.selectedCuisine} onChange={this.handleChange}>
                       <option>Select Cuisine</option>
                       {
                         this.state.cuisines.map(cuisine => {
@@ -52,7 +52,7 @@ class SearchPage extends React.Component {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <div className="col-lg-2 col-sm-3">
+                  <div className="col-3">
                     <button className="w-100 mt-4 mb-4 btn btn-primary" type="submit">SEARCH</button>
                   </div>
                 </div>

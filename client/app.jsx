@@ -15,7 +15,8 @@ export default class App extends React.Component {
     this.state = {
       user: null,
       isAuthorizing: true,
-      route: parseRoute(window.location.hash)
+      route: parseRoute(window.location.hash),
+      hideSpinner: false
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
@@ -30,6 +31,7 @@ export default class App extends React.Component {
     const token = window.localStorage.getItem('final-project-jwt');
     const user = token ? decodeToken(token) : null;
     this.setState({ user, isAuthorizing: false });
+    this.setState({ hideSpinner: true });
   }
 
   handleSignIn(result) {
@@ -71,12 +73,18 @@ export default class App extends React.Component {
     const { user, route } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, route, handleSignIn, handleSignOut };
+    const loaderClass = this.state.hideSpinner
+      ? 'd-none'
+      : 'd-flex justify-content-center mt-5';
     return (
       <div>
         <AppContext.Provider value={contextValue}>
           <>
             <NavBar goToProfile={this.handleProfileClick} user={this.state.user} route={this.state.route.path} handleSignOut={this.handleSignOut} />
             {this.renderPage()}
+            <div className={loaderClass}>
+              <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+            </div>
           </>
         </AppContext.Provider>
       </div>

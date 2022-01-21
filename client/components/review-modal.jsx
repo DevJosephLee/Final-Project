@@ -25,7 +25,7 @@ function ReviewModal(props) {
                 }
                 <p className="margin-left">select your rating</p>
               </div>
-              <div className="col-12">
+              <div className="col-12 mb-3">
                 <textarea
                   className="w-100 review-modal p-2"
                   required
@@ -33,9 +33,13 @@ function ReviewModal(props) {
                   onChange={props.handleTextChange}
                   type="text" />
               </div>
-              <div className="modal-footer">
-                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" data-bs-target="#confModal" data-bs-toggle="modal">Save</button>
-                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">Close</button>
+              <div className="modal-footer d-flex justify-content-between">
+                <div className="w-25">
+                  <button type="submit" className="btn btn-primary w-100" data-bs-dismiss="modal" data-bs-target="#confModal" data-bs-toggle="modal">Save</button>
+                </div>
+                <div className="w-25">
+                  <button type="button" className="btn btn-danger w-100" data-bs-dismiss="modal">Close</button>
+                </div>
               </div>
             </form>
           </div>

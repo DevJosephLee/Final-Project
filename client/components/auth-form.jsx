@@ -10,6 +10,7 @@ export default class AuthForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleGuestLogin = this.handleGuestLogin.bind(this);
   }
 
   handleChange(event) {
@@ -36,6 +37,17 @@ export default class AuthForm extends React.Component {
           window.location.hash = 'search';
         }
       });
+  }
+
+  handleGuestLogin() {
+    const guestUser = {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiR3Vlc3QiLCJpYXQiOjE2NDI3NTMyOTh9.pimGI-u0AH7kYD8Qq-Q6f6YPY-PfKPIuNCBjvyBqCZs',
+      user: {
+        userId: 2,
+        username: 'Guest'
+      }
+    };
+    this.props.onSignIn(guestUser);
   }
 
   render() {
@@ -79,6 +91,9 @@ export default class AuthForm extends React.Component {
                   {alternateActionText}
                 </a>
               </p>
+            </div>
+            <div className="d-flex justify-content-center">
+              <a href="#search" onClick={this.handleGuestLogin}>Continue as Guest</a>
             </div>
           </form>
         </div>
