@@ -40,20 +40,14 @@ export default class AuthForm extends React.Component {
   }
 
   handleGuestLogin() {
-    fetch('/api/auth/sign-in', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.user && result.token) {
-          this.props.onSignIn(result);
-          window.location.hash = 'search';
-        }
-      });
+    const result = {
+      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiR3Vlc3QiLCJpYXQiOjE2NDI3NTMyOTh9.pimGI-u0AH7kYD8Qq-Q6f6YPY-PfKPIuNCBjvyBqCZs',
+      user: {
+        userId: 2,
+        username: 'Guest'
+      }
+    };
+    this.props.onSignIn(result);
   }
 
   render() {
@@ -99,7 +93,7 @@ export default class AuthForm extends React.Component {
               </p>
             </div>
             <div className="d-flex justify-content-center">
-              <a type="submit" >Continue as Guest</a>
+              <a href="#search" onClick={this.handleGuestLogin}>Continue as Guest</a>
             </div>
           </form>
           {/* <form onSubmit={this.handleGuestLogin}>
