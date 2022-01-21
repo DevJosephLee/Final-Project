@@ -40,14 +40,14 @@ export default class AuthForm extends React.Component {
   }
 
   handleGuestLogin() {
-    const result = {
+    const guestUser = {
       token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiR3Vlc3QiLCJpYXQiOjE2NDI3NTMyOTh9.pimGI-u0AH7kYD8Qq-Q6f6YPY-PfKPIuNCBjvyBqCZs',
       user: {
         userId: 2,
         username: 'Guest'
       }
     };
-    this.props.onSignIn(result);
+    this.props.onSignIn(guestUser);
   }
 
   render() {
@@ -96,9 +96,6 @@ export default class AuthForm extends React.Component {
               <a href="#search" onClick={this.handleGuestLogin}>Continue as Guest</a>
             </div>
           </form>
-          {/* <form onSubmit={this.handleGuestLogin}>
-
-          </form> */}
         </div>
       </div>
     );
@@ -106,5 +103,3 @@ export default class AuthForm extends React.Component {
 }
 
 AuthForm.ContextType = AppContext;
-
-// when user clicks guest button, make a post request for a "guest"
