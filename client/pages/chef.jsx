@@ -16,16 +16,8 @@ class ChefProfile extends React.Component {
       reviews: [],
       savedChefs: [],
       rating: 1,
-      modalOpened: false,
-      confModalOpened: false,
-      saveConfModalOpened: false,
       isSaved: false
     };
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.openConfModal = this.openConfModal.bind(this);
-    this.closeConfModal = this.closeConfModal.bind(this);
-    this.closeSaveConfModal = this.closeSaveConfModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
@@ -62,30 +54,6 @@ class ChefProfile extends React.Component {
       .catch(err => console.error(err));
 
     this.setState({ isLoaded: true });
-  }
-
-  openModal() {
-    if (!this.state.modalOpened) {
-      this.setState({ modalOpened: true });
-    }
-  }
-
-  closeModal() {
-    if (this.state.modalOpened) {
-      this.setState({ modalOpened: false });
-    }
-  }
-
-  openConfModal() {
-    this.setState({ modalOpened: false, confModalOpened: true });
-  }
-
-  closeConfModal() {
-    this.setState({ confModalOpened: false });
-  }
-
-  closeSaveConfModal() {
-    this.setState({ saveConfModalOpened: false });
   }
 
   handleTextChange(event) {
@@ -127,7 +95,6 @@ class ChefProfile extends React.Component {
         'X-Access-Token': token
       }
     });
-    this.setState({ saveConfModalOpened: true });
     this.setState({ isSaved: true });
   }
 
@@ -141,9 +108,6 @@ class ChefProfile extends React.Component {
     for (let j = 0; j < this.state.chef.length; j++) {
       currentChefId = this.state.chef[j].chefId;
     }
-    const modalClass = this.state.modalOpened
-      ? 'show'
-      : 'hidden';
     const saveButton = savedChefIdsArray.includes(currentChefId) || this.state.isSaved
       ? (
         <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">
@@ -206,9 +170,7 @@ class ChefProfile extends React.Component {
                   </div>
                 </div>
               </div>
-              <div className={`height-100 overlay ${modalClass}`} >
-                <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
-              </div>
+              <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
               <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered">
                   <div className="modal-content">
