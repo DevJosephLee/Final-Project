@@ -60,6 +60,8 @@ class ChefProfile extends React.Component {
         this.setState({ savedChefs: data });
       })
       .catch(err => console.error(err));
+
+    this.setState({ isLoaded: true });
   }
 
   openModal() {
@@ -158,88 +160,88 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-              <div key={chef.name} className="pb-5">
-                <div className="text-center text-lg-start mb-5 col-md-6 ms-md-auto me-md-auto">
-                  <div className="d-lg-flex align-items-lg-center">
-                    <img src={chef.photoUrl} className="profile-page-picture shadow" />
-                    <div className="mt-4 mb-4 ms-lg-5">
-                      <ProfileName name={chef.name} />
-                      <div className="d-flex justify-content-center justify-content-lg-start">
-                        <StarRating rating={chef.avg} />
-                        <p>({chef.avg.slice(0, 3)})</p>
-                      </div>
-                      <p>{chef.count} reviews</p>
-                      <CuisineTypes cuisineType={chef.cuisineType} />
+            <div key={chef.name} className="pb-5">
+              <div className="text-center text-lg-start mb-5 col-md-6 ms-md-auto me-md-auto">
+                <div className="d-lg-flex align-items-lg-center">
+                  <img src={chef.photoUrl} className="profile-page-picture shadow" />
+                  <div className="mt-4 mb-4 ms-lg-5">
+                    <ProfileName name={chef.name} />
+                    <div className="d-flex justify-content-center justify-content-lg-start">
+                      <StarRating rating={chef.avg} />
+                      <p>({chef.avg.slice(0, 3)})</p>
                     </div>
+                    <p>{chef.count} reviews</p>
+                    <CuisineTypes cuisineType={chef.cuisineType} />
                   </div>
                 </div>
-                <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 mb-5 col-lg-6 me-auto ms-auto">
-                  <div className="w-50">
-                    <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                      Write Review
-                    </button>
-                  </div>
-                  <div className="w-50">
-                    {saveButton}
+              </div>
+              <div className="d-flex align-items-center gap-2 mt-5 mt-lg-3 mb-5 col-lg-6 me-auto ms-auto">
+                <div className="w-50">
+                  <button type="button" className="w-100 btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                    Write Review
+                  </button>
+                </div>
+                <div className="w-50">
+                  {saveButton}
+                </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div className="mb-5 col-12 col-lg-6">
+                  <DishPictures chefId={chef.chefId} />
+                </div>
+              </div>
+              <div className="d-flex justify-content-center">
+                <div className="mb-5 col-lg-6">
+                  <h1>About</h1>
+                  <div className="bg-white shadow p-4 rounded">
+                    <p>{chef.bio}</p>
                   </div>
                 </div>
-                <div className="d-flex justify-content-center">
-                  <div className="mb-5 col-12 col-lg-6">
-                    <DishPictures chefId={chef.chefId} />
+              </div>
+              <div className="d-lg-flex justify-content-lg-center">
+                <div className="col-lg-6">
+                  <h1>Reviews</h1>
+                  <div className="bg-white shadow p-4 rounded">
+                    <Reviews reviews={this.state.reviews} />
                   </div>
                 </div>
-                <div className="d-flex justify-content-center">
-                  <div className="mb-5 col-lg-6">
-                    <h1>About</h1>
-                    <div className="bg-white shadow p-4 rounded">
-                      <p>{chef.bio}</p>
+              </div>
+              <div className={`height-100 overlay ${modalClass}`} >
+                <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
+              </div>
+              <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                      <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  </div>
-                </div>
-                <div className="d-lg-flex justify-content-lg-center">
-                  <div className="col-lg-6">
-                    <h1>Reviews</h1>
-                    <div className="bg-white shadow p-4 rounded">
-                      <Reviews reviews={this.state.reviews} />
+                    <div className="modal-body">
+                      Your Comment has been Posted
                     </div>
-                  </div>
-                </div>
-                <div className={`height-100 overlay ${modalClass}`} >
-                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} openConfModal={this.openConfModal} closeModal={this.closeModal} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
-                </div>
-                <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                  <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div className="modal-body">
-                        Your Comment has been Posted
-                      </div>
-                      <div className="modal-footer">
-                        <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="modal fade" id="saveConfModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-                  <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div className="modal-body">
-                        Chef has been added
-                      </div>
-                      <div className="modal-footer">
-                        <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
-                      </div>
+                    <div className="modal-footer">
+                      <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
                 </div>
               </div>
+              <div className="modal fade" id="saveConfModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+                <div className="modal-dialog modal-dialog-centered">
+                  <div className="modal-content">
+                    <div className="modal-header">
+                      <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                      <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body">
+                      Chef has been added
+                    </div>
+                    <div className="modal-footer">
+                      <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             );
           })
         }
@@ -249,8 +251,3 @@ class ChefProfile extends React.Component {
 }
 
 export default ChefProfile;
-
-// when user logs out of this page, user property is set to null
-// when decoding token, at log out the user is set to null, so throws error
-//  do something during component unmount
-//

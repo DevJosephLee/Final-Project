@@ -60,16 +60,14 @@ class SearchResultPage extends React.Component {
                 }
               </div>
               )
-            : (
-              <div>
+            : <div>
                 <div className="d-flex justify-content-center mt-5">
                   <i className="fas fa-not-equal not-equal"></i>
                 </div>
                 <div className="d-flex justify-content-center mt-5">
-                  <h3>Sorry, we couldn&apos;t finy any chefs...</h3>
+                  <h3>Sorry, we couldn&apos;t find any chefs...</h3>
                 </div>
               </div>
-              )
           }
         </div>
       </div>
