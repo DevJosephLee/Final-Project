@@ -10,13 +10,16 @@ I wanted to make an app where users can easily look up information about chefs a
 https://chef-connect-1.herokuapp.com/
 
 ## Technologies Used
-- HTML
-- CSS
+- HTML5
+- CSS3
 - JavaScript
 - Node.JS
 - Express.JS
 - React.JS
 - PostgreSQL
+- Bootstrap 5
+- Webpack
+- Heroku
 
 ## Features
 - User can create an account.
@@ -31,3 +34,13 @@ https://chef-connect-1.herokuapp.com/
 - User can see a list of their own comments. 
 
 ## Preview
+
+## Stretch Features
+- User can add a photo to their profile page.
+- User can become a chef.
+
+## Requirements
+- None
+
+## Instructions
+Continue as guest or create an account. 
