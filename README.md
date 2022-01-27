@@ -1,4 +1,4 @@
-# ChefConnect
+# Chefconnect
 
 ## Description
 A full-stack web application for food enthusiasts who want to connect with chefs. 
