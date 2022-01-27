@@ -13,9 +13,9 @@ https://chef-connect-1.herokuapp.com/
 - HTML5
 - CSS3
 - JavaScript
-- Node.JS
-- Express.JS
-- React.JS
+- Node.js
+- Express.js
+- React
 - PostgreSQL
 - Bootstrap 5
 - Webpack
@@ -38,9 +38,6 @@ https://chef-connect-1.herokuapp.com/
 ## Stretch Features
 - User can add a photo to their profile page.
 - User can become a chef.
-
-## Requirements
-- None
 
 ## Instructions
 Continue as guest or create an account. 
