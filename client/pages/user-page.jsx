@@ -15,7 +15,7 @@ class UserPage extends React.Component {
   }
 
   componentDidMount() {
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     fetch('/api/userProfile', {
       headers: {
         'X-Access-Token': token
@@ -52,7 +52,7 @@ class UserPage extends React.Component {
   }
 
   handleDeleteClick(event) {
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     const chefId = Number(event.target.getAttribute('chefId'));
     fetch(`/api/userProfile/${chefId}`, {
       method: 'DELETE',

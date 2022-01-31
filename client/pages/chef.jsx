@@ -25,7 +25,7 @@ class ChefProfile extends React.Component {
   }
 
   componentDidMount() {
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
@@ -66,7 +66,7 @@ class ChefProfile extends React.Component {
 
   handleSubmit(newReview) {
     event.preventDefault();
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     fetch(`/api/review/${this.props.chefId}`, {
       method: 'POST',
       headers: {
@@ -87,7 +87,7 @@ class ChefProfile extends React.Component {
   }
 
   handleClickSave() {
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     fetch(`/api/userProfile/${this.props.chefId}`, {
       method: 'POST',
       headers: {
