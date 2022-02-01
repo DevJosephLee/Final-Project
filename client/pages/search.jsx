@@ -52,7 +52,7 @@ class SearchPage extends React.Component {
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                  <div className="col-3">
+                  <div className="col-4">
                     <button className="w-100 mt-4 mb-4 btn btn-primary" type="submit">SEARCH</button>
                   </div>
                 </div>

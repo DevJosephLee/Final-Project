@@ -13,6 +13,20 @@ export default class AuthForm extends React.Component {
     this.handleGuestLogin = this.handleGuestLogin.bind(this);
   }
 
+  componentDidMount() {
+    fetch('/api/auth/sign-up', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'GuestUser',
+        password: 'testing123'
+      })
+    })
+      .then(res => res.json());
+  }
+
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
@@ -40,19 +54,25 @@ export default class AuthForm extends React.Component {
   }
 
   handleGuestLogin() {
-    const guestUser = {
-      token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoiR3Vlc3QiLCJpYXQiOjE2NDI3NTMyOTh9.pimGI-u0AH7kYD8Qq-Q6f6YPY-PfKPIuNCBjvyBqCZs',
-      user: {
-        userId: 2,
-        username: 'Guest'
-      }
-    };
-    this.props.onSignIn(guestUser);
+    fetch('/api/auth/sign-in', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'GuestUser',
+        password: 'testing123'
+      })
+    })
+      .then(res => res.json())
+      .then(guestLogIn => {
+        this.props.onSignIn(guestLogIn);
+      });
   }
 
   render() {
     const { action } = this.props;
-    const { handleChange, handleSubmit } = this;
+    const { handleChange, handleSubmit, handleGuestLogin } = this;
     const alternateActionHref = action === 'sign-up'
       ? '#sign-in'
       : '#sign-up';
@@ -93,7 +113,7 @@ export default class AuthForm extends React.Component {
               </p>
             </div>
             <div className="d-flex justify-content-center">
-              <a href="#search" onClick={this.handleGuestLogin}>Continue as Guest</a>
+              <a href="#search" onClick={handleGuestLogin}>Continue as Guest</a>
             </div>
           </form>
         </div>

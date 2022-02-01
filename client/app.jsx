@@ -28,20 +28,21 @@ export default class App extends React.Component {
         route: parseRoute(window.location.hash)
       });
     });
-    const token = window.localStorage.getItem('final-project-jwt');
+    const token = window.localStorage.getItem('user-jwt');
     const user = token ? decodeToken(token) : null;
     this.setState({ user, isAuthorizing: false });
     this.setState({ hideSpinner: true });
+    window.location.hash = 'sign-in';
   }
 
   handleSignIn(result) {
     const { user, token } = result;
-    window.localStorage.setItem('final-project-jwt', token);
+    window.localStorage.setItem('user-jwt', token);
     this.setState({ user });
   }
 
   handleSignOut() {
-    window.localStorage.removeItem('final-project-jwt');
+    window.localStorage.removeItem('user-jwt');
     this.setState({ user: null });
     window.location.hash = 'sign-in';
   }

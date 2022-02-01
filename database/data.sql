@@ -36,7 +36,7 @@ values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
 
 
 insert into "users" ("username", "password", "createdAt")
-values('User1', 'testing123', current_timestamp);
+values('Guest', 'testing123', current_timestamp);
 
 insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
 values (1, 1, 'Food is Amazing!', 5, current_timestamp),
