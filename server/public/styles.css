@@ -171,6 +171,14 @@ body {
   }
 }
 
+@media screen and (max-width: 480px) {
+  .profile-picture {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .dish-photos {
     width: 250px;
