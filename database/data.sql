@@ -5,6 +5,7 @@ values ('Gordon Ramsay', 'images/ramsay.jpeg', 'Scottish by birth, Gordon Ramsay
        ('Massimo Bottura', 'images/bottura.jpeg', 'Massimo Bottura is an Italian restaurateur and the chef patron of Osteria Francescana, a three-Michelin-star restaurant based in Modena, Italy which has been listed in the top 5 at The Worlds 50 Best Restaurants Awards since 2010 and received top ratings from LEspresso, Gambero Rosso and the Touring Club guides.'),
        ('Lidia Bastianich', 'images/bastlanich.jpeg', 'Lidia Giuliana Matticchio Bastianich is an Italian-American celebrity chef, television host, author, and restaurateur. Specializing in Italian and Italian-American cuisine, Bastianich has been a regular contributor to public television cooking shows since 1998.'),
        ('Giorgio Locatelli', 'images/locatelli.jpeg', 'Giorgio Locatelli is an innovative Italian chef and star of his own TV series, Giorgio Locatelli: Pure Italian. Giorgio grew up in Northern Italy, where his family ran a Michelin-starred restaurant. His career took him from Italy to Switzerland, England and France before he returned to the UK and became head chef at Londons Olivo.');
+       ('Susanna Foo', 'images/foo.jpeg', 'Susanna Foo is a Chinese chef best known for her work in Chinese/French fusion at her self titled Susanna Foo restaurant in Philadelphia, Pennsylvania. She has also owned and run other restaurants in Philadelphia and Atlantic City, and is a two-time James Beard Foundation Award winner.')
 
 
 insert into "dishes" ("chefId", "name", "photoUrl")
@@ -31,7 +32,11 @@ values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
        (6, 'Margarita Pasta', 'images/margarita-pasta.jpeg'),
        (6, 'Cream Puffs', 'images/cream-puffs.jpeg'),
        (6, 'Tiramisu', 'images/tiramisu.jpeg'),
-       (6, 'Seafood Pasta', 'images/seafood-pasta.jpeg');
+       (6, 'Seafood Pasta', 'images/seafood-pasta.jpeg'),
+       (7, 'Shrimp Wontons', 'images/shrim-wontons.jpeg'),
+       (7, 'Peking Duck', 'images/peking-duck.jpeg'),
+       (7, 'Dim Sum', 'images/dim-sum.jpeg'),
+       (7, 'Chow Mein', 'images/chow-mein.jpeg');
 
 
 
@@ -75,33 +80,3 @@ values (1, 1),
 
 insert into "favorites" ("userId", "chefId")
 values (1, 1)
-
-
-
-
--- select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
---     from     "chefs"
---     join     "reviews" using ("chefId")
---     join     "chefCuisines" using ("chefId")
---     join     "cuisines" using ("cuisineId")
---     where    "cuisines"."name" = 'Italian'
---     group by "chefs"."chefId"
-
-
-
--- select *
--- from "favorites"
--- join "users" using ("userId")
--- join "chefs" using ("chefId")
-
--- select "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
--- from "favorites"
--- join "users" using ("userId")
--- join "chefs" using ("chefId")
--- join "chefCuisines" using ("chefId")
--- join "cuisines" using ("cuisineId")
--- join "reviews" using ("chefId")
--- group by "favorites"."chefId",
---          "chefs"."name",
---          "chefs"."photoUrl",
---          "users"."username"
