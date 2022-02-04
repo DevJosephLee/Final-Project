@@ -84,7 +84,9 @@ values (1, 1),
        (4, 5),
        (5, 1),
        (6, 1),
-       (6, 2);
+       (6, 2),
+       (7, 3),
+       (8, 10);
 
 insert into "favorites" ("userId", "chefId")
 values (1, 1)
