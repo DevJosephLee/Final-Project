@@ -4,8 +4,9 @@ values ('Gordon Ramsay', 'images/ramsay.jpeg', 'Scottish by birth, Gordon Ramsay
        ('Masaharu Morimoto', 'images/morimoto-2.jpeg', 'Born in Hiroshima, Japan, Iron Chef Japanese Masaharu Morimoto trained in a sushi restaurant before moving to the U.S. in 1985 at the age of 30. After working in several restaurants, he joined the highly acclaimed Nobu restaurant in New York City.'),
        ('Massimo Bottura', 'images/bottura.jpeg', 'Massimo Bottura is an Italian restaurateur and the chef patron of Osteria Francescana, a three-Michelin-star restaurant based in Modena, Italy which has been listed in the top 5 at The Worlds 50 Best Restaurants Awards since 2010 and received top ratings from LEspresso, Gambero Rosso and the Touring Club guides.'),
        ('Lidia Bastianich', 'images/bastlanich.jpeg', 'Lidia Giuliana Matticchio Bastianich is an Italian-American celebrity chef, television host, author, and restaurateur. Specializing in Italian and Italian-American cuisine, Bastianich has been a regular contributor to public television cooking shows since 1998.'),
-       ('Giorgio Locatelli', 'images/locatelli.jpeg', 'Giorgio Locatelli is an innovative Italian chef and star of his own TV series, Giorgio Locatelli: Pure Italian. Giorgio grew up in Northern Italy, where his family ran a Michelin-starred restaurant. His career took him from Italy to Switzerland, England and France before he returned to the UK and became head chef at Londons Olivo.');
-       ('Susanna Foo', 'images/foo.jpeg', 'Susanna Foo is a Chinese chef best known for her work in Chinese/French fusion at her self titled Susanna Foo restaurant in Philadelphia, Pennsylvania. She has also owned and run other restaurants in Philadelphia and Atlantic City, and is a two-time James Beard Foundation Award winner.')
+       ('Giorgio Locatelli', 'images/locatelli.jpeg', 'Giorgio Locatelli is an innovative Italian chef and star of his own TV series, Giorgio Locatelli: Pure Italian. Giorgio grew up in Northern Italy, where his family ran a Michelin-starred restaurant. His career took him from Italy to Switzerland, England and France before he returned to the UK and became head chef at Londons Olivo.'),
+       ('Susanna Foo', 'images/foo.jpeg', 'Susanna Foo is a Chinese chef best known for her work in Chinese/French fusion at her self titled Susanna Foo restaurant in Philadelphia, Pennsylvania. She has also owned and run other restaurants in Philadelphia and Atlantic City, and is a two-time James Beard Foundation Award winner.'),
+       ('Bobby Flay', 'images/flay.jpeg', 'Robert William Flay, is an American celebrity chef, restaurateur, and reality television personality. He is the owner and executive chef of several restaurants, including Amalfi in Las Vegas and Bobbys Burger Palace at multiple locations.');
 
 
 insert into "dishes" ("chefId", "name", "photoUrl")
@@ -33,10 +34,14 @@ values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
        (6, 'Cream Puffs', 'images/cream-puffs.jpeg'),
        (6, 'Tiramisu', 'images/tiramisu.jpeg'),
        (6, 'Seafood Pasta', 'images/seafood-pasta.jpeg'),
-       (7, 'Shrimp Wontons', 'images/shrim-wontons.jpeg'),
+       (7, 'Shrimp Wontons', 'images/shrimp-wontons.jpeg'),
        (7, 'Peking Duck', 'images/peking-duck.jpeg'),
        (7, 'Dim Sum', 'images/dim-sum.jpeg'),
-       (7, 'Chow Mein', 'images/chow-mein.jpeg');
+       (7, 'Chow Mein', 'images/chow-mein.jpeg'),
+       (8, 'Chicken Pot Pie', 'images/chicken-pot-pie.jpeg'),
+       (8, 'Double Cheeseburger', 'images/double-cheeseburger.jpeg'),
+       (8, 'Hot Dog', 'images/hotdog.jpeg'),
+       (8, 'Mac n Cheese', 'images/mac-n-cheese.jpeg');
 
 
 
@@ -49,7 +54,10 @@ values (1, 1, 'Food is Amazing!', 5, current_timestamp),
        (1, 3, 'Amazing Sushi!', 5, current_timestamp),
        (1, 4, 'Amazing!', 5, current_timestamp),
        (1, 5, 'Yummy food!', 5, current_timestamp),
-       (1, 6, 'Best food ever!', 5, current_timestamp);
+       (1, 6, 'Best food ever!', 5, current_timestamp),
+       (1, 7, 'Chow Mein was bomb!', 5, current_timestamp),
+       (1, 8, 'Mac-n-Cheese is dry.', 3, current_timestamp);
+
 
 
 insert into "cuisines" ("name")
