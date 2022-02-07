@@ -7,7 +7,8 @@ values ('Gordon Ramsay', 'images/ramsay.jpeg', 'Scottish by birth, Gordon Ramsay
        ('Giorgio Locatelli', 'images/locatelli.jpeg', 'Giorgio Locatelli is an innovative Italian chef and star of his own TV series, Giorgio Locatelli: Pure Italian. Giorgio grew up in Northern Italy, where his family ran a Michelin-starred restaurant. His career took him from Italy to Switzerland, England and France before he returned to the UK and became head chef at Londons Olivo.'),
        ('Susanna Foo', 'images/foo.jpeg', 'Susanna Foo is a Chinese chef best known for her work in Chinese/French fusion at her self titled Susanna Foo restaurant in Philadelphia, Pennsylvania. She has also owned and run other restaurants in Philadelphia and Atlantic City, and is a two-time James Beard Foundation Award winner.'),
        ('Bobby Flay', 'images/flay.jpeg', 'Robert William Flay, is an American celebrity chef, restaurateur, and reality television personality. He is the owner and executive chef of several restaurants, including Amalfi in Las Vegas and Bobbys Burger Palace at multiple locations.'),
-       ('Baek Jeong-won', 'images/baek.jpeg', 'Baek Jong-won is a South Korean chef. He is the main host of the SBSs cooking television series Baek Jong-wons Top 3 Chef King, Baek Jong-wons Food Truck and Baek Jong-wons Alley Restaurant.');
+       ('Baek Jeong-won', 'images/baek.jpeg', 'Baek Jong-won is a South Korean chef. He is the main host of the SBSs cooking television series Baek Jong-wons Top 3 Chef King, Baek Jong-wons Food Truck and Baek Jong-wons Alley Restaurant.'),
+       ('Lee Yeon-bok', 'images/yeon-bok.png', 'Lee Yeon Bok is a South Korean-Taiwanese chef and TV personality who was born on July 11, 1959, in Seoul, South Korea. During his career in the culinary industry, he has worked as the official chef of the Taiwanese embassy in Seoul and currently works as a professor at the Korea Hotel Tourism College.');
 
 insert into "dishes" ("chefId", "name", "photoUrl")
 values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
@@ -45,7 +46,11 @@ values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
        (9, 'Bibimbap', 'images/bibimbap.jpeg'),
        (9, 'Bulgogi', 'images/bulgogi.jpeg'),
        (9, 'Kimchi Fried Rice', 'images/kimchi-fried-rice.jpeg'),
-       (9, 'Ttekobboki', 'images/tteokbboki.jpeg');
+       (9, 'Ttekobboki', 'images/tteokbboki.jpeg'),
+       (10, 'Jjajangmyeon', 'images/jjajangmyeon.jpeg'),
+       (10, 'Jjamppong', 'images/jjamppong.jpeg'),
+       (10, 'Chili Shrimp', 'images/chili-shrimp.jpeg'),
+       (10, 'Tangsuyuk', 'images/tangsuyuk.jpeg');
 
 
 
@@ -61,7 +66,8 @@ values (1, 1, 'Food is Amazing!', 5, current_timestamp),
        (1, 6, 'Best food ever!', 5, current_timestamp),
        (1, 7, 'Chow Mein was bomb!', 5, current_timestamp),
        (1, 8, 'Mac-n-Cheese is dry.', 3, current_timestamp),
-       (1, 9, 'Bomb Bibimbap!', 5, current_timestamp);
+       (1, 9, 'Bomb Bibimbap!', 5, current_timestamp),
+       (1, 10, 'Best Jjajangmyeon I ever had', 5, current_timestamp);
 
 
 
@@ -92,7 +98,9 @@ values (1, 1),
        (6, 2),
        (7, 3),
        (8, 10),
-       (9, 8);
+       (9, 8),
+       (10, 3),
+       (10, 8);
 
 insert into "favorites" ("userId", "chefId")
 values (1, 1)
