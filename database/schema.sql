@@ -11,6 +11,7 @@ CREATE TABLE "public"."users" (
 	"username" TEXT NOT NULL,
 	"password" TEXT NOT NULL,
 	"createdAt" timestamp with time zone NOT NULL,
+  "photoUrl" TEXT,
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
