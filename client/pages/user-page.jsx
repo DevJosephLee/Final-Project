@@ -8,10 +8,12 @@ class UserPage extends React.Component {
       username: null,
       chefs: [],
       reviews: [],
+      photoUrl: '',
       confModalOpened: false
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.closeConfModal = this.closeConfModal.bind(this);
+    this.handlePhotoUpload = this.handlePhotoUpload.bind(this);
   }
 
   componentDidMount() {
@@ -76,6 +78,13 @@ class UserPage extends React.Component {
     this.setState({ confModalOpened: false });
   }
 
+  handlePhotoUpload(event) {
+    // const token = window.localStorage.getItem('user-jwt');
+    // console.log(event.target);
+    // console.log('success');
+    // console.log(event.target.files[0]);
+  }
+
   render() {
     return (
       <div className="container pb-5 mt-5">
@@ -85,6 +94,10 @@ class UserPage extends React.Component {
             <h3>{this.state.username}</h3>
           </div>
         </div>
+        <form>
+          <label htmlFor="photoUpload">Add Photo</label>
+          <input type="file" id="photoUpload" onChange={this.handlePhotoUpload}/>
+        </form>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
           {
