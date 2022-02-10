@@ -242,6 +242,25 @@ app.get('/api/userProfile/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/userProfile/', (req, res, next) => {
+  const { userId } = req.user;
+  const photoUrl = req.body.photoUrl;
+  if (!photoUrl) {
+    throw new ClientError(400, 'photoUrl is a required field');
+  }
+  const sql = `
+    insert into "users" ("photoUrl", "userId")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [photoUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/userProfile/:chefId', (req, res, next) => {
   const { userId } = req.user;
   const chefId = Number(req.params.chefId);
