@@ -262,7 +262,8 @@ app.get('/api/userProfile/', (req, res, next) => {
 //     })
 //     .catch(err => next(err));
 // });
-app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
+
+app.post('/api/userProfile/uploads', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   const photoUrl = path.join('/images', req.file.filename);
   const sql = `
@@ -278,7 +279,20 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get();
+app.get('/api/userProfile/images', (req, res, next) => {
+  // const { userId } = req.user;
+  // const sql = `
+  // select "photoUrl"
+  // from "images"
+  // where "userId" = $1
+  // `;
+  // const params = [userId];
+  // db.query(sql, params)
+  //   .then(result => {
+  //     res.json(result.rows);
+  //   })
+  //   .catch(err => next(err));
+});
 
 app.post('/api/userProfile/:chefId', (req, res, next) => {
   const { userId } = req.user;

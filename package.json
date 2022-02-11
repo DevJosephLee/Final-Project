@@ -1,8 +1,8 @@
 {
-  "name": "final-project",
+  "name": "chefconnect",
   "version": "1.0.0",
   "private": true,
-  "description": "A full stack JavaScript solo project.",
+  "description": "A full-stack web application for food enthusiasts who want to connect with chefs.",
   "main": "server/index.js",
   "scripts": {
     "build": "webpack --mode=production",
