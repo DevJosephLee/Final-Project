@@ -83,13 +83,19 @@ class UserPage extends React.Component {
     // console.log(event.target);
     // console.log('success');
     // console.log(event.target.files[0]);
+    this.setState({ photoUrl: event.target.files[0].name });
   }
 
   render() {
     return (
       <div className="container pb-5 mt-5">
         <div className="text-center mb-5">
-          <i className="far fa-grin user-icon"></i>
+          {
+            this.state.photoUrl === ''
+              ? <i className="far fa-grin user-icon"></i>
+              : <img src={this.state.photoUrl} />
+          }
+
           <div className="mt-2">
             <h3>{this.state.username}</h3>
           </div>

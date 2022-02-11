@@ -11,13 +11,17 @@ CREATE TABLE "public"."users" (
 	"username" TEXT NOT NULL,
 	"password" TEXT NOT NULL,
 	"createdAt" timestamp with time zone NOT NULL,
-  "photoUrl" TEXT,
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
 ) WITH (
   OIDS=FALSE
 );
 
-
+CREATE TABLE "public"."images" (
+	"photoUrl" TEXT NOT NULL,
+	"userId" int
+) WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE "public"."reviews" (
 	"reviewId" serial NOT NULL,
