@@ -271,7 +271,10 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
   returning *
   `;
   const params = [photoUrl, userId];
-  db.query(sql, params);
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    });
 });
 
 app.post('/api/userProfile/:chefId', (req, res, next) => {
