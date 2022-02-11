@@ -280,17 +280,17 @@ app.post('/api/userProfile/uploads', uploadsMiddleware, (req, res, next) => {
 });
 
 app.get('/api/userProfile/images', (req, res, next) => {
-  // const { userId } = req.user;
-  // const sql = `
-  // select "photoUrl"
-  // from "images"
-  // where "userId" = $1
-  // `;
-  // const params = [userId];
-  // db.query(sql, params)
-  //   .then(result => {
-  //     res.json(result.rows);
-  //   })
+  const { userId } = req.user;
+  const sql = `
+  select "photoUrl"
+  from "images"
+  where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    });
   //   .catch(err => next(err));
 });
 
