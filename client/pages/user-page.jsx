@@ -51,6 +51,17 @@ class UserPage extends React.Component {
         this.setState({ reviews: result });
       })
       .catch(err => console.error(err));
+
+    fetch('/api/userProfile/images', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ photoUrl: result });
+      })
+      .catch(err => console.error(err));
   }
 
   handleDeleteClick(event) {
