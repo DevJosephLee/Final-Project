@@ -290,8 +290,8 @@ app.get('/api/userProfile/images', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
-    });
-  //   .catch(err => next(err));
+    })
+    .catch(err => next(err));
 });
 
 app.post('/api/userProfile/:chefId', (req, res, next) => {
