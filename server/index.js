@@ -278,6 +278,8 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get();
+
 app.post('/api/userProfile/:chefId', (req, res, next) => {
   const { userId } = req.user;
   const chefId = Number(req.params.chefId);
