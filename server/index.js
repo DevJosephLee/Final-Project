@@ -7,6 +7,8 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
+// const path = require('path');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -260,7 +262,17 @@ app.get('/api/userProfile/', (req, res, next) => {
 //     })
 //     .catch(err => next(err));
 // });
-app.post();
+app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
+  // const { userId } = req.user;
+  // const photoUrl = path.join('/images', req.file.filename);
+  // const sql = `
+  // insert into "images" ("photoUrl", "userId")
+  // values ($1, $2)
+  // returning *
+  // `;
+  // const params = [photoUrl, userId];
+
+});
 
 app.post('/api/userProfile/:chefId', (req, res, next) => {
   const { userId } = req.user;
