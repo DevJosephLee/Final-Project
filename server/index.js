@@ -282,8 +282,8 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
 app.get('/api/images', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-  select "photoUrl"
-  from "users"
+  select "url"
+  from "images"
   where "userId" = $1
   `;
   const params = [userId];

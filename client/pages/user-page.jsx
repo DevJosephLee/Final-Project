@@ -8,12 +8,12 @@ class UserPage extends React.Component {
       username: null,
       chefs: [],
       reviews: [],
-      photoUrl: '',
       confModalOpened: false
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.closeConfModal = this.closeConfModal.bind(this);
-    this.handlePhotoUpload = this.handlePhotoUpload.bind(this);
+    this.fileInputRef = React.createRef();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -52,16 +52,16 @@ class UserPage extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch('/api/userProfile/images', {
-      headers: {
-        'X-Access-Token': token
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
-        this.setState({ photoUrl: result });
-      })
-      .catch(err => console.error(err));
+    // fetch('/api/userProfile/images', {
+    //   headers: {
+    //     'X-Access-Token': token
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     this.setState({ photoUrl: result });
+    //   })
+    //   .catch(err => console.error(err));
   }
 
   handleDeleteClick(event) {
@@ -89,31 +89,43 @@ class UserPage extends React.Component {
     this.setState({ confModalOpened: false });
   }
 
-  handlePhotoUpload(event) {
-    // const token = window.localStorage.getItem('user-jwt');
-    // console.log(event.target);
-    // console.log('success');
-    // console.log(event.target.files[0]);
-    this.setState({ photoUrl: event.target.files[0].name });
+  handleSubmit(event) {
+    const token = window.localStorage.getItem('user-jwt');
+    event.preventDefault();
+    const form = new FormData();
+    form.append('image', this.fileInputRef.current.files[0]);
+    fetch('/api/uploads', {
+      method: 'POST',
+      headers: {
+        'X-Access-Token': token
+      },
+      body: form
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.fileInputRef.current.value = null;
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
     return (
       <div className="container pb-5 mt-5">
         <div className="text-center mb-5">
-          {
+          {/* {
             this.state.photoUrl === ''
               ? <i className="far fa-grin user-icon"></i>
               : <img src={this.state.photoUrl} />
-          }
+          } */}
 
           <div className="mt-2">
             <h3>{this.state.username}</h3>
           </div>
         </div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor="photoUpload">Add Photo</label>
-          <input type="file" id="photoUpload" onChange={this.handlePhotoUpload}/>
+          <input type="file" id="photoUpload" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif"/>
+          <button type="submit" className="btn btn-primary">Upload</button>
         </form>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
