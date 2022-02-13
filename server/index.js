@@ -263,15 +263,15 @@ app.get('/api/userProfile/', (req, res, next) => {
 //     .catch(err => next(err));
 // });
 
-app.post('/api/userProfile/uploads', uploadsMiddleware, (req, res, next) => {
+app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
-  const photoUrl = path.join('/images', req.file.filename);
+  const url = path.join('/images', req.file.filename);
   const sql = `
-  insert into "images" ("photoUrl", "userId")
+  insert into "images" ("userId", "url")
   values ($1, $2)
   returning *
   `;
-  const params = [photoUrl, userId];
+  const params = [userId, url];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
@@ -279,11 +279,11 @@ app.post('/api/userProfile/uploads', uploadsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.get('/api/userProfile/images', (req, res, next) => {
+app.get('/api/images', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
   select "photoUrl"
-  from "images"
+  from "users"
   where "userId" = $1
   `;
   const params = [userId];
