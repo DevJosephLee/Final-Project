@@ -8,11 +8,9 @@ class UserPage extends React.Component {
       username: null,
       chefs: [],
       reviews: [],
-      photoUrl: [],
-      confModalOpened: false
+      photoUrl: []
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.closeConfModal = this.closeConfModal.bind(this);
     this.fileInputRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -87,11 +85,6 @@ class UserPage extends React.Component {
         this.setState({ chefs: newChefArray });
       })
       .catch(err => console.error(err));
-    this.setState({ confModalOpened: true });
-  }
-
-  closeConfModal() {
-    this.setState({ confModalOpened: false });
   }
 
   handleSubmit(event) {
@@ -128,7 +121,7 @@ class UserPage extends React.Component {
         <div>
         </div>
         <div className="d-flex justify-content-center mb-5">
-          <button className="add-profile-picture-button" data-toggle="modal" data-target="#pictureUploadModal">Add Profile Picture</button>
+          <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#pictureUploadModal">Add Profile Picture</button>
         </div>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
@@ -232,21 +225,21 @@ class UserPage extends React.Component {
             </div>
           </div>
         </div>
-        <div className="modal fade" id="pictureUploadModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div className="modal-dialog" role="document">
+        <div className="modal fade" id="pictureUploadModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title" id="exampleModalLabel">Add Profile Picture</h5>
-                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form onSubmit={this.handleSubmit}>
-                <div className="modal-body">
-                  <input type="file" id="photoUpload" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
-                </div>
-                <div className="modal-footer d-flex justify-content-between">
-                  <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" className="btn btn-primary" data-dismiss="modal">Upload</button>
-                </div>
+              <div className="modal-body">
+                <input type="file" id="photoUpload" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
+              </div>
+              <div className="modal-footer d-flex justify-content-between">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
+              </div>
               </form>
             </div>
           </div>
