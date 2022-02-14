@@ -105,5 +105,8 @@ values (1, 1),
 insert into "favorites" ("userId", "chefId")
 values (1, 1);
 
+insert into "images" ("userId", "url")
+values (1, 'images/testing-image.jpeg')
+
 -- insert into "images" ("userId", "photoUrl")
 -- values(2, 'hotdog.jpeg');

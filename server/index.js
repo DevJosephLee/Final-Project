@@ -142,6 +142,7 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
   select *
   from "reviews"
   join "users" using ("userId")
+  join "images" using ("userId")
   where "chefId" = $1
   `;
   const params = [chefId];
@@ -243,25 +244,6 @@ app.get('/api/userProfile/', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-
-// app.post('/api/userProfile/', (req, res, next) => {
-//   const { userId } = req.user;
-//   const photoUrl = req.body.photoUrl;
-//   if (!photoUrl) {
-//     throw new ClientError(400, 'photoUrl is a required field');
-//   }
-//   const sql = `
-//     insert into "users" ("photoUrl", "userId")
-//     values ($1, $2)
-//     returning *
-//   `;
-//   const params = [photoUrl, userId];
-//   db.query(sql, params)
-//     .then(result => {
-//       res.json(result.rows);
-//     })
-//     .catch(err => next(err));
-// });
 
 app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
