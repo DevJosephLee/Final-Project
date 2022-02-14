@@ -3,9 +3,24 @@ body {
   background: linear-gradient(90deg, #f7f4f2 100%, white 100%);
 }
 
-.profile-picture {
+.profile-picture,
+.user-profile-picture {
   height: 190px;
   object-fit: contain;
+}
+
+.add-profile-picture-button {
+  border: none;
+  color: blue;
+  background-color: #f7f4f2;
+}
+
+.add-profile-picture-button:hover {
+  text-decoration: underline;
+}
+
+.user-profile-picture {
+  border-radius: 50%;
 }
 
 .profile-page-picture {
