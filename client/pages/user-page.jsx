@@ -8,10 +8,11 @@ class UserPage extends React.Component {
       username: null,
       chefs: [],
       reviews: [],
-      confModalOpened: false
+      photoUrl: []
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
-    this.closeConfModal = this.closeConfModal.bind(this);
+    this.fileInputRef = React.createRef();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -49,6 +50,21 @@ class UserPage extends React.Component {
         this.setState({ reviews: result });
       })
       .catch(err => console.error(err));
+
+    fetch('/api/images', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.length > 0) {
+          this.setState({ photoUrl: result[0].url });
+        } else {
+          this.setState({ photoUrl: '/images/testing-image.jpeg' });
+        }
+      })
+      .catch(err => console.error(err));
   }
 
   handleDeleteClick(event) {
@@ -69,21 +85,43 @@ class UserPage extends React.Component {
         this.setState({ chefs: newChefArray });
       })
       .catch(err => console.error(err));
-    this.setState({ confModalOpened: true });
   }
 
-  closeConfModal() {
-    this.setState({ confModalOpened: false });
+  handleSubmit(event) {
+    const token = window.localStorage.getItem('user-jwt');
+    event.preventDefault();
+    const form = new FormData();
+    form.append('image', this.fileInputRef.current.files[0]);
+    fetch('/api/uploads', {
+      method: 'POST',
+      headers: {
+        'X-Access-Token': token
+      },
+      body: form
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.fileInputRef.current.value = null;
+        this.setState({ photoUrl: result[0].url });
+      })
+      .catch(err => console.error(err));
   }
 
   render() {
     return (
       <div className="container pb-5 mt-5">
-        <div className="text-center mb-5">
-          <i className="far fa-grin user-icon"></i>
+        <div className="text-center">
+          <div className="d-flex justify-content-center">
+            <img src={this.state.photoUrl} className="user-profile-picture shadow"/>
+          </div>
           <div className="mt-2">
             <h3>{this.state.username}</h3>
           </div>
+        </div>
+        <div>
+        </div>
+        <div className="d-flex justify-content-center mb-5">
+          <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#pictureUploadModal">Add Profile Picture</button>
         </div>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
@@ -184,6 +222,25 @@ class UserPage extends React.Component {
               <div className="modal-footer">
                 <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="modal fade" id="pictureUploadModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Add Profile Picture</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <form onSubmit={this.handleSubmit}>
+              <div className="modal-body">
+                <input type="file" id="photoUpload" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
+              </div>
+              <div className="modal-footer d-flex justify-content-between">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
+              </div>
+              </form>
             </div>
           </div>
         </div>

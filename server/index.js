@@ -7,6 +7,8 @@ const errorMiddleware = require('./error-middleware');
 const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
+const uploadsMiddleware = require('./uploads-middleware');
+const path = require('path');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -140,6 +142,7 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
   select *
   from "reviews"
   join "users" using ("userId")
+  join "images" using ("userId")
   where "chefId" = $1
   `;
   const params = [chefId];
@@ -233,6 +236,37 @@ app.get('/api/userProfile/', (req, res, next) => {
     select "username"
     from   "users"
     where  "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
+  const url = path.join('/images', req.file.filename);
+  const sql = `
+  insert into "images" ("userId", "url")
+  values ($1, $2)
+  returning *
+  `;
+  const params = [userId, url];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/images', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+  select "url"
+  from "images"
+  where "userId" = $1
   `;
   const params = [userId];
   db.query(sql, params)

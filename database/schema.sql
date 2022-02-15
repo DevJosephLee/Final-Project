@@ -16,7 +16,12 @@ CREATE TABLE "public"."users" (
   OIDS=FALSE
 );
 
-
+CREATE TABLE "public"."images" (
+	"url" TEXT NOT NULL,
+	"userId" int NOT NULL
+) WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE "public"."reviews" (
 	"reviewId" serial NOT NULL,
@@ -30,16 +35,12 @@ CREATE TABLE "public"."reviews" (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE "public"."favorites" (
 	"userId" int NOT NULL,
 	"chefId" int NOT NULL
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 CREATE TABLE "public"."chefs" (
 	"chefId" serial NOT NULL,
