@@ -25,6 +25,7 @@ class UserPage extends React.Component {
       .then(response => response.json())
       .then(result => {
         const [user] = result;
+        this.setState({ photoUrl: user.photoUrl });
         this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
@@ -50,21 +51,6 @@ class UserPage extends React.Component {
         this.setState({ reviews: result });
       })
       .catch(err => console.error(err));
-
-    fetch('/api/images', {
-      headers: {
-        'X-Access-Token': token
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
-        if (result.length > 0) {
-          this.setState({ photoUrl: result[0].url });
-        } else {
-          this.setState({ photoUrl: '/images/testing-image.jpeg' });
-        }
-      })
-      .catch(err => console.error(err));
   }
 
   handleDeleteClick(event) {
@@ -88,8 +74,8 @@ class UserPage extends React.Component {
   }
 
   handleSubmit(event) {
-    const token = window.localStorage.getItem('user-jwt');
     event.preventDefault();
+    const token = window.localStorage.getItem('user-jwt');
     const form = new FormData();
     form.append('image', this.fileInputRef.current.files[0]);
     fetch('/api/uploads', {
@@ -102,7 +88,7 @@ class UserPage extends React.Component {
       .then(response => response.json())
       .then(result => {
         this.fileInputRef.current.value = null;
-        this.setState({ photoUrl: result[0].url });
+        this.setState({ photoUrl: result[0].photoUrl });
       })
       .catch(err => console.error(err));
   }

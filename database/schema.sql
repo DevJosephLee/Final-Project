@@ -11,14 +11,8 @@ CREATE TABLE "public"."users" (
 	"username" TEXT NOT NULL,
 	"password" TEXT NOT NULL,
 	"createdAt" timestamp with time zone NOT NULL,
+  "photoUrl" TEXT NOT NULL,
 	CONSTRAINT "users_pk" PRIMARY KEY ("userId")
-) WITH (
-  OIDS=FALSE
-);
-
-CREATE TABLE "public"."images" (
-	"url" TEXT NOT NULL,
-	"userId" int NOT NULL
 ) WITH (
   OIDS=FALSE
 );

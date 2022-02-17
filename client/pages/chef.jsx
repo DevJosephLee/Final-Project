@@ -16,7 +16,7 @@ class ChefProfile extends React.Component {
       reviews: [],
       savedChefs: [],
       rating: 1,
-      photoUrl: null,
+      photoUrl: 'images/testing-image.jpeg',
       isSaved: false
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,11 +61,7 @@ class ChefProfile extends React.Component {
     })
       .then(response => response.json())
       .then(data => {
-        if (data.length > 0) {
-          this.setState({ photoUrl: data[0].url });
-        } else {
-          this.setState({ photoUrl: 'images/testing-image.jpeg' });
-        }
+        this.setState({ photoUrl: data[0].photoUrl });
       })
       .catch(err => console.error(err));
 
@@ -95,7 +91,7 @@ class ChefProfile extends React.Component {
       .then(newReview => {
         const payload = decodeToken(token);
         newReview.username = payload.username;
-        newReview.url = this.state.photoUrl;
+        newReview.photoUrl = this.state.photoUrl;
         this.setState({ reviews: [].concat(this.state.reviews, newReview) });
       })
       .catch(err => {
