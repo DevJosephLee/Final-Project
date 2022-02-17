@@ -34,8 +34,8 @@ app.post('/api/auth/sign-up', (req, res, next) => {
     .hash(password)
     .then(password => {
       const sql = `
-      insert into "users" ("username", "password", "createdAt")
-      values ($1, $2, current_timestamp)
+      insert into "users" ("username", "password", "photoUrl", "createdAt")
+      values ($1, $2, 'images/testing-image.jpeg', current_timestamp)
       returning "username", "createdAt", "userId"
       `;
       const params = [username, password];
@@ -142,7 +142,6 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
   select *
   from "reviews"
   join "users" using ("userId")
-  join "images" using ("userId")
   where "chefId" = $1
   `;
   const params = [chefId];
@@ -233,7 +232,7 @@ app.post('/api/review/:chefId/', (req, res, next) => {
 app.get('/api/userProfile/', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select "username"
+    select "username", "photoUrl"
     from   "users"
     where  "userId" = $1
   `;
@@ -247,13 +246,14 @@ app.get('/api/userProfile/', (req, res, next) => {
 
 app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
-  const url = path.join('/images', req.file.filename);
+  const photoUrl = path.join('/images', req.file.filename);
   const sql = `
-  insert into "images" ("userId", "url")
-  values ($1, $2)
-  returning *
+  update "users"
+     set "photoUrl" = $1
+   where "userId" = $2
+   returning *
   `;
-  const params = [userId, url];
+  const params = [photoUrl, userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
@@ -264,8 +264,8 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
 app.get('/api/images', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-  select "url"
-  from "images"
+  select "photoUrl"
+  from "users"
   where "userId" = $1
   `;
   const params = [userId];
@@ -301,7 +301,7 @@ app.post('/api/userProfile/:chefId', (req, res, next) => {
 app.get('/api/userProfile/chefs', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    select   "chefId", "chefs"."name", "chefs"."photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
     from     "favorites"
     join     "users" using ("userId")
     join     "chefs" using ("chefId")
