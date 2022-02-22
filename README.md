@@ -4,7 +4,7 @@
 A full-stack web application for food enthusiasts who want to connect with chefs. 
 
 ## Inspiration
-I wanted to make an app where users can easily look up information about chefs and connect with them. 
+I wanted to make an app where users can easily look up information about chefs, rate, and comment about them. 
 
 ## Live Demo
 https://chef-connect-1.herokuapp.com/
