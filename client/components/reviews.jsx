@@ -16,7 +16,7 @@ function Reviews(props) {
               <StarRating rating={reviews.rating} />
             </div>
           </div>
-          <div className="">
+          <div>
             <p className="mx-3 mx-md-5 mx-lg-3 mx-xl-4 mx-xxl-5">{reviews.content}</p>
           </div>
         </div>
