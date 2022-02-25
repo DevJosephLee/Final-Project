@@ -17,7 +17,7 @@ function Reviews(props) {
             </div>
           </div>
           <div className="">
-            <p className="ms-3 ms-md-5 ms-lg-3 ms-xl-4 ms-xxl-5">{reviews.content}</p>
+            <p className="mx-3 mx-md-5 mx-lg-3 mx-xl-4 mx-xxl-5">{reviews.content}</p>
           </div>
         </div>
       );
