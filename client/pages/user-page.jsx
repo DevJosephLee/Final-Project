@@ -77,7 +77,7 @@ class UserPage extends React.Component {
     event.preventDefault();
     const token = window.localStorage.getItem('user-jwt');
     const form = new FormData();
-    form.append('image', this.fileInputRef.current.files[0]);
+    form.append('file-to-upload', this.fileInputRef.current.files[0]);
     fetch('/api/uploads', {
       method: 'POST',
       headers: {

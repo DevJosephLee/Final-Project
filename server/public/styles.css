@@ -6,6 +6,7 @@ body {
 .profile-picture,
 .user-profile-picture {
   height: 190px;
+  width: 190px;
   object-fit: contain;
 }
 
