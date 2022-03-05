@@ -175,7 +175,7 @@ class UserPage extends React.Component {
                             <h3>{review.name}</h3>
                             <h5>{review.createdAt.slice(0, 10)}</h5>
                             <StarRating rating={review.rating} />
-                            <p>{review.content}</p>
+                            <p className="review-section">{review.content}</p>
                           </div>
                         </div>
                       </div>
