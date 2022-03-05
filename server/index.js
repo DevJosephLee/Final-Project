@@ -8,6 +8,7 @@ const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const path = require('path');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -245,14 +246,14 @@ app.get('/api/userProfile/', (req, res, next) => {
 
 app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
-  const fileUrl = req.file.location;
+  const photoUrl = path.join('/images', req.file.filename);
   const sql = `
   update "users"
      set "photoUrl" = $1
    where "userId" = $2
    returning *
   `;
-  const params = [fileUrl, userId];
+  const params = [photoUrl, userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
