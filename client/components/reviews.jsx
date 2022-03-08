@@ -10,7 +10,7 @@ function Reviews(props) {
             <div className="col-4 text-center">
               <img src={reviews.photoUrl} className="user-picture shadow" />
             </div>
-            <div className="col-8">
+            <div className="col-8 ms-3">
               <h3>{reviews.username}</h3>
               <h5>{reviews.createdAt.slice(0, 10)}</h5>
               <StarRating rating={reviews.rating} />
