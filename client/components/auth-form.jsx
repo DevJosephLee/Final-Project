@@ -78,7 +78,7 @@ export default class AuthForm extends React.Component {
       : '#sign-up';
     const alternateActionText = action === 'sign-up'
       ? 'Sign in'
-      : 'Register';
+      : 'Register now';
     const alternateActionDesc = action === 'sign-up'
       ? 'Already have an account?'
       : "Don't have an account?";
@@ -89,34 +89,32 @@ export default class AuthForm extends React.Component {
       ? 'SIGN UP'
       : 'LOG IN';
     return (
-      <div className="container">
-        <div className="bg-white p-4 rounded shadow mt-4">
-          <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <label htmlFor="usernameInput" className="form-label">Username</label>
-              <input onChange={handleChange} type="text" name="username" className="form-control" id="usernameInput" aria-describedby="usernameHelp" required autoFocus />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="passwordInput" className="form-label">Password</label>
-              <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
-            </div>
-            <div className="mb-4">
-              <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
-            </div>
-            <div className="mb-4">
-              <p className="text-center">
-                {alternateActionDesc}&nbsp;&nbsp;
-                <a href={alternateActionHref}>
-                  {alternateActionText}
-                </a>
-              </p>
-            </div>
-            <div className="d-flex justify-content-center">
-              <a href="#search" onClick={handleGuestLogin}>Continue as Guest</a>
-            </div>
-          </form>
-        </div>
+      <div className="bg-white p-4 rounded shadow mt-4">
+        <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label htmlFor="usernameInput" className="form-label">Username</label>
+            <input onChange={handleChange} type="text" name="username" className="form-control" id="usernameInput" aria-describedby="usernameHelp" required autoFocus />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="passwordInput" className="form-label">Password</label>
+            <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
+          </div>
+          <div className="mb-4">
+            <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
+          </div>
+          <div className="mb-4">
+            <p className="text-center">
+              {alternateActionDesc}&nbsp;&nbsp;
+              <a href={alternateActionHref}>
+                {alternateActionText}
+              </a>
+            </p>
+          </div>
+          <div className="d-flex justify-content-center">
+            <a href="#search" onClick={handleGuestLogin}>Continue as Guest</a>
+          </div>
+        </form>
       </div>
     );
   }

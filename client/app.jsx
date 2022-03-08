@@ -32,7 +32,6 @@ export default class App extends React.Component {
     const user = token ? decodeToken(token) : null;
     this.setState({ user, isAuthorizing: false });
     this.setState({ hideSpinner: true });
-    window.location.hash = 'sign-in';
   }
 
   handleSignIn(result) {
