@@ -78,7 +78,7 @@ export default class AuthForm extends React.Component {
       : '#sign-up';
     const alternateActionText = action === 'sign-up'
       ? 'Sign in'
-      : 'Register now';
+      : 'Register';
     const alternateActionDesc = action === 'sign-up'
       ? 'Already have an account?'
       : "Don't have an account?";
