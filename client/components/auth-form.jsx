@@ -6,7 +6,8 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      unauthorizedModalOpen: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -49,6 +50,10 @@ export default class AuthForm extends React.Component {
         } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
+        } else if (action === 'sign-in' && !result.user && !result.token) {
+          this.setState({ unauthorizedModalOpen: true });
+        } else if (action !== 'sign-in') {
+          this.setState({ unauthorizedModalOpen: false });
         }
       });
   }
@@ -88,6 +93,12 @@ export default class AuthForm extends React.Component {
     const welcomeMessage = action === 'sign-up'
       ? 'SIGN UP'
       : 'LOG IN';
+    const dataBsToggle = this.state.unauthorizedModalOpen
+      ? ''
+      : 'modal';
+    const dataBsTarget = this.state.unauthorizedModalOpen
+      ? ''
+      : '#unauthorizedModal';
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
@@ -101,7 +112,7 @@ export default class AuthForm extends React.Component {
             <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
           </div>
           <div className="mb-4">
-            <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
+            <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}>{submitButtonText}</button>
           </div>
           <div className="mb-4">
             <p className="text-center">
@@ -115,6 +126,22 @@ export default class AuthForm extends React.Component {
             <a href="#search" onClick={handleGuestLogin}>Continue as Guest</a>
           </div>
         </form>
+        <div className="modal fade" id="unauthorizedModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalToggleLabel">Failed!</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                Username or Password are incorrect.
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
