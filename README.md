@@ -1,7 +1,7 @@
 # Chefconnect
 
 ## Description
-A full-stack web application for food enthusiasts who want to connect with chefs. 
+A full-stack web application for food enthusiasts who want to review chefs. 
 
 ## Inspiration
 I wanted to make an app where users can easily look up information about chefs, rate, and comment about them. 
