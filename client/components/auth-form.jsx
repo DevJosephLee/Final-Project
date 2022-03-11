@@ -50,11 +50,22 @@ export default class AuthForm extends React.Component {
         } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
-        } else if (action === 'sign-in' && !result.user && !result.token) {
+        } else if (!result.user && !result.token) {
           this.setState({ unauthorizedModalOpen: true });
-        } else if (action !== 'sign-in') {
-          this.setState({ unauthorizedModalOpen: false });
         }
+        // else if (result.error === 'invalid login') {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // } else {
+        //   this.setState({ unauthorizedModalOpen: false });
+        // }
+        // else if (result.userId && result.createdAt) {
+        //   this.setState({ unauthorizedModalOpen: false });
+        // }
+        // else if (action === 'sign-in' && !result.user && !result.token) {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // } else if (action !== 'sign-in') {
+        //   this.setState({ unauthorizedModalOpen: false });
+        // }
       });
   }
 
@@ -93,10 +104,10 @@ export default class AuthForm extends React.Component {
     const welcomeMessage = action === 'sign-up'
       ? 'SIGN UP'
       : 'LOG IN';
-    const dataBsToggle = this.state.unauthorizedModalOpen
+    const dataBsToggle = this.state.unauthorizedModalOpen && action === 'sign-in'
       ? ''
       : 'modal';
-    const dataBsTarget = this.state.unauthorizedModalOpen
+    const dataBsTarget = this.state.unauthorizedModalOpen && action === 'sign-in'
       ? ''
       : '#unauthorizedModal';
     return (
@@ -113,6 +124,8 @@ export default class AuthForm extends React.Component {
           </div>
           <div className="mb-4">
             <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}>{submitButtonText}</button>
+            {/* <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button> */}
+
           </div>
           <div className="mb-4">
             <p className="text-center">
@@ -148,3 +161,7 @@ export default class AuthForm extends React.Component {
 }
 
 AuthForm.ContextType = AppContext;
+
+// modal must not open when going from sign-up to sign-in
+// modal must open when in sign-in, unath access
+// modal must not open on any other components other than sign-in
