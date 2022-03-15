@@ -20,6 +20,7 @@ https://chef-connect-1.herokuapp.com/
 - Bootstrap 5
 - Webpack
 - Heroku
+- AWS S3
 
 ## Features
 - User can create an account.
