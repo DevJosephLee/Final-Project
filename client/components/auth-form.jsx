@@ -6,8 +6,8 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      unauthorizedModalOpen: false
+      password: ''
+      // unauthorizedModalOpen: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,12 +50,29 @@ export default class AuthForm extends React.Component {
         } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
-        } else if (!result.user && !result.token) {
-          this.setState({ unauthorizedModalOpen: true });
         }
-        // else if (result.error === 'invalid login') {
+        // else if (!result.user && !result.token) {
         //   this.setState({ unauthorizedModalOpen: true });
-        // } else {
+        // }
+        // else if (action === 'sign-in' && !result.user && !result.token) {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // }
+        // else if (result.error) {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // } else if (result.createdAt) {
+        //   this.setState({ unauthorizedModalOpen: false });
+        // }
+        // console.log(result);
+        // else {
+        //   $('#unauthorizedModal').modal('hide');
+        // }
+        //  else if (result.error) {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // }
+        //  else if (!result.user && !result.token) {
+        //   this.setState({ unauthorizedModalOpen: true });
+        // }
+        // else {
         //   this.setState({ unauthorizedModalOpen: false });
         // }
         // else if (result.userId && result.createdAt) {
@@ -104,12 +121,15 @@ export default class AuthForm extends React.Component {
     const welcomeMessage = action === 'sign-up'
       ? 'SIGN UP'
       : 'LOG IN';
-    const dataBsToggle = this.state.unauthorizedModalOpen && action === 'sign-in'
-      ? ''
-      : 'modal';
-    const dataBsTarget = this.state.unauthorizedModalOpen && action === 'sign-in'
-      ? ''
-      : '#unauthorizedModal';
+    // const dataBsToggle = this.state.unauthorizedModalOpen
+    //   ? ''
+    //   : 'modal';
+    // const dataBsTarget = this.state.unauthorizedModalOpen
+    //   ? ''
+    //   : '#unauthorizedModal';
+    const submitButton = action === 'sign-up'
+      ? <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
+      : <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle='modal' data-bs-target='#unauthorizedModal'>{submitButtonText}</button>;
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
@@ -123,9 +143,11 @@ export default class AuthForm extends React.Component {
             <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
           </div>
           <div className="mb-4">
-            <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}>{submitButtonText}</button>
+            {/* <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle='modal' data-bs-target='#unauthorizedModal'>{submitButtonText}</button> */}
             {/* <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button> */}
-
+            {/* <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={dataBsToggle} data-bs-target={dataBsTarget}>{submitButtonText}</button> */}
+            {/* <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button> */}
+            {submitButton}
           </div>
           <div className="mb-4">
             <p className="text-center">
@@ -162,6 +184,5 @@ export default class AuthForm extends React.Component {
 
 AuthForm.ContextType = AppContext;
 
-// modal must not open when going from sign-up to sign-in
 // modal must open when in sign-in, unath access
 // modal must not open on any other components other than sign-in
