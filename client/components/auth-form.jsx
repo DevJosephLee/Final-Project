@@ -6,12 +6,13 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: ''
-      // unauthorizedModalOpen: false
+      password: '',
+      unauthorizedModalOpen: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleGuestLogin = this.handleGuestLogin.bind(this);
+    // this.handleModal = this.handleModal.bind(this);
   }
 
   componentDidMount() {
@@ -50,10 +51,9 @@ export default class AuthForm extends React.Component {
         } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
+        } else if (!result.user && !result.token) {
+          this.setState({ unauthorizedModalOpen: true });
         }
-        // else if (!result.user && !result.token) {
-        //   this.setState({ unauthorizedModalOpen: true });
-        // }
         // else if (action === 'sign-in' && !result.user && !result.token) {
         //   this.setState({ unauthorizedModalOpen: true });
         // }
@@ -103,6 +103,10 @@ export default class AuthForm extends React.Component {
       });
   }
 
+  componentWillUnmount() {
+    this.setState({ unauthorizedModalOpen: false });
+  }
+
   render() {
     const { action } = this.props;
     const { handleChange, handleSubmit, handleGuestLogin } = this;
@@ -124,12 +128,12 @@ export default class AuthForm extends React.Component {
     // const dataBsToggle = this.state.unauthorizedModalOpen
     //   ? ''
     //   : 'modal';
-    // const dataBsTarget = this.state.unauthorizedModalOpen
-    //   ? ''
-    //   : '#unauthorizedModal';
+    const dataBsTarget = this.state.unauthorizedModalOpen
+      ? ''
+      : '#unauthorizedModal';
     const submitButton = action === 'sign-up'
       ? <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
-      : <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle='modal' data-bs-target='#unauthorizedModal'>{submitButtonText}</button>;
+      : <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={window.location.hash === 'sign-in' ? '' : 'modal'} data-bs-target={dataBsTarget}>{submitButtonText}</button>;
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
