@@ -359,6 +359,24 @@ app.get('/api/userProfile/reviews', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/userProfile/becomeChef', (req, res, next) => {
+  const { userId } = req.user;
+  const photoUrl = req.file.location;
+  const name = req.body.name;
+  const bio = req.body.bio;
+  const sql = `
+    insert into "chefs" ("name", "photoUrl", "bio", "userId")
+    values ($1, $2, $3, $4)
+    returning *
+  `;
+  const params = [name, photoUrl, bio, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
