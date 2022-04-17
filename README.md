@@ -41,6 +41,7 @@ https://chef-connect-1.herokuapp.com/
 
 ## Stretch Features
 - User can become a chef.
+- User can live message chefs. 
 
 ## Instructions
 Continue as guest or create an account. 
