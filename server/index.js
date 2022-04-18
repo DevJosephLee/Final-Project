@@ -359,11 +359,12 @@ app.get('/api/userProfile/reviews', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/userProfile/becomeChef', (req, res, next) => {
+app.post('/api/becomeChef', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
-  const photoUrl = req.file.location;
+  const photoUrl = req.body.photoUrl;
   const name = req.body.name;
   const bio = req.body.bio;
+  // const chefId = Number(req.params.chefId);
   const sql = `
     insert into "chefs" ("name", "photoUrl", "bio", "userId")
     values ($1, $2, $3, $4)
