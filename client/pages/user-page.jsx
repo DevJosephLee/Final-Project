@@ -101,7 +101,7 @@ class UserPage extends React.Component {
 
   handleMakeChefProfileClick() {
     const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
-    const lastChefId = lastChef.chefId;
+    const lastChefId = lastChef.chefId + 1;
     window.location.hash = 'becomeChef?chefId=' + lastChefId;
   }
 
