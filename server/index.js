@@ -82,6 +82,18 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/chefs', (req, res, next) => {
+  const sql = `
+  select "chefId"
+  from "chefs"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/chefs/:chefId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
@@ -359,18 +371,52 @@ app.get('/api/userProfile/reviews', (req, res, next) => {
     .catch(err => next(err));
 });
 
-app.post('/api/becomeChef', uploadsMiddleware, (req, res, next) => {
+app.post('/api/becomeChef/:chefId', (req, res, next) => {
   const { userId } = req.user;
   const photoUrl = req.body.photoUrl;
   const name = req.body.name;
   const bio = req.body.bio;
-  // const chefId = Number(req.params.chefId);
+  const chefId = Number(req.params.chefId);
   const sql = `
-    insert into "chefs" ("name", "photoUrl", "bio", "userId")
-    values ($1, $2, $3, $4)
+    insert into "chefs" ("name", "photoUrl", "bio", "userId", "chefId", "createdAt")
+    values ($1, $2, $3, $4, $5, current_timestamp)
     returning *
   `;
-  const params = [name, photoUrl, bio, userId];
+  const params = [name, photoUrl, bio, userId, chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/cuisines/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const cuisineId = req.body.cuisineId;
+  const sql = `
+    insert into "chefCuisines" ("chefId", "cuisineId", "userId")
+    values ($1, $2, $3)
+    returning *
+  `;
+  const params = [chefId, cuisineId, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/dishes/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const name = req.body.name;
+  const photoUrl = req.body.photoUrl;
+  const sql = `
+    insert into "dishes" ("chefId", "name", "photoUrl", "userId")
+    values ($1, $2, $3, $4)
+  `;
+  const params = [chefId, name, photoUrl, userId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
