@@ -8,11 +8,13 @@ class UserPage extends React.Component {
       username: null,
       chefs: [],
       reviews: [],
-      photoUrl: []
+      photoUrl: [],
+      totalChefs: []
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.fileInputRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleMakeChefProfileClick = this.handleMakeChefProfileClick.bind(this);
   }
 
   componentDidMount() {
@@ -51,6 +53,10 @@ class UserPage extends React.Component {
         this.setState({ reviews: result });
       })
       .catch(err => console.error(err));
+
+    fetch('/api/chefs')
+      .then(response => response.json())
+      .then(totalChefs => this.setState({ totalChefs }));
   }
 
   handleDeleteClick(event) {
@@ -93,6 +99,12 @@ class UserPage extends React.Component {
       .catch(err => console.error(err));
   }
 
+  handleMakeChefProfileClick() {
+    const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
+    const lastChefId = lastChef.chefId;
+    window.location.hash = 'becomeChef?chefId=' + lastChefId;
+  }
+
   render() {
     return (
       <div className="container pb-5 mt-5">
@@ -106,8 +118,11 @@ class UserPage extends React.Component {
         </div>
         <div>
         </div>
-        <div className="d-flex justify-content-center mb-5">
+        <div className="d-flex justify-content-center">
           <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#pictureUploadModal">Add Profile Picture</button>
+        </div>
+        <div className="d-flex justify-content-center mb-5">
+          <button onClick={this.handleMakeChefProfileClick}>Make chef profile</button>
         </div>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
