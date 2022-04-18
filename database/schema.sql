@@ -41,6 +41,7 @@ CREATE TABLE "public"."chefs" (
 	"name" TEXT NOT NULL,
 	"photoUrl" TEXT NOT NULL,
 	"bio" TEXT NOT NULL,
+  "createdAt" timestamp with time zone NOT NULL,
 	"userId" int,
 	CONSTRAINT "chefs_pk" PRIMARY KEY ("chefId")
 ) WITH (
@@ -54,6 +55,7 @@ CREATE TABLE "public"."dishes" (
 	"chefId" int NOT NULL,
 	"name" TEXT NOT NULL,
 	"photoUrl" TEXT NOT NULL,
+  "userId" int,
 	CONSTRAINT "dishes_pk" PRIMARY KEY ("dishId")
 ) WITH (
   OIDS=FALSE
@@ -73,7 +75,8 @@ CREATE TABLE "public"."cuisines" (
 
 CREATE TABLE "public"."chefCuisines" (
 	"chefId" int NOT NULL,
-	"cuisineId" int NOT NULL
+	"cuisineId" int NOT NULL,
+  "userId" int
 ) WITH (
   OIDS=FALSE
 );
