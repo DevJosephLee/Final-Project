@@ -137,12 +137,12 @@ class ChefProfile extends React.Component {
         {
           this.state.chef.map(chef => {
             return (
-            <div key={chef.name} className="pb-5">
+            <div key={chef.username} className="pb-5">
               <div className="text-center text-lg-start mb-5 col-md-6 ms-md-auto me-md-auto">
                 <div className="d-lg-flex align-items-lg-center">
                   <img src={chef.photoUrl} className="profile-page-picture shadow" />
                   <div className="mt-4 mb-4 ms-lg-5">
-                    <ProfileName name={chef.name} />
+                    <ProfileName name={chef.username} />
                     <div className="d-flex justify-content-center justify-content-lg-start">
                       <StarRating rating={chef.avg} />
                       <p>({chef.avg.slice(0, 3)})</p>
@@ -183,7 +183,7 @@ class ChefProfile extends React.Component {
                   </div>
                 </div>
               </div>
-              <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} name={chef.name} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
+              <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} username={chef.username} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
               <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                 <div className="modal-dialog modal-dialog-centered">
                   <div className="modal-content">

@@ -41,7 +41,7 @@ class SearchResultPage extends React.Component {
                             <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
                           </div>
                           <div className="ms-4 ms-lg-0 mt-lg-5">
-                            <h2 className="mb-lg-3">{chef.name}</h2>
+                            <h2 className="mb-lg-3">{chef.username}</h2>
                             <div className="text-lg-center">
                               <div className="d-flex justify-content-lg-center">
                                 <StarRating rating={chef.avg} />

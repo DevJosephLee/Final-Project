@@ -7,7 +7,7 @@ function ReviewModal(props) {
       <div className="modal-dialog modal-dialog-centered">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">{props.name}</h4>
+            <h4 className="modal-title">{props.username}</h4>
             <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
           </div>
           <div className="modal-body">

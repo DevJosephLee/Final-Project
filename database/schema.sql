@@ -38,7 +38,7 @@ CREATE TABLE "public"."favorites" (
 
 CREATE TABLE "public"."chefs" (
 	"chefId" serial NOT NULL,
-	"name" TEXT NOT NULL,
+	"username" TEXT NOT NULL,
 	"photoUrl" TEXT NOT NULL,
 	"bio" TEXT NOT NULL,
   "createdAt" timestamp with time zone NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE "public"."chefs" (
 CREATE TABLE "public"."dishes" (
 	"dishId" serial NOT NULL,
 	"chefId" int NOT NULL,
-	"name" TEXT NOT NULL,
+	"name" TEXT,
 	"photoUrl" TEXT NOT NULL,
   "userId" int,
 	CONSTRAINT "dishes_pk" PRIMARY KEY ("dishId")
