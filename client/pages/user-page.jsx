@@ -102,7 +102,7 @@ class UserPage extends React.Component {
   handleMakeChefProfileClick() {
     const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
     const lastChefId = lastChef.chefId + 1;
-    window.location.hash = 'becomeChef?chefId=' + lastChefId;
+    window.location.hash = 'becomeChefBio?chefId=' + lastChefId;
   }
 
   render() {
@@ -140,7 +140,7 @@ class UserPage extends React.Component {
                           <div className="col-7">
                             <div className="ms-4">
                               <div className="d-flex align-items-center">
-                                <h3 className="saved-chefs-text">{chef.name}</h3>
+                                <h3 className="saved-chefs-text">{chef.username}</h3>
                               </div>
                               <div className="d-flex">
                                 <StarRating rating={chef.avg} />
@@ -187,7 +187,7 @@ class UserPage extends React.Component {
                         </div>
                         <div className="col-6">
                           <div className="ms-4">
-                            <h3>{review.name}</h3>
+                            <h3>{review.username}</h3>
                             <h5>{review.createdAt.slice(0, 10)}</h5>
                             <StarRating rating={review.rating} />
                             <p className="review-section">{review.content}</p>
