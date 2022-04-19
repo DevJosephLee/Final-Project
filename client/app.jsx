@@ -7,7 +7,7 @@ import ChefProfile from './pages/chef';
 import NavBar from './components/nav-bar';
 import SearchPage from './pages/search';
 import SearchResultPage from './pages/search-result';
-import MakeChefProfilePage from './pages/make-chef-profile';
+import MakeChefProfilePageBio from './pages/make-chef-profile-bio';
 import UserPage from './pages/user-page';
 
 export default class App extends React.Component {
@@ -66,8 +66,8 @@ export default class App extends React.Component {
     if (route.path === 'userProfile') {
       return <UserPage />;
     }
-    if (route.path === 'becomeChef') {
-      return <MakeChefProfilePage />;
+    if (route.path === 'becomeChefBio') {
+      return <MakeChefProfilePageBio />;
     }
     return <AuthPage />;
   }
