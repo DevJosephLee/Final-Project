@@ -8,6 +8,8 @@ import NavBar from './components/nav-bar';
 import SearchPage from './pages/search';
 import SearchResultPage from './pages/search-result';
 import MakeChefProfilePageBio from './pages/make-chef-profile-bio';
+import MakeChefProfilePageCuisine from './pages/make-chef-profile-cuisine';
+import MakeChefProfilePageDishes from './pages/make-chef-profile-dishes';
 import UserPage from './pages/user-page';
 
 export default class App extends React.Component {
@@ -49,8 +51,8 @@ export default class App extends React.Component {
 
   renderPage() {
     const { route } = this.state;
+    const chefId = route.params.get('chefId');
     if (route.path === 'chefProfile') {
-      const chefId = route.params.get('chefId');
       return <ChefProfile chefId={chefId} />;
     }
     if (route.path === 'sign-in' || route.path === 'sign-up') {
@@ -67,7 +69,13 @@ export default class App extends React.Component {
       return <UserPage />;
     }
     if (route.path === 'becomeChefBio') {
-      return <MakeChefProfilePageBio />;
+      return <MakeChefProfilePageBio chefId={chefId}/>;
+    }
+    if (route.path === 'becomeChefCuisine') {
+      return <MakeChefProfilePageCuisine chefId={chefId}/>;
+    }
+    if (route.path === 'becomeChefDishes') {
+      return <MakeChefProfilePageDishes chefId={chefId} />;
     }
     return <AuthPage />;
   }
