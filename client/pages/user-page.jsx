@@ -106,20 +106,22 @@ class UserPage extends React.Component {
   }
 
   render() {
+    let profilePictureButtonText = 'Add Profile Picture';
+    if (this.state.photoUrl !== 'images/testing-image.jpeg') {
+      profilePictureButtonText = 'Change Profile Picture';
+    }
     return (
       <div className="container pb-5 mt-5">
         <div className="text-center">
           <div className="d-flex justify-content-center">
             <img src={this.state.photoUrl} className="user-profile-picture shadow"/>
           </div>
+          <div className="mt-1">
+            <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#pictureUploadModal">{profilePictureButtonText}</button>
+          </div>
           <div className="mt-2">
             <h3>{this.state.username}</h3>
           </div>
-        </div>
-        <div>
-        </div>
-        <div className="d-flex justify-content-center">
-          <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#pictureUploadModal">Add Profile Picture</button>
         </div>
         <div className="d-flex justify-content-center mb-5">
           <button onClick={this.handleMakeChefProfileClick}>Make chef profile</button>
