@@ -37,7 +37,7 @@ class MakeChefProfilePageBio extends React.Component {
     this.setState({ bio: event.target.value });
   }
 
-  handleSubmit() {
+  handleSubmit(event) {
     event.preventDefault();
     const token = window.localStorage.getItem('user-jwt');
     fetch(`/api/becomeChef/${this.props.chefId}`, {
