@@ -67,7 +67,7 @@ class MakeChefProfilePageCuisine extends React.Component {
       });
 
     const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
-    const lastChefId = lastChef.chefId + 1;
+    const lastChefId = lastChef.chefId;
     window.location.hash = 'becomeChefDishes?chefId=' + lastChefId;
   }
 
