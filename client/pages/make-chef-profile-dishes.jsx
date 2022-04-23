@@ -1,89 +1,3 @@
-// handleDishOneNameChange(event) {
-//   this.setState({ dishNameOne: event.target.value });
-// }
-
-// this.handleDishImageOneSubmit = this.handleDishImageOneSubmit.bind(this);
-
-// handleDishImageOneSubmit(event) {
-//   event.preventDefault();
-//   const token = window.localStorage.getItem('user-jwt');
-//   const form = new FormData();
-//   const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
-//   const lastChefId = lastChef.chefId;
-//   form.append('file-to-upload', this.fileInputRef.current.files[0]);
-//   fetch(`/api/becomeChef/dishes/${lastChefId}`, {
-//     method: 'POST',
-//     headers: {
-//       'X-Access-Token': token
-//     },
-//     body: form
-//   })
-//     .then(response => response.json())
-//     .then(result => {
-//       this.fileInputRef.current.value = null;
-//       console.log(result);
-//       // this.setState({ dishImageOne: result[0].dishImageOne });
-//     })
-//     .catch(err => console.error(err));
-//   // this.setState({ dishImageOne: event.target. });
-// }
-
-// <div className="mb-3">
-//   <div className="text-center chef-reg-image-container">
-//     <img src={this.state.dishImageOne === '' ? 'images/default-image.png' : this.state.dishImageOne} className="default-image" />
-//     {/* <input type="file" onChange={this.handleDishImageOneSubmit}></input> */}
-//   </div>
-//   <div className="text-center">
-//     <button type="button" className="add-profile-picture-button" data-bs-toggle="modal" data-bs-target="#dishPhotoUploadModalOne">add dish photo</button>
-//   </div>
-//   <div className="text-center">
-//     <input text="text" placeholder="dish name"></input>
-//   </div>
-//   {/* <div className="text-center chef-reg-image-container">
-//               <label>
-//                 <img src="images/default-image.png" className="default-image"></img>
-//                 <input type="file"></input>
-//                 <input text="text" placeholder="dish name"></input>
-//               </label>
-//             </div> */}
-// </div>
-
-// {/* <div className="d-flex mb-3">
-//             <div className="text-center chef-reg-image-container">
-//               <label>
-//                 <img src="images/default-image.png" className="default-image"></img>
-//                 <input type="file"></input>
-//                 <input text="text" placeholder="dish name"></input>
-//               </label>
-//             </div>
-//             <div className="text-center chef-reg-image-container">
-//               <label>
-//                 <img src="images/default-image.png" className="default-image"></img>
-//                 <input type="file"></input>
-//                 <input text="text" placeholder="dish name"></input>
-//               </label>
-//             </div>
-//           </div> */}
-
-// { /* <div className="modal fade" id="dishPhotoUploadModalOne" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-//   <div className="modal-dialog modal-dialog-centered">
-//     <div className="modal-content">
-//       <div className="modal-header">
-//         <h5 className="modal-title" id="exampleModalLabel">Add Dish Photo</h5>
-//         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-//       </div>
-//       <form onSubmit={this.handleDishImageOneSubmit}>
-//         <div className="modal-body">
-//           <input type="file" id="photoUpload" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
-//         </div>
-//         <div className="modal-footer d-flex justify-content-between">
-//           <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-//           <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
-//         </div>
-//       </form>
-//     </div>
-//   </div>
-// </div> */ }
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -190,20 +104,6 @@ class MakeChefProfilePageDishes extends React.Component {
     this.setState({ numOfDishesUploads: this.state.numOfDishesUploads + 1 });
   }
 
-  // componentDidUpdate() {
-  //   const token = window.localStorage.getItem('user-jwt');
-  //   fetch(`/api/becomeChef/dishes/${this.props.chefId}`, {
-  //     headers: {
-  //       'X-Access-Token': token
-  //     }
-  //   })
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       this.setState({ chefDishes: result });
-  //     })
-  //     .catch(err => console.error(err));
-  // }
-
   clickFinishButton(newReview) {
     const token = window.localStorage.getItem('user-jwt');
     fetch(`/api/review/${this.props.chefId}`, {
@@ -215,11 +115,11 @@ class MakeChefProfilePageDishes extends React.Component {
       body: JSON.stringify(this.state)
     })
       .then(response => response.json())
-      // .then(newReview => {
-    // newReview.content = 'test;
-    // newReview.rating = this.state.rating;
-    // console.log(newReview);
-      // })
+      .then(newReview => {
+        // newReview.content = 'test;
+        // newReview.rating = this.state.rating;
+        // console.log(newReview);
+      })
       .catch(err => {
         console.error(err);
       });
