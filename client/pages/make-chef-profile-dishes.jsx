@@ -106,6 +106,7 @@ class MakeChefProfilePageDishes extends React.Component {
     this.handleDishNameChange = this.handleDishNameChange.bind(this);
     this.handleDishNameSubmit = this.handleDishNameSubmit.bind(this);
     this.clickFinishButton = this.clickFinishButton.bind(this);
+    this.clickCloseButton = this.clickCloseButton.bind(this);
   }
 
   componentDidMount() {
@@ -222,6 +223,9 @@ class MakeChefProfilePageDishes extends React.Component {
       .catch(err => {
         console.error(err);
       });
+  }
+
+  clickCloseButton() {
     window.location.hash = 'chefProfile?chefId=' + this.props.chefId;
   }
 
@@ -255,7 +259,7 @@ class MakeChefProfilePageDishes extends React.Component {
       : 'red';
     const finishButtonClass = this.state.numOfDishesUploads === 4
       ? (
-        <button type="submit" className="btn btn-primary w-100" onClick={this.clickFinishButton}>Finish</button>
+        <button type="submit" className="btn btn-primary w-100" onClick={this.clickFinishButton} data-bs-toggle="modal" data-bs-target="#ConfModal">Finish</button>
         )
       : (
         <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>
@@ -315,7 +319,7 @@ class MakeChefProfilePageDishes extends React.Component {
             <div className="modal-dialog modal-dialog-centered">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Add Profile Picture</h5>
+                  <h5 className="modal-title" id="exampleModalLabel">Add Dish Photos</h5>
                   <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form onSubmit={this.handleDishPhotoSubmit}>
@@ -327,6 +331,22 @@ class MakeChefProfilePageDishes extends React.Component {
                     <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
                   </div>
                 </form>
+              </div>
+            </div>
+          </div>
+          <div className="modal fade" id="ConfModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+            <div className="modal-dialog modal-dialog-centered">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalToggleLabel">Success!</h5>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={this.clickCloseButton}></button>
+                </div>
+                <div className="modal-body">
+                  Your chef profile has been created!
+                </div>
+                <div className="modal-footer">
+                  <button className="btn btn-primary" data-bs-dismiss="modal" onClick={this.clickCloseButton}>Close</button>
+                </div>
               </div>
             </div>
           </div>
