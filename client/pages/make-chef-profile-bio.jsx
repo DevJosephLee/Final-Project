@@ -64,6 +64,9 @@ class MakeChefProfilePageBio extends React.Component {
   }
 
   render() {
+    const nextButton = this.state.bio.length > 0
+      ? <button type="submit" className="btn btn-primary w-100" >Next</button>
+      : <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Next</div>;
     return (
       <div className="container pb-5">
         <div className="container">
@@ -84,7 +87,7 @@ class MakeChefProfilePageBio extends React.Component {
               <textarea required className="chef-reg-textarea" onChange={this.handleBioChange} placeholder="Hello, I am Joe and I love to cook..."></textarea>
             </div>
             <div className="text-center mb-3">
-              <button type="submit" className="btn btn-primary w-100" >Next</button>
+              {nextButton}
             </div>
           </form>
         </div>
