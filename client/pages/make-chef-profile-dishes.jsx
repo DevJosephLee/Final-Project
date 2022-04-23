@@ -260,6 +260,12 @@ class MakeChefProfilePageDishes extends React.Component {
       : (
         <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>
         );
+    const formContainerClass = this.state.numOfDishesUploads === 4
+      ? 'hidden'
+      : 'mb-3 col-6 text-center';
+    const dishUploadsNotifierContainerClass = this.state.numOfDishesUploads === 4
+      ? 'col-12 text-center'
+      : 'col-6 text-center';
     return (
       <div className="container pb-5">
         <div className="container">
@@ -276,7 +282,7 @@ class MakeChefProfilePageDishes extends React.Component {
             <h5><u>Step 3</u></h5><p>Choose your dish photos:</p>
           </div>
           <div className="d-flex">
-            <div className="mb-3 col-6 text-center">
+            <div className={formContainerClass}>
               <img src={this.state.dishPhotoUrl} className="default-image"></img>
               <div className="text-center mb-3">
                 <button type="button" className={addDishPhotoClass} data-bs-toggle="modal" data-bs-target="#dishPhotoUploadModal">Add dish photo</button>
@@ -295,7 +301,7 @@ class MakeChefProfilePageDishes extends React.Component {
                 <h5>{this.state.name}</h5>
               </div>
             </div>
-            <div className="col-6 text-center">
+            <div className={dishUploadsNotifierContainerClass}>
               <p className={dishUploadNotifierClassOne}>Dish #1 Uploaded&nbsp;<FontAwesomeIcon icon={this.state.numOfDishesUploads > 0 ? faCheck : faX} /></p>
               <p className={dishUploadNotifierClassTwo}>Dish #2 Uploaded&nbsp;<FontAwesomeIcon icon={this.state.numOfDishesUploads > 1 ? faCheck : faX} /></p>
               <p className={dishUploadNotifierClassThree}>Dish #3 Uploaded&nbsp;<FontAwesomeIcon icon={this.state.numOfDishesUploads > 2 ? faCheck : faX} /></p>
