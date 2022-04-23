@@ -99,14 +99,13 @@ class MakeChefProfilePageDishes extends React.Component {
       dishPhotoUrl: 'images/default-image.png',
       chefDishes: [],
       numOfDishesUploads: 0,
-      // dishPhotoUrlOne: 'images/default-image.png',
       dishNameSubmitted: false
     };
     this.handleDishPhotoSubmit = this.handleDishPhotoSubmit.bind(this);
-    // this.handleDishPhotoSubmitOne = this.handleDishPhotoSubmitOne.bind(this);
     this.fileInputRef = React.createRef();
     this.handleDishNameChange = this.handleDishNameChange.bind(this);
     this.handleDishNameSubmit = this.handleDishNameSubmit.bind(this);
+    this.clickFinishButton = this.clickFinishButton.bind(this);
   }
 
   componentDidMount() {
@@ -124,16 +123,16 @@ class MakeChefProfilePageDishes extends React.Component {
       })
       .catch(err => console.error(err));
 
-    fetch(`/api/becomeChef/dishes/${this.props.chefId}`, {
-      headers: {
-        'X-Access-Token': token
-      }
-    })
-      .then(response => response.json())
-      .then(result => {
-        this.setState({ chefDishes: result });
-      })
-      .catch(err => console.error(err));
+    // fetch(`/api/becomeChef/dishes/${this.props.chefId}`, {
+    //   headers: {
+    //     'X-Access-Token': token
+    //   }
+    // })
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     this.setState({ chefDishes: result });
+    //   })
+    //   .catch(err => console.error(err));
   }
 
   handleDishNameChange(event) {
@@ -160,27 +159,6 @@ class MakeChefProfilePageDishes extends React.Component {
       })
       .catch(err => console.error(err));
   }
-
-  // handleDishPhotoSubmitOne(event) {
-  //   event.preventDefault();
-  //   const token = window.localStorage.getItem('user-jwt');
-  //   const form = new FormData();
-  //   form.append('file-to-upload', this.fileInputRef.current.files[0]);
-  //   fetch(`/api/becomeChef/dishPhoto/${this.props.chefId}`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'X-Access-Token': token
-  //     },
-  //     body: form
-  //   })
-  //     .then(response => response.json())
-  //     .then(newChef => {
-  //       this.fileInputRef.current.value = null;
-  //       this.setState({ dishPhotoUrlOne: newChef.photoUrl });
-  //       this.setState({ dishId: newChef.dishId });
-  //     })
-  //     .catch(err => console.error(err));
-  // }
 
   handleDishNameSubmit(event) {
     event.preventDefault();
@@ -225,13 +203,32 @@ class MakeChefProfilePageDishes extends React.Component {
   //     .catch(err => console.error(err));
   // }
 
+  clickFinishButton(newReview) {
+    const token = window.localStorage.getItem('user-jwt');
+    fetch(`/api/review/${this.props.chefId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': token
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(response => response.json())
+      // .then(newReview => {
+    // newReview.content = 'test;
+    // newReview.rating = this.state.rating;
+    // console.log(newReview);
+      // })
+      .catch(err => {
+        console.error(err);
+      });
+    window.location.hash = 'chefProfile?chefId=' + this.props.chefId;
+  }
+
   render() {
     const addDishPhotoClass = this.state.dishPhotoUrl === 'images/default-image.png'
       ? 'add-profile-picture-button'
       : 'hidden';
-    // const addDishPhotoClassOne = this.state.dishPhotoUrlOne === 'images/default-image.png'
-    //   ? 'add-profile-picture-button'
-    //   : 'hidden';
     const dishPhotoTextSubmitClass = this.state.name === ''
       ? 'hidden'
       : 'btn btn-primary w-50';
@@ -256,6 +253,13 @@ class MakeChefProfilePageDishes extends React.Component {
     const dishUploadNotifierClassFour = this.state.numOfDishesUploads > 3
       ? 'green'
       : 'red';
+    const finishButtonClass = this.state.numOfDishesUploads === 4
+      ? (
+        <button type="submit" className="btn btn-primary w-100" onClick={this.clickFinishButton}>Finish</button>
+        )
+      : (
+        <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>
+        );
     return (
       <div className="container pb-5">
         <div className="container">
@@ -297,15 +301,9 @@ class MakeChefProfilePageDishes extends React.Component {
               <p className={dishUploadNotifierClassThree}>Dish #3 Uploaded&nbsp;<FontAwesomeIcon icon={this.state.numOfDishesUploads > 2 ? faCheck : faX} /></p>
               <p className={dishUploadNotifierClassFour}>Dish #4 Uploaded&nbsp;<FontAwesomeIcon icon={this.state.numOfDishesUploads > 3 ? faCheck : faX} /></p>
             </div>
-            {/* <div className="mb-3 col-6 text-center">
-              <img src={this.state.dishPhotoUrlOne} className="default-image"></img>
-              <div className="text-center mb-3">
-                <button type="button" className={addDishPhotoClassOne} data-bs-toggle="modal" data-bs-target="#dishPhotoUploadModalOne">Add dish photo</button>
-              </div>
-            </div> */}
           </div>
           <div className="text-center mb-3">
-            <button type="button" className="btn btn-primary w-100">Finish</button>
+            {finishButtonClass}
           </div>
           <div className="modal fade" id="dishPhotoUploadModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
             <div className="modal-dialog modal-dialog-centered">
@@ -326,25 +324,6 @@ class MakeChefProfilePageDishes extends React.Component {
               </div>
             </div>
           </div>
-          {/* <div className="modal fade" id="dishPhotoUploadModalOne" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
-            <div className="modal-dialog modal-dialog-centered">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel">Add Profile Picture</h5>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form onSubmit={this.handleDishPhotoSubmitOne}>
-                  <div className="modal-body">
-                    <input type="file" id="photoUploadOne" name="image" ref={this.fileInputRef} accept=".png, .jpg, .jpeg, .gif" />
-                  </div>
-                  <div className="modal-footer d-flex justify-content-between">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     );
