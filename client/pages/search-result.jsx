@@ -34,28 +34,55 @@ class SearchResultPage extends React.Component {
               <div className="d-lg-flex flex-wrap">
                 {
                   this.state.chefs.map(chef => {
-                    return (
-                      <div key={chef.chefId} className="text-lg-center search-result-cards">
-                        <div className="bg-white p-3 rounded shadow mt-4 d-flex d-lg-block align-items-center m-lg-4" key={chef.chefId}>
-                          <div className="col-5 col-lg-12">
-                            <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
-                          </div>
-                          <div className="ms-4 ms-lg-0 mt-lg-5">
-                            <h2 className="mb-lg-3">{chef.username}</h2>
-                            <div className="text-lg-center">
-                              <div className="d-flex justify-content-lg-center">
-                                <StarRating rating={chef.avg} />
-                                <p>({chef.avg.slice(0, 3)})</p>
-                              </div>
-                              <p>{chef.count} reviews</p>
+                    if (chef.avg !== null && chef.count !== null) {
+                      return (
+                        <div key={chef.chefId} className="text-lg-center search-result-cards">
+                          <div className="bg-white p-3 rounded shadow mt-4 d-flex d-lg-block align-items-center m-lg-4" key={chef.chefId}>
+                            <div className="col-5 col-lg-12">
+                              <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
                             </div>
-                            <div className="col-7 col-lg-12 mt-lg-5">
-                              <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
+                            <div className="ms-4 ms-lg-0 mt-lg-5">
+                              <h2 className="mb-lg-3">{chef.username}</h2>
+                              <div className="text-lg-center">
+                                <div className="d-flex justify-content-lg-center">
+                                  <StarRating rating={chef.avg} />
+                                  <p>({chef.avg.slice(0, 3)})</p>
+                                </div>
+                                <p>{chef.count} reviews</p>
+                              </div>
+                              <div className="col-7 col-lg-12 mt-lg-5">
+                                <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    );
+                      );
+                    } else {
+                      return (
+                        <div key={chef.chefId} className="text-lg-center search-result-cards">
+                          <div className="bg-white p-3 rounded shadow mt-4 d-flex d-lg-block align-items-center m-lg-4" key={chef.chefId}>
+                            <div className="col-5 col-lg-12">
+                              <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
+                            </div>
+                            <div className="ms-4 ms-lg-0 mt-lg-5">
+                              <h2 className="mb-lg-3">{chef.username}</h2>
+                              <div className="text-lg-center">
+                                <div className="d-flex justify-content-lg-center">
+                                  {/* <StarRating rating={chef.avg} />
+                                  <p>({chef.avg.slice(0, 3)})</p> */}
+                                  {/* {chef.avg === null && chef.count === null ? <p>no reviews</p> : <p>({chef.avg.slice(0, 3)})</p>} */}
+                                  <p>No Reviews</p>
+                                </div>
+                                {/* <p>{chef.count} reviews</p> */}
+                              </div>
+                              <div className="col-7 col-lg-12 mt-lg-5">
+                                <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
                   })
                 }
               </div>
