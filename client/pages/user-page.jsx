@@ -129,7 +129,7 @@ class UserPage extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-center mb-5">
-          <button onClick={this.handleMakeChefProfileClick}>Make chef profile</button>
+          <button onClick={this.handleMakeChefProfileClick} className="btn btn-primary">Make chef profile</button>
         </div>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
