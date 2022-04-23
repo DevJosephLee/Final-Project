@@ -21,8 +21,8 @@ CREATE TABLE "public"."reviews" (
 	"reviewId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"chefId" int NOT NULL,
-	"content" TEXT NOT NULL,
-	"rating" int NOT NULL,
+	"content" TEXT,
+	"rating" int,
 	"createdAt" timestamp with time zone NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (

@@ -58,7 +58,7 @@ insert into "users" ("username", "password", "photoUrl", "createdAt")
 values('Guest', 'testing123', 'images/testing-image.jpeg', current_timestamp);
 
 insert into "reviews" ("chefId", "userId", "content", "rating", "createdAt")
-values (1, 1, 'Food is Amazing!', 5, current_timestamp);
+values (1, 1, NULL, NULL, current_timestamp);
       --  (1, 2, 'Great food!', 5, current_timestamp),
       --  (1, 3, 'Amazing Sushi!', 5, current_timestamp),
       --  (1, 4, 'Amazing!', 5, current_timestamp),
