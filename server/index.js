@@ -160,7 +160,8 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
     .then(result => {
       const [reviews] = result.rows;
       if (!reviews) {
-        throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
+        // throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
+        res.json([]);
       } else {
         res.json(result.rows);
       }
@@ -213,19 +214,21 @@ app.post('/api/review/:chefId/', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   const { userId } = req.user;
   const content = req.body.content;
-  const rating = Number(req.body.rating);
-  if (!chefId) {
-    throw new ClientError(400, 'chefId is a required field');
-  } else if (!content || !rating) {
-    throw new ClientError(400, 'content and rating are required fields');
-  }
-  if (!Number.isInteger(chefId) || chefId < 1) {
-    throw new ClientError(400, 'chefId must be a positive integer');
-  } else if (Number.isInteger(content)) {
-    throw new ClientError(400, 'review content must be letters');
-  } else if (!Number.isInteger(rating) || rating < 1) {
-    throw new ClientError(400, 'rating must be a positive integer');
-  }
+  // const rating = Number(req.body.rating);
+  const rating = req.body.rating;
+
+  // if (!chefId) {
+  //   throw new ClientError(400, 'chefId is a required field');
+  // } else if (!content || !rating) {
+  //   throw new ClientError(400, 'content and rating are required fields');
+  // }
+  // if (!Number.isInteger(chefId) || chefId < 1) {
+  //   throw new ClientError(400, 'chefId must be a positive integer');
+  // } else if (Number.isInteger(content)) {
+  //   throw new ClientError(400, 'review content must be letters');
+  // } else if (!Number.isInteger(rating) || rating < 1) {
+  //   throw new ClientError(400, 'rating must be a positive integer');
+  // }
   const sql = `
     insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
     values ($1, $2, $3, $4, current_timestamp)
