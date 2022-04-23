@@ -72,6 +72,9 @@ class MakeChefProfilePageCuisine extends React.Component {
   }
 
   render() {
+    const nextButton = this.state.cuisineId !== null
+      ? <button type="submit" className="btn btn-primary w-100" >Next</button>
+      : <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>;
     return (
       <div className="container pb-5">
         <div className="container">
@@ -101,7 +104,8 @@ class MakeChefProfilePageCuisine extends React.Component {
               </select>
             </div>
             <div className="text-center mb-3">
-              <button type="submit" className="btn btn-primary w-100" >Next</button>
+              {/* <button type="submit" className="btn btn-primary w-100" >Next</button> */}
+              {nextButton}
             </div>
           </form>
         </div>
