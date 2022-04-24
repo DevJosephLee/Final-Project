@@ -38,7 +38,7 @@ function ReviewModal(props) {
                   <button type="button" className="btn btn-danger w-100" data-bs-dismiss="modal">Close</button>
                 </div>
                 <div className="w-25">
-                  <button type="submit" className="btn btn-primary w-100" data-bs-dismiss="modal" data-bs-target="#confModal" data-bs-toggle="modal">Save</button>
+                  <button type="submit" className="btn btn-primary w-100" data-bs-dismiss="modal" data-bs-target="#confModal" data-bs-toggle="modal" onClick={props.updateAvgCount}>Save</button>
                 </div>
               </div>
             </form>
