@@ -50,12 +50,13 @@ class UserPage extends React.Component {
     })
       .then(response => response.json())
       .then(result => {
-        this.setState({ reviews: result });
-        for (let i = 0; i < this.state.reviews.length; i++) {
-          if (this.state.reviews[i].content === null && this.state.reviews[i].rating === null) {
-            this.state.reviews.splice(i);
-          }
-        }
+        const noDummyReview = result.filter(noDummyReview => noDummyReview.content !== null && noDummyReview.rating !== null);
+        this.setState({ reviews: noDummyReview });
+        // for (let i = 0; i < this.state.reviews.length; i++) {
+        //   if (this.state.reviews[i].content === null && this.state.reviews[i].rating === null) {
+        //     this.state.reviews.splice(i);
+        //   }
+        // }
       })
       .catch(err => console.error(err));
 
