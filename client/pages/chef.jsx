@@ -15,6 +15,8 @@ class ChefProfile extends React.Component {
       reviews: [],
       savedChefs: [],
       rating: 1,
+      count: 0,
+      avg: 0,
       photoUrl: 'images/testing-image.jpeg',
       isSaved: false,
       noComment: true
@@ -23,6 +25,7 @@ class ChefProfile extends React.Component {
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.updateAvgCount = this.updateAvgCount.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +33,11 @@ class ChefProfile extends React.Component {
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
-        this.setState({ chef: data });
+        const [modifyData] = data;
+        this.setState({ count: modifyData.count - 1 });
+        this.setState({ avg: modifyData.avg });
+        modifyData.count = modifyData.count - 1;
+        this.setState({ chef: [modifyData] });
       })
       .catch(err => {
         console.error(err);
@@ -39,12 +46,8 @@ class ChefProfile extends React.Component {
     fetch(`/api/reviews/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].content === null && data[i].rating === null) {
-            data.splice(i);
-          }
-        }
-        this.setState({ reviews: data });
+        const noDummyReview = data.filter(noDummyReview => noDummyReview.content !== null && noDummyReview.rating !== null);
+        this.setState({ reviews: noDummyReview });
       })
       .catch(err => console.error(err));
 
@@ -71,14 +74,6 @@ class ChefProfile extends React.Component {
       .catch(err => console.error(err));
 
     this.setState({ isLoaded: true });
-
-    // this.state.chef.map(chef => {
-    //   if (chef.avg !== null && chef.count !== null) {
-    //     this.setState({ noComment: true });
-    //   } else {
-    //     this.setState({ noComment: false });
-    //   }
-    // });
   }
 
   handleTextChange(event) {
@@ -130,6 +125,19 @@ class ChefProfile extends React.Component {
     this.setState({ isSaved: true });
   }
 
+  updateAvgCount() {
+    fetch(`/api/chefs/${this.props.chefId}`)
+      .then(response => response.json())
+      .then(data => {
+        const [modifyData] = data;
+        this.setState({ count: modifyData.count - 1 });
+        this.setState({ avg: modifyData.avg });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   render() {
     const reviewView = this.state.noComment
       ? (
@@ -147,6 +155,44 @@ class ChefProfile extends React.Component {
           <Reviews reviews={this.state.reviews} />
         </div>
         );
+    // console.log(this.state.reviews);
+    // if (this.state.reviews.length === 0) {
+    //   return
+    // }
+    // function showHideStats() {
+    //   if (this.state.reviews.length !== 0) {
+    //     return (
+    //       <p>No Reviews</p>
+    //     );
+    //   } else {
+    //     return (
+    //       <>
+    //         <div className="d-flex justify-content-center justify-content-lg-start">
+    //           <StarRating rating={this.state.avg} />
+    //           <p>({this.state.avg.slice(0, 3)})</p>
+    //         </div>
+    //         <p>{this.state.count} reviews</p>
+    //       </>
+    //     );
+    //   }
+    // }
+
+    // const chefStatsView = this.state.noComment
+    //   ? (
+    //     <>
+    //       <div className="d-flex justify-content-center justify-content-lg-start">
+    //         <StarRating rating={this.state.avg} />
+    //         <p>({this.state.slice(0, 3)})</p>
+    //       </div>
+    //       <p>{this.state.count} reviews</p>
+    //     </>
+
+    //     )
+    //   : (
+    //     <div className="d-flex justify-content-center justify-content-lg-start">
+    //       <p>No Reviews</p>
+    //     </div>
+    //     );
     const savedChefIdsArray = [];
     let currentChefId = '';
     for (let i = 0; i < this.state.savedChefs.length; i++) {
@@ -171,7 +217,7 @@ class ChefProfile extends React.Component {
       <div className='container'>
         {
           this.state.chef.map(chef => {
-            if (chef.avg !== null && chef.count !== null) {
+            if (chef.avg !== null && chef.count !== 0) {
               return (
                 <div key={chef.username} className="pb-5">
                   <div className="text-center text-lg-start mb-5 col-md-6 ms-md-auto me-md-auto">
@@ -179,11 +225,13 @@ class ChefProfile extends React.Component {
                       <img src={chef.photoUrl} className="profile-page-picture shadow" />
                       <div className="mt-4 mb-4 ms-lg-5">
                         <ProfileName name={chef.username} />
-                        <div className="d-flex justify-content-center justify-content-lg-start">
-                          <StarRating rating={chef.avg} />
-                          <p>({chef.avg.slice(0, 3)})</p>
-                        </div>
-                        <p>{chef.count} reviews</p>
+                        <>
+                          <div className="d-flex justify-content-center justify-content-lg-start">
+                            <StarRating rating={this.state.avg} />
+                            <p>({this.state.avg.slice(0, 3)})</p>
+                          </div>
+                          <p>{this.state.count} reviews</p>
+                        </>
                         <CuisineTypes cuisineType={chef.cuisineType} />
                       </div>
                     </div>
@@ -219,7 +267,7 @@ class ChefProfile extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} username={chef.username} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
+                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} username={chef.username} chefId={chef.chefId} handleSubmit={this.handleSubmit} updateAvgCount={this.updateAvgCount}/>
                   <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                     <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
@@ -298,7 +346,7 @@ class ChefProfile extends React.Component {
                       {reviewView}
                     </div>
                   </div>
-                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} username={chef.username} chefId={chef.chefId} handleSubmit={this.handleSubmit} />
+                  <ReviewModal handleTextChange={this.handleTextChange} handleStarClick={this.handleStarClick} rating={this.state.rating} username={chef.username} chefId={chef.chefId} handleSubmit={this.handleSubmit} updateAvgCount={this.updateAvgCount} />
                   <div className="modal fade" id="confModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
                     <div className="modal-dialog modal-dialog-centered">
                       <div className="modal-content">
