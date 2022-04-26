@@ -78,7 +78,7 @@ class MakeChefProfilePageCuisine extends React.Component {
     return (
       <div className="container pb-5">
         <div className="container">
-          <p>Make Chef Profile Cuisine Page</p>
+          <p>Create Chef Profile Cuisine Page</p>
           <div className="text-center">
             <div className="d-flex justify-content-center mt-2">
               <img src={this.state.photoUrl} className="user-profile-picture shadow" />
