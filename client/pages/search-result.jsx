@@ -14,11 +14,11 @@ class SearchResultPage extends React.Component {
     fetch(`/api/search/${this.props.selectedCuisine}`)
       .then(res => res.json())
       .then(data => {
-        const noDummyChef = data.filter(noDummyChef => noDummyChef.chefId !== 1);
+        // const noDummyChef = data.filter(noDummyChef => noDummyChef.chefId !== 1);
         for (let i = 0; i < data.length; i++) {
           data[i].count = data[i].count - 1;
         }
-        this.setState({ chefs: noDummyChef });
+        this.setState({ chefs: data });
       });
   }
 
