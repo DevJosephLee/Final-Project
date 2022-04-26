@@ -39,6 +39,9 @@ class UserPage extends React.Component {
     })
       .then(response => response.json())
       .then(result => {
+        for (let i = 0; i < result.length; i++) {
+          result[i].count = result[i].count - 1;
+        }
         this.setState({ chefs: result });
       })
       .catch(err => console.error(err));
@@ -52,11 +55,6 @@ class UserPage extends React.Component {
       .then(result => {
         const noDummyReview = result.filter(noDummyReview => noDummyReview.content !== null && noDummyReview.rating !== null);
         this.setState({ reviews: noDummyReview });
-        // for (let i = 0; i < this.state.reviews.length; i++) {
-        //   if (this.state.reviews[i].content === null && this.state.reviews[i].rating === null) {
-        //     this.state.reviews.splice(i);
-        //   }
-        // }
       })
       .catch(err => console.error(err));
 
@@ -138,35 +136,66 @@ class UserPage extends React.Component {
             this.state.chefs.length > 0
               ? (
                   this.state.chefs.map(chef => {
-                    return (
-                    <div key={chef.chefId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
-                      <div className="p-1">
-                        <div className="d-flex align-items-center">
-                          <div className="d-flex justify-content-center col-5">
-                            <img className="profile-picture rounded" src={chef.photoUrl} />
-                          </div>
-                          <div className="col-7">
-                            <div className="ms-4">
-                              <div className="d-flex align-items-center">
-                                <h3 className="saved-chefs-text">{chef.username}</h3>
+                    if (chef.avg !== null && chef.count !== 0) {
+                      return (
+                        <div key={chef.chefId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
+                          <div className="p-1">
+                            <div className="d-flex align-items-center">
+                              <div className="d-flex justify-content-center col-5">
+                                <img className="profile-picture rounded" src={chef.photoUrl} />
                               </div>
-                              <div className="d-flex">
-                                <StarRating rating={chef.avg} />
-                                <p>({chef.avg.slice(0, 3)})</p>
-                              </div>
-                              <p className="">{chef.count} Reviews</p>
-                              <p className="saved-chefs-text">{chef.cuisineType}</p>
-                              <div className="col-12">
-                                <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
-                                  Delete
-                                </button>
+                              <div className="col-7">
+                                <div className="ms-4">
+                                  <div className="d-flex align-items-center">
+                                    <h3 className="saved-chefs-text">{chef.username}</h3>
+                                  </div>
+                                  <div className="d-flex">
+                                    <StarRating rating={chef.avg} />
+                                    <p>({chef.avg.slice(0, 3)})</p>
+                                  </div>
+                                  <p>{chef.count} Review(s)</p>
+                                  <p className="saved-chefs-text">{chef.cuisineType}</p>
+                                  <div className="col-12">
+                                    <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    );
+                      );
+                    } else {
+                      return (
+                        <div key={chef.chefId} className="container-saved-chefs bg-white p-3 rounded shadow mb-3">
+                          <div className="p-1">
+                            <div className="d-flex align-items-center">
+                              <div className="d-flex justify-content-center col-5">
+                                <img className="profile-picture rounded" src={chef.photoUrl} />
+                              </div>
+                              <div className="col-7">
+                                <div className="ms-4">
+                                  <div className="d-flex align-items-center">
+                                    <h3 className="saved-chefs-text">{chef.username}</h3>
+                                  </div>
+                                  <div className="d-flex">
+                                    <p>No Reviews</p>
+                                  </div>
+                                  {/* <p className="">{chef.count} Reviews</p> */}
+                                  <p className="saved-chefs-text">{chef.cuisineType}</p>
+                                  <div className="col-12">
+                                    <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
                   })
                 )
               : (
