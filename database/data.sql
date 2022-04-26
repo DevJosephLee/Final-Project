@@ -1,5 +1,5 @@
 insert into "chefs" ("username", "photoUrl", "bio", "createdAt")
-values ('Gordon Ramsay', 'images/ramsay.jpeg', 'Scottish by birth, Gordon Ramsay was brought up in Stratford-upon-Avon, England. With an injury prematurely putting an end to any hopes of a promising career in football, he went back to college to complete a course in hotel management. His dedication and natural talent led him to train with some of the worlds leading chefs, such as Albert Roux and Marco Pierre White in London, and Guy Savoy and Joël Robuchon in France.', current_timestamp);
+values ('testChef', 'images/testing-image.jpeg', 'testing', current_timestamp);
       --  ('Wolfgang Puck', 'images/wolfgang-2.jpeg', 'Wolfgang Puck is an Austrian-born American celebrity chef and restaurateur, who is famous all over the world for his high-end gourmet restaurants, catering services and cookbooks. Best known for his signature dish, the House Smoked Salmon Pizza, Puck is also much renowned for whipping up dishes like Classic Chicken Pot Pie and Catalonian Fire Roasted Lamb Rack. His fascination with food began decades ago when as a young kid he used to observe his mother cooking in the kitchen. His mother was a restaurant chef and young Wolfgang soon decided that he too wanted to be one, much to the chagrin of his father.', current_timestamp),
       --  ('Masaharu Morimoto', 'images/morimoto-2.jpeg', 'Born in Hiroshima, Japan, Iron Chef Japanese Masaharu Morimoto trained in a sushi restaurant before moving to the U.S. in 1985 at the age of 30. After working in several restaurants, he joined the highly acclaimed Nobu restaurant in New York City.', current_timestamp),
       --  ('Massimo Bottura', 'images/bottura.jpeg', 'Massimo Bottura is an Italian restaurateur and the chef patron of Osteria Francescana, a three-Michelin-star restaurant based in Modena, Italy which has been listed in the top 5 at The Worlds 50 Best Restaurants Awards since 2010 and received top ratings from LEspresso, Gambero Rosso and the Touring Club guides.', current_timestamp),
@@ -11,10 +11,10 @@ values ('Gordon Ramsay', 'images/ramsay.jpeg', 'Scottish by birth, Gordon Ramsay
       --  ('Lee Yeon-bok', 'images/yeon-bok.png', 'Lee Yeon Bok is a South Korean-Taiwanese chef and TV personality who was born on July 11, 1959, in Seoul, South Korea. During his career in the culinary industry, he has worked as the official chef of the Taiwanese embassy in Seoul and currently works as a professor at the Korea Hotel Tourism College.', current_timestamp);
 
 insert into "dishes" ("chefId", "name", "photoUrl")
-values (1, 'Tomato Spinach Pasta', 'images/pasta.jpeg'),
-       (1, 'Cheeseburger', 'images/cheeseburger.jpeg'),
-       (1, 'Tofu & Watercress Salad', 'images/salad.jpeg'),
-       (1, 'French Onion Soup', 'images/soup.jpeg');
+values (1, 'testing', 'images/testing-image.jpeg'),
+       (1, 'testing', 'images/testing-image.jpeg'),
+       (1, 'testing', 'images/testing-image.jpeg'),
+       (1, 'testing', 'images/testing-image.jpeg');
       --  (2, 'Coffee', 'images/coffee.jpeg'),
       --  (2, 'Garden Salad', 'images/salad.jpeg'),
       --  (2, 'New York Steak', 'images/steak.jpeg'),
