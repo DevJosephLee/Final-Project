@@ -161,7 +161,6 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
       const [reviews] = result.rows;
       if (!reviews) {
         throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
-        // res.json([]);
       } else {
         res.json(result.rows);
       }
