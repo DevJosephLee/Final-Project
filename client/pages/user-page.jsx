@@ -9,12 +9,16 @@ class UserPage extends React.Component {
       chefs: [],
       reviews: [],
       photoUrl: [],
-      totalChefs: []
+      totalChefs: [],
+      chefProfCreated: false,
+      chefId: null
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.fileInputRef = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleMakeChefProfileClick = this.handleMakeChefProfileClick.bind(this);
+    this.updateChefProfilePic = this.updateChefProfilePic.bind(this);
+    this.goToChefProfile = this.goToChefProfile.bind(this);
   }
 
   componentDidMount() {
@@ -53,6 +57,12 @@ class UserPage extends React.Component {
     })
       .then(response => response.json())
       .then(result => {
+        for (let i = 0; i < result.length; i++) {
+          if (result[i].content === null && result[i].rating === null) {
+            this.setState({ chefProfCreated: true });
+            this.setState({ chefId: result[i].chefId });
+          }
+        }
         const noDummyReview = result.filter(noDummyReview => noDummyReview.content !== null && noDummyReview.rating !== null);
         this.setState({ reviews: noDummyReview });
       })
@@ -103,13 +113,26 @@ class UserPage extends React.Component {
       .catch(err => console.error(err));
   }
 
+  updateChefProfilePic() {
+    // if (this.state.chefId !== null) {
+    //   console.log('success');
+    // }
+  }
+
   handleMakeChefProfileClick() {
     const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
     const lastChefId = lastChef.chefId + 1;
     window.location.hash = 'becomeChefBio?chefId=' + lastChefId;
   }
 
+  goToChefProfile() {
+    window.location.hash = 'chefProfile?chefId=' + this.state.chefId;
+  }
+
   render() {
+    const createChefProfileButton = this.state.chefProfCreated
+      ? <button onClick={this.goToChefProfile} className="btn btn-primary">Go to my chef profile</button>
+      : <button onClick={this.handleMakeChefProfileClick} className="btn btn-primary">Create chef profile</button>;
     let profilePictureButtonText = 'Add Profile Picture';
     if (this.state.photoUrl !== 'images/testing-image.jpeg') {
       profilePictureButtonText = 'Change Profile Picture';
@@ -128,7 +151,8 @@ class UserPage extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-center mb-5">
-          <button onClick={this.handleMakeChefProfileClick} className="btn btn-primary">Create chef profile</button>
+          {/* <button onClick={this.handleMakeChefProfileClick} className="btn btn-primary">Create chef profile</button> */}
+          {createChefProfileButton}
         </div>
         <div className="container mb-5 col-md-10 col-lg-6">
           <h1>Saved Chefs</h1>
@@ -275,7 +299,7 @@ class UserPage extends React.Component {
               </div>
               <div className="modal-footer d-flex justify-content-between">
                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" >Upload</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal" onClick={this.updateChefProfilePic}>Upload</button>
               </div>
               </form>
             </div>
