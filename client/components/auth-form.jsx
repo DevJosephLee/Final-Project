@@ -1,5 +1,7 @@
 import React from 'react';
 import AppContext from '../lib/app-context';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default class AuthForm extends React.Component {
   constructor(props) {
@@ -88,6 +90,13 @@ export default class AuthForm extends React.Component {
     const welcomeMessage = action === 'sign-up'
       ? 'SIGN UP'
       : 'LOG IN';
+    const usernameLengthNot = action === 'sign-up'
+      ? 'd-flex justify-content-center mt-2'
+      : 'hidden';
+    const usernameLengthNotClass = this.state.username.length < 9 && this.state.username.length > 0
+      ? 'green'
+      : 'red';
+
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
@@ -113,6 +122,9 @@ export default class AuthForm extends React.Component {
           </div>
           <div className="d-flex justify-content-center">
             <a href="#search" onClick={handleGuestLogin}>Continue as Guest</a>
+          </div>
+          <div className={usernameLengthNot}>
+            <p className={usernameLengthNotClass}>Username must be maximum 9 characters&nbsp;<FontAwesomeIcon icon={this.state.username.length < 9 && this.state.username.length > 0 ? faCheck : faX}/></p>
           </div>
         </form>
       </div>

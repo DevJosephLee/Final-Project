@@ -37,6 +37,24 @@ body {
   border-radius: 50%;
 }
 
+.default-image {
+  width: 250px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.chef-reg-textarea {
+  width: 100%;
+  height: 250px;
+  padding: 1rem;
+}
+
 .dish-photos {
   width: 200px;
   height: 200px;

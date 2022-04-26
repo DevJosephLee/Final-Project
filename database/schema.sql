@@ -21,8 +21,8 @@ CREATE TABLE "public"."reviews" (
 	"reviewId" serial NOT NULL,
 	"userId" int NOT NULL,
 	"chefId" int NOT NULL,
-	"content" TEXT NOT NULL,
-	"rating" int NOT NULL,
+	"content" TEXT,
+	"rating" int,
 	"createdAt" timestamp with time zone NOT NULL,
 	CONSTRAINT "reviews_pk" PRIMARY KEY ("reviewId")
 ) WITH (
@@ -38,9 +38,10 @@ CREATE TABLE "public"."favorites" (
 
 CREATE TABLE "public"."chefs" (
 	"chefId" serial NOT NULL,
-	"name" TEXT NOT NULL,
+	"username" TEXT NOT NULL,
 	"photoUrl" TEXT NOT NULL,
 	"bio" TEXT NOT NULL,
+  "createdAt" timestamp with time zone NOT NULL,
 	"userId" int,
 	CONSTRAINT "chefs_pk" PRIMARY KEY ("chefId")
 ) WITH (
@@ -52,8 +53,9 @@ CREATE TABLE "public"."chefs" (
 CREATE TABLE "public"."dishes" (
 	"dishId" serial NOT NULL,
 	"chefId" int NOT NULL,
-	"name" TEXT NOT NULL,
+	"name" TEXT,
 	"photoUrl" TEXT NOT NULL,
+  "userId" int,
 	CONSTRAINT "dishes_pk" PRIMARY KEY ("dishId")
 ) WITH (
   OIDS=FALSE
@@ -73,7 +75,8 @@ CREATE TABLE "public"."cuisines" (
 
 CREATE TABLE "public"."chefCuisines" (
 	"chefId" int NOT NULL,
-	"cuisineId" int NOT NULL
+	"cuisineId" int NOT NULL,
+  "userId" int
 ) WITH (
   OIDS=FALSE
 );

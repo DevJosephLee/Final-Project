@@ -82,13 +82,25 @@ app.post('/api/auth/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/chefs', (req, res, next) => {
+  const sql = `
+  select "chefId"
+  from "chefs"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/chefs/:chefId', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   if (!Number.isInteger(chefId) || chefId < 1) {
     throw new ClientError(400, 'grade must be a positive integer');
   }
   const sql = `
-    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType", "bio"
+    select   "chefId", "chefs"."username", "photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType", "bio"
     from     "chefs"
     join     "reviews" using ("chefId")
     join     "chefCuisines" using ("chefId")
@@ -162,7 +174,7 @@ app.get('/api/search/:cuisineType', (req, res, next) => {
     throw new ClientError(400, 'cuisineType must be letters');
   }
   const sql = `
-    select   "chefId", "chefs"."name", "photoUrl", avg(distinct "rating"), count(distinct "reviewId")
+    select   "chefId", "chefs"."username", "photoUrl", avg(distinct "rating"), count(distinct "reviewId")
     from     "chefs"
     join     "reviews" using ("chefId")
     join     "chefCuisines" using ("chefId")
@@ -201,19 +213,7 @@ app.post('/api/review/:chefId/', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   const { userId } = req.user;
   const content = req.body.content;
-  const rating = Number(req.body.rating);
-  if (!chefId) {
-    throw new ClientError(400, 'chefId is a required field');
-  } else if (!content || !rating) {
-    throw new ClientError(400, 'content and rating are required fields');
-  }
-  if (!Number.isInteger(chefId) || chefId < 1) {
-    throw new ClientError(400, 'chefId must be a positive integer');
-  } else if (Number.isInteger(content)) {
-    throw new ClientError(400, 'review content must be letters');
-  } else if (!Number.isInteger(rating) || rating < 1) {
-    throw new ClientError(400, 'rating must be a positive integer');
-  }
+  const rating = req.body.rating;
   const sql = `
     insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
     values ($1, $2, $3, $4, current_timestamp)
@@ -253,6 +253,25 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
    returning *
   `;
   const params = [photoUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/changeChefProfilePhoto/:chefId', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
+  const photoUrl = req.file.location;
+  const chefId = Number(req.params.chefId);
+  const sql = `
+  update "chefs"
+     set "photoUrl" = $1
+   where "userId" = $2 and
+         "chefId" = $3
+   returning *
+  `;
+  const params = [photoUrl, userId, chefId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
@@ -300,7 +319,7 @@ app.post('/api/userProfile/:chefId', (req, res, next) => {
 app.get('/api/userProfile/chefs', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
-    select   "chefId", "chefs"."name", "chefs"."photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
+    select   "chefId", "chefs"."username", "chefs"."photoUrl", avg(distinct "rating"), count(distinct "reviewId"), string_agg(distinct "cuisines"."name", ', ') as "cuisineType"
     from     "favorites"
     join     "users" using ("userId")
     join     "chefs" using ("chefId")
@@ -309,7 +328,7 @@ app.get('/api/userProfile/chefs', (req, res, next) => {
     join     "reviews" using ("chefId")
     where    "users"."userId" = $1
     group by "favorites"."chefId",
-             "chefs"."name",
+             "chefs"."username",
              "chefs"."photoUrl",
              "users"."username"
   `;
@@ -355,6 +374,84 @@ app.get('/api/userProfile/reviews', (req, res, next) => {
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const photoUrl = req.body.photoUrl;
+  const username = req.body.username;
+  const bio = req.body.bio;
+  const chefId = Number(req.params.chefId);
+  const sql = `
+    insert into "chefs" ("username", "photoUrl", "bio", "userId", "chefId", "createdAt")
+    values ($1, $2, $3, $4, $5, current_timestamp)
+    returning *
+  `;
+  const params = [username, photoUrl, bio, userId, chefId];
+  db.query(sql, params)
+    .then(result => {
+      const [newChef] = result.rows;
+      res.json(newChef);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/cuisines/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const cuisineId = req.body.cuisineId;
+  const sql = `
+    insert into "chefCuisines" ("chefId", "cuisineId", "userId")
+    values ($1, $2, $3)
+    returning *
+  `;
+  const params = [chefId, cuisineId, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [newChef] = result.rows;
+      res.json(newChef);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/dishPhoto/:chefId', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const photoUrl = req.file.location;
+  const sql = `
+    insert into "dishes" ("chefId", "photoUrl", "userId")
+    values ($1, $2, $3)
+    returning *
+  `;
+  const params = [chefId, photoUrl, userId];
+  db.query(sql, params)
+    .then(result => {
+      const [newChef] = result.rows;
+      res.json(newChef);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/becomeChef/dishName/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const name = req.body.name;
+  const dishId = req.body.dishId;
+  const sql = `
+  update "dishes"
+     set "name" = $1
+   where "chefId" = $2 and
+         "userId" = $3 and
+         "dishId" = $4
+   returning *
+  `;
+  const params = [name, chefId, userId, dishId];
+  db.query(sql, params)
+    .then(result => {
+      const [newChef] = result.rows;
+      res.json(newChef);
     })
     .catch(err => next(err));
 });
