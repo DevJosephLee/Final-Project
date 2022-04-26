@@ -74,6 +74,7 @@ class SearchResultPage extends React.Component {
                                 <div className="d-flex justify-content-lg-center">
                                   <p>No Reviews</p>
                                 </div>
+                                <p>&nbsp;</p>
                               </div>
                               <div className="col-7 col-lg-12 mt-lg-5">
                                 <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
