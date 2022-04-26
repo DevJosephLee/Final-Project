@@ -114,9 +114,24 @@ class UserPage extends React.Component {
   }
 
   updateChefProfilePic() {
-    // if (this.state.chefId !== null) {
-    //   console.log('success');
-    // }
+    if (this.state.chefId !== null) {
+      const token = window.localStorage.getItem('user-jwt');
+      const form = new FormData();
+      form.append('file-to-upload', this.fileInputRef.current.files[0]);
+      fetch(`/api/changeChefProfilePhoto/${this.state.chefId}`, {
+        method: 'POST',
+        headers: {
+          'X-Access-Token': token
+        },
+        body: form
+      })
+        .then(response => response.json())
+        .then(result => {
+          this.fileInputRef.current.value = null;
+          this.setState({ photoUrl: result[0].photoUrl });
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   handleMakeChefProfileClick() {
