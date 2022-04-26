@@ -160,8 +160,8 @@ app.get('/api/reviews/:chefId', (req, res, next) => {
     .then(result => {
       const [reviews] = result.rows;
       if (!reviews) {
-        // throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
-        res.json([]);
+        throw new ClientError(404, `cannot find dishes with chefId ${chefId}`);
+        // res.json([]);
       } else {
         res.json(result.rows);
       }
@@ -214,21 +214,7 @@ app.post('/api/review/:chefId/', (req, res, next) => {
   const chefId = Number(req.params.chefId);
   const { userId } = req.user;
   const content = req.body.content;
-  // const rating = Number(req.body.rating);
   const rating = req.body.rating;
-
-  // if (!chefId) {
-  //   throw new ClientError(400, 'chefId is a required field');
-  // } else if (!content || !rating) {
-  //   throw new ClientError(400, 'content and rating are required fields');
-  // }
-  // if (!Number.isInteger(chefId) || chefId < 1) {
-  //   throw new ClientError(400, 'chefId must be a positive integer');
-  // } else if (Number.isInteger(content)) {
-  //   throw new ClientError(400, 'review content must be letters');
-  // } else if (!Number.isInteger(rating) || rating < 1) {
-  //   throw new ClientError(400, 'rating must be a positive integer');
-  // }
   const sql = `
     insert into "reviews" ("userId", "chefId", "content", "rating", "createdAt")
     values ($1, $2, $3, $4, current_timestamp)
@@ -452,23 +438,6 @@ app.post('/api/becomeChef/dishName/:chefId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-
-// app.get('/api/becomeChef/dishes/:chefId', (req, res, next) => {
-//   const { userId } = req.user;
-//   const chefId = Number(req.params.chefId);
-//   const sql = `
-//     select *
-//     from   "dishes"
-//     where  "chefId" = $1 and
-//            "userId" = $2
-//   `;
-//   const params = [chefId, userId];
-//   db.query(sql, params)
-//     .then(result => {
-//       res.json(result.rows);
-//     })
-//     .catch(err => next(err));
-// });
 
 app.use(errorMiddleware);
 

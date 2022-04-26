@@ -37,17 +37,6 @@ class MakeChefProfilePageDishes extends React.Component {
         this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
-
-    // fetch(`/api/becomeChef/dishes/${this.props.chefId}`, {
-    //   headers: {
-    //     'X-Access-Token': token
-    //   }
-    // })
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     this.setState({ chefDishes: result });
-    //   })
-    //   .catch(err => console.error(err));
   }
 
   handleDishNameChange(event) {
@@ -115,11 +104,11 @@ class MakeChefProfilePageDishes extends React.Component {
       body: JSON.stringify(this.state)
     })
       .then(response => response.json())
-      .then(newReview => {
-        // newReview.content = 'test;
-        // newReview.rating = this.state.rating;
-        // console.log(newReview);
-      })
+      // .then(newReview => {
+    // newReview.content = 'test;
+    // newReview.rating = this.state.rating;
+    // console.log(newReview);
+      // })
       .catch(err => {
         console.error(err);
       });

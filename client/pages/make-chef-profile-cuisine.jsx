@@ -104,7 +104,6 @@ class MakeChefProfilePageCuisine extends React.Component {
               </select>
             </div>
             <div className="text-center mb-3">
-              {/* <button type="submit" className="btn btn-primary w-100" >Next</button> */}
               {nextButton}
             </div>
           </form>

@@ -155,44 +155,6 @@ class ChefProfile extends React.Component {
           <Reviews reviews={this.state.reviews} />
         </div>
         );
-    // console.log(this.state.reviews);
-    // if (this.state.reviews.length === 0) {
-    //   return
-    // }
-    // function showHideStats() {
-    //   if (this.state.reviews.length !== 0) {
-    //     return (
-    //       <p>No Reviews</p>
-    //     );
-    //   } else {
-    //     return (
-    //       <>
-    //         <div className="d-flex justify-content-center justify-content-lg-start">
-    //           <StarRating rating={this.state.avg} />
-    //           <p>({this.state.avg.slice(0, 3)})</p>
-    //         </div>
-    //         <p>{this.state.count} reviews</p>
-    //       </>
-    //     );
-    //   }
-    // }
-
-    // const chefStatsView = this.state.noComment
-    //   ? (
-    //     <>
-    //       <div className="d-flex justify-content-center justify-content-lg-start">
-    //         <StarRating rating={this.state.avg} />
-    //         <p>({this.state.slice(0, 3)})</p>
-    //       </div>
-    //       <p>{this.state.count} reviews</p>
-    //     </>
-
-    //     )
-    //   : (
-    //     <div className="d-flex justify-content-center justify-content-lg-start">
-    //       <p>No Reviews</p>
-    //     </div>
-    //     );
     const savedChefIdsArray = [];
     let currentChefId = '';
     for (let i = 0; i < this.state.savedChefs.length; i++) {

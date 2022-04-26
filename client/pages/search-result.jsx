@@ -71,12 +71,8 @@ class SearchResultPage extends React.Component {
                               <h2 className="mb-lg-3">{chef.username}</h2>
                               <div className="text-lg-center">
                                 <div className="d-flex justify-content-lg-center">
-                                  {/* <StarRating rating={chef.avg} />
-                                  <p>({chef.avg.slice(0, 3)})</p> */}
-                                  {/* {chef.avg === null && chef.count === null ? <p>no reviews</p> : <p>({chef.avg.slice(0, 3)})</p>} */}
                                   <p>No Reviews</p>
                                 </div>
-                                {/* <p>{chef.count} reviews</p> */}
                               </div>
                               <div className="col-7 col-lg-12 mt-lg-5">
                                 <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
