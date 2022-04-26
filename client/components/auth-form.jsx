@@ -96,7 +96,7 @@ export default class AuthForm extends React.Component {
     const usernameLengthNotClass = this.state.username.length < 9 && this.state.username.length > 0
       ? 'green'
       : 'red';
-
+    // testing
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
