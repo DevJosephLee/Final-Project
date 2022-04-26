@@ -260,6 +260,25 @@ app.post('/api/uploads', uploadsMiddleware, (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/changeChefProfilePhoto/:chefId', uploadsMiddleware, (req, res, next) => {
+  const { userId } = req.user;
+  const photoUrl = req.file.location;
+  const chefId = Number(req.params.chefId);
+  const sql = `
+  update "chefs"
+     set "photoUrl" = $1
+   where "userId" = $2 and
+         "chefId" = $3
+   returning *
+  `;
+  const params = [photoUrl, userId, chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.get('/api/images', (req, res, next) => {
   const { userId } = req.user;
   const sql = `
