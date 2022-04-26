@@ -104,11 +104,6 @@ class MakeChefProfilePageDishes extends React.Component {
       body: JSON.stringify(this.state)
     })
       .then(response => response.json())
-      // .then(newReview => {
-    // newReview.content = 'test;
-    // newReview.rating = this.state.rating;
-    // console.log(newReview);
-      // })
       .catch(err => {
         console.error(err);
       });

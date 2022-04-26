@@ -401,7 +401,6 @@ app.post('/api/becomeChef/cuisines/:chefId', (req, res, next) => {
 app.post('/api/becomeChef/dishPhoto/:chefId', uploadsMiddleware, (req, res, next) => {
   const { userId } = req.user;
   const chefId = Number(req.params.chefId);
-  // const name = req.body.name;
   const photoUrl = req.file.location;
   const sql = `
     insert into "dishes" ("chefId", "photoUrl", "userId")
