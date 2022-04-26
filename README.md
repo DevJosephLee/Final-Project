@@ -34,13 +34,13 @@ https://chef-connect-1.herokuapp.com/
 - User can remove chefs from their watchlist. 
 - User can see a list of their own comments. 
 - User can add a photo to their profile page.
+- User can create a chef profile.
 
 ## Preview
 ![Kapture 2022-01-26 at 16 11 24](https://user-images.githubusercontent.com/68756038/151448049-831ce9f5-6c3e-4ccc-9a44-01319b463f55.gif)
 
 
 ## Stretch Features
-- User can become a chef.
 - User can live message chefs. 
 
 ## Instructions
