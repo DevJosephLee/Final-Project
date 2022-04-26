@@ -141,7 +141,7 @@ class MakeChefProfilePageDishes extends React.Component {
     const dishUploadNotifierClassFour = this.state.numOfDishesUploads > 3
       ? 'green'
       : 'red';
-    const finishButtonClass = this.state.numOfDishesUploads === 4
+    const finishButtonClass = this.state.numOfDishesUploads > 0
       ? (
         <button type="submit" className="btn btn-primary w-100" onClick={this.clickFinishButton} data-bs-toggle="modal" data-bs-target="#ConfModal">Finish</button>
         )
@@ -166,9 +166,12 @@ class MakeChefProfilePageDishes extends React.Component {
               <h3>{this.state.username}</h3>
             </div>
           </div>
-          <div>
+          <>
             <h5><u>Step 3</u></h5><p>Choose your dish photos:</p>
-          </div>
+          </>
+          <>
+            <p className="red">&#10058;&nbsp;You may upload up to 4 dish photos.</p>
+          </>
           <div className="d-flex">
             <div className={formContainerClass}>
               <img src={this.state.dishPhotoUrl} className="default-image"></img>
