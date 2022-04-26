@@ -182,7 +182,6 @@ class UserPage extends React.Component {
                                   <div className="d-flex">
                                     <p>No Reviews</p>
                                   </div>
-                                  {/* <p className="">{chef.count} Reviews</p> */}
                                   <p className="saved-chefs-text">{chef.cuisineType}</p>
                                   <div className="col-12">
                                     <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
