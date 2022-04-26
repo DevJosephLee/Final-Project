@@ -19,12 +19,12 @@ class DishPictures extends React.Component {
   }
 
   render() {
-    const dishPhotoUrls = [];
-    const dishNames = [];
-    for (let i = 0; i < this.state.dishes.length; i++) {
-      dishPhotoUrls.push(this.state.dishes[i].photoUrl);
-      dishNames.push(this.state.dishes[i].name);
-    }
+    // const dishPhotoUrls = [];
+    // const dishNames = [];
+    // for (let i = 0; i < this.state.dishes.length; i++) {
+    //   dishPhotoUrls.push(this.state.dishes[i].photoUrl);
+    //   dishNames.push(this.state.dishes[i].name);
+    // }
     return (
       <div>
         <h1>Dishes</h1>
@@ -32,7 +32,7 @@ class DishPictures extends React.Component {
           <div className="text-center">
             <div id="carouselIndicators" className="carousel slide" data-ride="carousel">
               <div className="carousel-inner">
-                <div className="carousel-item active">
+                {/* <div className="carousel-item active">
                   <img className="d-block w-100 dish-photos" src={dishPhotoUrls[0]} alt={dishNames[0]} />
                   <div className="mb-5">
                     <p>{dishNames[0]}</p>
@@ -55,7 +55,20 @@ class DishPictures extends React.Component {
                   <div className="mb-5">
                     <p>{dishNames[3]}</p>
                   </div>
-                </div>
+                </div> */}
+                {
+                  this.state.dishes.map((dish, i) => {
+                    return (
+                      <div className={i === 0 ? 'carousel-item active' : 'carousel-item'} key={dish.dishId}>
+                        <img className="d-block w-100 dish-photos" src={dish.photoUrl} alt={dish.name} />
+                        <div className="mb-5">
+                          <p>{dish.name}</p>
+                        </div>
+                      </div>
+                    );
+                  })
+                }
+
               </div>
               <a className="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -66,10 +79,17 @@ class DishPictures extends React.Component {
                 <span className="sr-only">Next</span>
               </a>
               <ol className="carousel-indicators gap-2">
-                <li data-target="#carouselIndicators" data-slide-to="0" className="active"></li>
+                {/* <li data-target="#carouselIndicators" data-slide-to="0" className="active"></li>
                 <li data-target="#carouselIndicators" data-slide-to="1"></li>
                 <li data-target="#carouselIndicators" data-slide-to="2"></li>
-                <li data-target="#carouselIndicators" data-slide-to="3"></li>
+                <li data-target="#carouselIndicators" data-slide-to="3"></li> */}
+                {
+                  this.state.dishes.map((dish, i) => {
+                    return (
+                      <li data-target="#carouselIndicators" data-slide-to={i} className={i === 0 ? 'active' : ''} key={dish.dishId}></li>
+                    );
+                  })
+                }
               </ol>
             </div>
           </div>
