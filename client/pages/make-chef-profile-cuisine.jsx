@@ -1,20 +1,24 @@
 import React from 'react';
-
+import parseRoute from '../lib/parse-route.js';
 class MakeChefProfilePageCuisine extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: null,
       photoUrl: [],
+      route: parseRoute(window.location.hash),
       cuisines: [],
       cuisineId: null,
-      totalChefs: []
+      chefId: null
     };
     this.handleCuisineChange = this.handleCuisineChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
+    const { route } = this.state;
+    const chefId = route.params.get('chefId');
+    this.setState({ chefId });
     const token = window.localStorage.getItem('user-jwt');
     fetch('/api/userProfile', {
       headers: {
@@ -28,10 +32,6 @@ class MakeChefProfilePageCuisine extends React.Component {
         this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
-
-    fetch('/api/chefs')
-      .then(response => response.json())
-      .then(totalChefs => this.setState({ totalChefs }));
 
     fetch('/api/cuisines')
       .then(response => response.json())
@@ -49,8 +49,9 @@ class MakeChefProfilePageCuisine extends React.Component {
 
   handleSubmit() {
     event.preventDefault();
+
     const token = window.localStorage.getItem('user-jwt');
-    fetch(`/api/becomeChef/cuisines/${this.props.chefId}`, {
+    fetch(`/api/becomeChef/cuisines/${this.state.chefId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,9 +67,7 @@ class MakeChefProfilePageCuisine extends React.Component {
         console.error(err);
       });
 
-    const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
-    const lastChefId = lastChef.chefId;
-    window.location.hash = 'becomeChefDishes?chefId=' + lastChefId;
+    window.location.hash = 'becomeChefDishes?chefId=' + this.state.chefId;
   }
 
   render() {
