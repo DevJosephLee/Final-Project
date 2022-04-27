@@ -69,13 +69,13 @@ export default class App extends React.Component {
       return <UserPage />;
     }
     if (route.path === 'becomeChefBio') {
-      return <MakeChefProfilePageBio chefId={chefId}/>;
+      return <MakeChefProfilePageBio/>;
     }
     if (route.path === 'becomeChefCuisine') {
-      return <MakeChefProfilePageCuisine chefId={chefId}/>;
+      return <MakeChefProfilePageCuisine/>;
     }
     if (route.path === 'becomeChefDishes') {
-      return <MakeChefProfilePageDishes chefId={chefId} />;
+      return <MakeChefProfilePageDishes/>;
     }
     return <AuthPage />;
   }
