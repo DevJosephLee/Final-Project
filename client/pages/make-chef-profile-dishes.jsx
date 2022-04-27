@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX, faCheck } from '@fortawesome/free-solid-svg-icons';
-
+import parseRoute from '../lib/parse-route.js';
 class MakeChefProfilePageDishes extends React.Component {
   constructor(props) {
     super(props);
@@ -11,9 +11,11 @@ class MakeChefProfilePageDishes extends React.Component {
       photoUrl: [],
       dishId: null,
       dishPhotoUrl: 'images/default-image.png',
+      route: parseRoute(window.location.hash),
       chefDishes: [],
       numOfDishesUploads: 0,
-      dishNameSubmitted: false
+      dishNameSubmitted: false,
+      chefId: null
     };
     this.handleDishPhotoSubmit = this.handleDishPhotoSubmit.bind(this);
     this.fileInputRef = React.createRef();
@@ -24,6 +26,9 @@ class MakeChefProfilePageDishes extends React.Component {
   }
 
   componentDidMount() {
+    const { route } = this.state;
+    const chefId = route.params.get('chefId');
+    this.setState({ chefId });
     const token = window.localStorage.getItem('user-jwt');
     fetch('/api/userProfile', {
       headers: {
@@ -48,7 +53,7 @@ class MakeChefProfilePageDishes extends React.Component {
     const token = window.localStorage.getItem('user-jwt');
     const form = new FormData();
     form.append('file-to-upload', this.fileInputRef.current.files[0]);
-    fetch(`/api/becomeChef/dishPhoto/${this.props.chefId}`, {
+    fetch(`/api/becomeChef/dishPhoto/${this.state.chefId}`, {
       method: 'POST',
       headers: {
         'X-Access-Token': token
@@ -67,7 +72,7 @@ class MakeChefProfilePageDishes extends React.Component {
   handleDishNameSubmit(event) {
     event.preventDefault();
     const token = window.localStorage.getItem('user-jwt');
-    fetch(`/api/becomeChef/dishName/${this.props.chefId}`, {
+    fetch(`/api/becomeChef/dishName/${this.state.chefId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -95,7 +100,7 @@ class MakeChefProfilePageDishes extends React.Component {
 
   clickFinishButton(newReview) {
     const token = window.localStorage.getItem('user-jwt');
-    fetch(`/api/review/${this.props.chefId}`, {
+    fetch(`/api/review/${this.state.chefId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +115,7 @@ class MakeChefProfilePageDishes extends React.Component {
   }
 
   clickCloseButton() {
-    window.location.hash = 'chefProfile?chefId=' + this.props.chefId;
+    window.location.hash = 'chefProfile?chefId=' + this.state.chefId;
   }
 
   render() {

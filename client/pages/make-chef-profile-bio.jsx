@@ -1,19 +1,23 @@
 import React from 'react';
-
+import parseRoute from '../lib/parse-route.js';
 class MakeChefProfilePageBio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: null,
       bio: '',
+      route: parseRoute(window.location.hash),
       photoUrl: [],
-      totalChefs: []
+      chefId: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBioChange = this.handleBioChange.bind(this);
   }
 
   componentDidMount() {
+    const { route } = this.state;
+    const chefId = route.params.get('chefId');
+    this.setState({ chefId });
     const token = window.localStorage.getItem('user-jwt');
     fetch('/api/userProfile', {
       headers: {
@@ -27,10 +31,6 @@ class MakeChefProfilePageBio extends React.Component {
         this.setState({ username: user.username });
       })
       .catch(err => console.error(err));
-
-    fetch('/api/chefs')
-      .then(response => response.json())
-      .then(totalChefs => this.setState({ totalChefs }));
   }
 
   handleBioChange(event) {
@@ -40,7 +40,7 @@ class MakeChefProfilePageBio extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const token = window.localStorage.getItem('user-jwt');
-    fetch(`/api/becomeChef/${this.props.chefId}`, {
+    fetch(`/api/becomeChef/${this.state.chefId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -58,9 +58,7 @@ class MakeChefProfilePageBio extends React.Component {
         console.error(err);
       });
 
-    const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
-    const lastChefId = lastChef.chefId + 1;
-    window.location.hash = 'becomeChefCuisine?chefId=' + lastChefId;
+    window.location.hash = 'becomeChefCuisine?chefId=' + this.state.chefId;
   }
 
   render() {
