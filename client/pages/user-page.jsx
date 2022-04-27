@@ -74,6 +74,10 @@ class UserPage extends React.Component {
       .then(totalChefs => this.setState({ totalChefs }));
   }
 
+  componentWillUnmount() {
+    this.setState({ chefId: null });
+  }
+
   handleDeleteClick(event) {
     const token = window.localStorage.getItem('user-jwt');
     const chefId = Number(event.target.getAttribute('chefId'));
