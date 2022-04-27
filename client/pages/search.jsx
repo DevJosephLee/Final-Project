@@ -14,7 +14,10 @@ class SearchPage extends React.Component {
   componentDidMount() {
     fetch('/api/cuisines')
       .then(response => response.json())
-      .then(cuisines => this.setState({ cuisines }));
+      .then(cuisines => {
+        const noItalian = cuisines.filter(noItalian => noItalian.cuisineId !== 1 && noItalian.name !== 'Italian');
+        this.setState({ cuisines: noItalian });
+      });
   }
 
   handleChange(event) {
