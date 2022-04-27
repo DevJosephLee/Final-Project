@@ -14,7 +14,9 @@ class SearchPage extends React.Component {
   componentDidMount() {
     fetch('/api/cuisines')
       .then(response => response.json())
-      .then(cuisines => this.setState({ cuisines }));
+      .then(cuisines => {
+        this.setState({ cuisines });
+      });
   }
 
   handleChange(event) {
