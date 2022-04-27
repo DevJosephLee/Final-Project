@@ -1,6 +1,6 @@
 import React from 'react';
 import StarRating from '../components/star-rating';
-
+import decodeToken from '../lib/decode-token';
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
@@ -57,8 +57,9 @@ class UserPage extends React.Component {
     })
       .then(response => response.json())
       .then(result => {
+        const payload = decodeToken(token);
         for (let i = 0; i < result.length; i++) {
-          if (result[i].content === null && result[i].rating === null) {
+          if (result[i].content === null && result[i].rating === null && result[i].userId === payload.userId) {
             this.setState({ chefProfCreated: true });
             this.setState({ chefId: result[i].chefId });
           }
