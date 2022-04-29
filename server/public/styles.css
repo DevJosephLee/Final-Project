@@ -72,6 +72,14 @@ body {
   left: 15px;
 }
 
+.saved-chefs-button {
+  border: none;
+  background-color: white;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: blue;
+}
+
 .arrow-icon-right {
   font-size: 2rem;
   position: absolute;
