@@ -225,7 +225,7 @@ class UserPage extends React.Component {
                               <div className="col-7">
                                 <div className="ms-4">
                                   <div className="d-flex align-items-center">
-                                    <h3>{chef.username}</h3>
+                                    <button className="saved-chefs-button" onClick={this.clickChefUsername} data-chef-id={chef.chefId}>{chef.username}</button>
                                   </div>
                                   <div className="d-flex">
                                     <p>No Reviews</p>
