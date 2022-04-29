@@ -78,6 +78,7 @@ body {
   font-weight: 500;
   font-size: 1.6rem;
   color: blue;
+  padding: 0;
 }
 
 .arrow-icon-right {
