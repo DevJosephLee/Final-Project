@@ -19,6 +19,7 @@ class UserPage extends React.Component {
     this.handleMakeChefProfileClick = this.handleMakeChefProfileClick.bind(this);
     this.updateChefProfilePic = this.updateChefProfilePic.bind(this);
     this.goToChefProfile = this.goToChefProfile.bind(this);
+    this.clickChefUsername = this.clickChefUsername.bind(this);
   }
 
   componentDidMount() {
@@ -139,6 +140,10 @@ class UserPage extends React.Component {
     }
   }
 
+  clickChefUsername(event) {
+    window.location.hash = 'chefProfile?chefId=' + event.target.getAttribute('data-chef-id');
+  }
+
   handleMakeChefProfileClick() {
     const lastChef = this.state.totalChefs[this.state.totalChefs.length - 1];
     const lastChefId = lastChef.chefId + 1;
@@ -190,14 +195,14 @@ class UserPage extends React.Component {
                               <div className="col-7">
                                 <div className="ms-4">
                                   <div className="d-flex align-items-center">
-                                    <h3 className="saved-chefs-text">{chef.username}</h3>
+                                    <button className="saved-chefs-button" onClick={this.clickChefUsername} data-chef-id={chef.chefId}>{chef.username}</button>
                                   </div>
                                   <div className="d-flex">
                                     <StarRating rating={chef.avg} />
                                     <p>({chef.avg.slice(0, 3)})</p>
                                   </div>
                                   <p>{chef.count} Review(s)</p>
-                                  <p className="saved-chefs-text">{chef.cuisineType}</p>
+                                  <p>{chef.cuisineType}</p>
                                   <div className="col-12">
                                     <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
                                       Delete
@@ -220,12 +225,12 @@ class UserPage extends React.Component {
                               <div className="col-7">
                                 <div className="ms-4">
                                   <div className="d-flex align-items-center">
-                                    <h3 className="saved-chefs-text">{chef.username}</h3>
+                                    <button className="saved-chefs-button" onClick={this.clickChefUsername} data-chef-id={chef.chefId}>{chef.username}</button>
                                   </div>
                                   <div className="d-flex">
                                     <p>No Reviews</p>
                                   </div>
-                                  <p className="saved-chefs-text">{chef.cuisineType}</p>
+                                  <p>{chef.cuisineType}</p>
                                   <div className="col-12">
                                     <button chefid={chef.chefId} type="button" className="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#deleteChefModal" onClick={this.handleDeleteClick}>
                                       Delete
