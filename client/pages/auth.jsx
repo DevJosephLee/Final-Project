@@ -4,6 +4,7 @@ import AuthForm from '../components/auth-form';
 import AppContext from '../lib/app-context';
 
 export default class AuthPage extends React.Component {
+
   render() {
     const { user, route, handleSignIn } = this.context;
     if (user) return <Redirect to="" />;
@@ -22,6 +23,22 @@ export default class AuthPage extends React.Component {
               key={route.path}
               action={route.path}
               onSignIn={handleSignIn} />
+          </div>
+        </div>
+        <div className="modal fade" id="incorrectLoginModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabIndex="-1">
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalToggleLabel">Failed!</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                Your username or password is incorrect.
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
