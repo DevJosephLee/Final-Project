@@ -97,16 +97,6 @@ export default class AuthForm extends React.Component {
       ? 'green'
       : 'red';
     let submitButtonRes;
-    // const submitButtonRes = usernameLengthNotClass === 'green'
-    //   ? <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
-    //   : <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>;
-    // if (action === 'sign-in') {
-    //   return;
-    // } else if (usernameLengthNotClass !== 'green') {
-    //   submitButtonRes = <div className="d-flex justify-content-center align-items-center w-100 gap-2 saved-button rounded">Finish</div>;
-    // } else {
-    //   submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>;
-    // }
     if (action === 'sign-in') {
       submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>;
     } else if (action === 'sign-up' && usernameLengthNotClass !== 'green') {
@@ -127,7 +117,6 @@ export default class AuthForm extends React.Component {
             <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
           </div>
           <div className="mb-4">
-            {/* <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button> */}
             {submitButtonRes}
           </div>
           <div className="mb-4">
