@@ -8,8 +8,7 @@ export default class AuthForm extends React.Component {
     super(props);
     this.state = {
       username: '',
-      password: '',
-      incorrectModalToggle: 'modal'
+      password: ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -53,7 +52,7 @@ export default class AuthForm extends React.Component {
           this.props.onSignIn(result);
           window.location.hash = 'search';
         } else if (action === 'sign-in' && !result.user && !result.token) {
-          this.setState({ incorrectModalToggle: '' });
+          alert('Failed! Username or password is incorrect.');
         }
       });
   }
@@ -101,8 +100,7 @@ export default class AuthForm extends React.Component {
       : 'red';
     let submitButtonRes;
     if (action === 'sign-in') {
-      submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100" data-bs-toggle={this.state.incorrectModalToggle} data-bs-target='#incorrectLoginModal'>{submitButtonText}</button>;
-
+      submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>;
     } else if (action === 'sign-up' && usernameLengthNotClass !== 'green') {
       submitButtonRes = <div className="d-flex justify-content-center align-items-center w-100 gap-2 reg-button-grey rounded">Register</div>;
     } else {
