@@ -146,6 +146,13 @@ body {
   height: 38px;
 }
 
+.reg-button-grey {
+  background-color: #6c757d;
+  color: white;
+  height: 48px;
+  font-size: 1.25rem;
+}
+
 .not-equal {
   font-size: 4rem;
 }
