@@ -4,6 +4,7 @@ import AuthForm from '../components/auth-form';
 import AppContext from '../lib/app-context';
 
 export default class AuthPage extends React.Component {
+
   render() {
     const { user, route, handleSignIn } = this.context;
     if (user) return <Redirect to="" />;

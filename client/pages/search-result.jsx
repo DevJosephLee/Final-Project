@@ -45,7 +45,7 @@ class SearchResultPage extends React.Component {
                             <div className="col-5 col-lg-12">
                               <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
                             </div>
-                            <div className="ms-4 ms-lg-0 mt-lg-5">
+                            <div className="ms-4 ms-lg-0 mt-lg-5 col-6 col-lg-12">
                               <h2 className="mb-lg-3">{chef.username}</h2>
                               <div className="text-lg-center">
                                 <div className="d-flex justify-content-lg-center">
@@ -54,7 +54,7 @@ class SearchResultPage extends React.Component {
                                 </div>
                                 <p>{chef.count} reviews</p>
                               </div>
-                              <div className="col-7 col-lg-12 mt-lg-5">
+                              <div className="col-12 mt-lg-5">
                                 <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
                               </div>
                             </div>
@@ -68,7 +68,7 @@ class SearchResultPage extends React.Component {
                             <div className="col-5 col-lg-12">
                               <img className="rounded w-100 profile-picture" src={chef.photoUrl} />
                             </div>
-                            <div className="ms-4 ms-lg-0 mt-lg-5">
+                            <div className="ms-4 ms-lg-0 mt-lg-5 col-6 col-lg-12">
                               <h2 className="mb-lg-3">{chef.username}</h2>
                               <div className="text-lg-center">
                                 <div className="d-flex justify-content-lg-center">
@@ -76,7 +76,7 @@ class SearchResultPage extends React.Component {
                                 </div>
                                 <p>&nbsp;</p>
                               </div>
-                              <div className="col-7 col-lg-12 mt-lg-5">
+                              <div className="col-12 mt-lg-5">
                                 <a chefid={chef.chefId} type="button" className="btn btn-primary w-100" onClick={this.handleClick}>INFO</a>
                               </div>
                             </div>

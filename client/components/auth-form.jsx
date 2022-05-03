@@ -51,6 +51,8 @@ export default class AuthForm extends React.Component {
         } else if (action === 'sign-in' && result.user && result.token) {
           this.props.onSignIn(result);
           window.location.hash = 'search';
+        } else if (action === 'sign-in' && !result.user && !result.token) {
+          alert('Failed! Username or password is incorrect.');
         }
       });
   }
@@ -96,6 +98,14 @@ export default class AuthForm extends React.Component {
     const usernameLengthNotClass = this.state.username.length < 9 && this.state.username.length > 0
       ? 'green'
       : 'red';
+    let submitButtonRes;
+    if (action === 'sign-in') {
+      submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>;
+    } else if (action === 'sign-up' && usernameLengthNotClass !== 'green') {
+      submitButtonRes = <div className="d-flex justify-content-center align-items-center w-100 gap-2 reg-button-grey rounded">Register</div>;
+    } else {
+      submitButtonRes = <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>;
+    }
     return (
       <div className="bg-white p-4 rounded shadow mt-4">
         <h2 className="text-center mb-5 mt-3">{welcomeMessage}</h2>
@@ -109,7 +119,7 @@ export default class AuthForm extends React.Component {
             <input onChange={handleChange} type="password" name="password" className="form-control" id="passwordInput" required />
           </div>
           <div className="mb-4">
-            <button type="submit" className="btn btn-primary btn-lg w-100">{submitButtonText}</button>
+            {submitButtonRes}
           </div>
           <div className="mb-4">
             <p className="text-center">
