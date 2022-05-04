@@ -8,6 +8,9 @@ const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const { Server } = require('socket.io');
+const http = require('http');
+const cors = require('cors');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -17,6 +20,26 @@ const db = new pg.Pool({
 });
 
 const app = express();
+
+app.use(cors());
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+});
+
+io.on('connection', socket => {
+  // eslint-disable-next-line no-console
+  console.log(`User Connected: ${socket.id}`);
+  socket.on('disconnect', () => {
+    // eslint-disable-next-line no-console
+    console.log('User disconnected', socket.id);
+  });
+});
 
 app.use(staticMiddleware);
 
@@ -458,7 +481,7 @@ app.post('/api/becomeChef/dishName/:chefId', (req, res, next) => {
 
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
 });
