@@ -6,6 +6,9 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
+import io from 'socket.io-client';
+// eslint-disable-next-line
+const socket = io.connect('http://localhost:3001');
 class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
