@@ -42,6 +42,7 @@ https://chef-connect-1.herokuapp.com/
 
 ## Stretch Features
 - User can live message chefs. 
+- User can schedule a chef using appointment calendar.
 
 ## Instructions
 Continue as guest or create an account. 
