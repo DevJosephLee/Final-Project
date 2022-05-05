@@ -6,8 +6,8 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
+import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
-// eslint-disable-next-line
 const socket = io.connect('http://localhost:3001');
 class ChefProfile extends React.Component {
   constructor(props) {
@@ -22,13 +22,16 @@ class ChefProfile extends React.Component {
       avg: 0,
       photoUrl: 'images/testing-image.jpeg',
       isSaved: false,
-      noComment: true
+      noComment: true,
+      roomId: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
     this.updateAvgCount = this.updateAvgCount.bind(this);
+    this.joinChatRoom = this.joinChatRoom.bind(this);
+    this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +80,14 @@ class ChefProfile extends React.Component {
       .catch(err => console.error(err));
 
     this.setState({ isLoaded: true });
+  }
+
+  joinChatRoom() {
+    socket.emit('join_room', this.state.roomId);
+  }
+
+  handleRoomIdChange(event) {
+    this.setState({ roomId: event.target.value });
   }
 
   handleTextChange(event) {
@@ -142,6 +153,9 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    // const token = window.localStorage.getItem('user-jwt');
+    // const payload = decodeToken(token);
+    // console.log(payload.username);
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -209,6 +223,10 @@ class ChefProfile extends React.Component {
                     </div>
                     <div className="w-50">
                       {saveButton}
+                    </div>
+                    <div>
+                      <button onClick={this.joinChatRoom}>Live Messaging</button>
+                      <input type='text' onChange={this.handleRoomIdChange}></input>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center">
@@ -291,6 +309,10 @@ class ChefProfile extends React.Component {
                     <div className="w-50">
                       {saveButton}
                     </div>
+                    <div>
+                      <button onClick={this.joinChatRoom}>Live Messaging</button>
+                      <input type='text' onChange={this.handleRoomIdChange}></input>
+                    </div>
                   </div>
                   <div className="d-flex justify-content-center">
                     <div className="mb-5 col-12 col-lg-6">
@@ -349,6 +371,7 @@ class ChefProfile extends React.Component {
             }
           })
         }
+        <ChatRoom roomId={this.state.roomId} socket={socket}></ChatRoom>
       </div>
     );
   }

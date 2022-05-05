@@ -35,6 +35,15 @@ const io = new Server(server, {
 io.on('connection', socket => {
   // eslint-disable-next-line no-console
   console.log(`User Connected: ${socket.id}`);
+
+  socket.on('join_room', data => {
+    socket.join(data);
+    // eslint-disable-next-line no-console
+    console.log(`User with ${socket.id} joined room: ${data}`);
+  });
+  socket.on('send_message', data => {
+    socket.to(data.roomId).emit('receive_message', data);
+  });
   socket.on('disconnect', () => {
     // eslint-disable-next-line no-console
     console.log('User disconnected', socket.id);
