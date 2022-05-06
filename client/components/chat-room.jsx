@@ -25,7 +25,7 @@ class ChatRoom extends React.Component {
     if (this.state.currentMessage !== '') {
       const messageData = {
         roomId: this.props.roomId,
-        // author: this.props.username,
+        author: this.props.username,
         message: this.state.currentMessage,
         // time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes()
         time: new Date()
