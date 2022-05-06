@@ -153,9 +153,8 @@ class ChefProfile extends React.Component {
   }
 
   render() {
-    // const token = window.localStorage.getItem('user-jwt');
-    // const payload = decodeToken(token);
-    // console.log(payload.username);
+    const token = window.localStorage.getItem('user-jwt');
+    const payload = decodeToken(token);
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -371,7 +370,7 @@ class ChefProfile extends React.Component {
             }
           })
         }
-        <ChatRoom roomId={this.state.roomId} socket={socket}></ChatRoom>
+        <ChatRoom roomId={this.state.roomId} username={payload.username} socket={socket}></ChatRoom>
       </div>
     );
   }
