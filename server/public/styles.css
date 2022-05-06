@@ -37,6 +37,19 @@ body {
   border-radius: 50%;
 }
 
+.chat-room-container {
+  background-color: white;
+  border: 1px solid black;
+  height: 350px;
+  padding: 1rem;
+}
+
+.send-message-container {
+  padding: 1rem;
+  background-color: #6c757d;
+  display: flex;
+}
+
 .default-image {
   width: 250px;
 }

@@ -6,6 +6,9 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage } from '@fortawesome/free-solid-svg-icons';
+// eslint-disable-next-line
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
@@ -23,6 +26,7 @@ class ChefProfile extends React.Component {
       photoUrl: 'images/testing-image.jpeg',
       isSaved: false,
       noComment: true,
+      chatContainerOpened: false,
       roomId: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -30,7 +34,7 @@ class ChefProfile extends React.Component {
     this.handleStarClick = this.handleStarClick.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
     this.updateAvgCount = this.updateAvgCount.bind(this);
-    this.joinChatRoom = this.joinChatRoom.bind(this);
+    this.clickLiveMessageButton = this.clickLiveMessageButton.bind(this);
     this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
@@ -82,7 +86,12 @@ class ChefProfile extends React.Component {
     this.setState({ isLoaded: true });
   }
 
-  joinChatRoom() {
+  clickLiveMessageButton() {
+    if (!this.state.chatContainerOpened) {
+      this.setState({ chatContainerOpened: true });
+    } else {
+      this.setState({ chatContainerOpened: false });
+    }
     socket.emit('join_room', this.state.roomId);
   }
 
@@ -154,7 +163,11 @@ class ChefProfile extends React.Component {
 
   render() {
     const token = window.localStorage.getItem('user-jwt');
+    // eslint-disable-next-line
     const payload = decodeToken(token);
+    const chatRoomContainerClass = this.state.chatContainerOpened
+      ? 'view'
+      : 'hidden';
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -192,7 +205,7 @@ class ChefProfile extends React.Component {
         </button>
         );
     return (
-      <div className='container'>
+      <div className='container position-relative'>
         {
           this.state.chef.map(chef => {
             if (chef.avg !== null && chef.count !== 0) {
@@ -222,10 +235,6 @@ class ChefProfile extends React.Component {
                     </div>
                     <div className="w-50">
                       {saveButton}
-                    </div>
-                    <div>
-                      <button onClick={this.joinChatRoom}>Live Messaging</button>
-                      <input type='text' onChange={this.handleRoomIdChange}></input>
                     </div>
                   </div>
                   <div className="d-flex justify-content-center">
@@ -308,10 +317,6 @@ class ChefProfile extends React.Component {
                     <div className="w-50">
                       {saveButton}
                     </div>
-                    <div>
-                      <button onClick={this.joinChatRoom}>Live Messaging</button>
-                      <input type='text' onChange={this.handleRoomIdChange}></input>
-                    </div>
                   </div>
                   <div className="d-flex justify-content-center">
                     <div className="mb-5 col-12 col-lg-6">
@@ -370,10 +375,28 @@ class ChefProfile extends React.Component {
             }
           })
         }
-        <ChatRoom roomId={this.state.roomId} username={payload.username} socket={socket}></ChatRoom>
+        <div className='position-fixed bottom-0 end-0 w-50'>
+          <div className={chatRoomContainerClass}>
+            <div className="chat-room-container">
+              <p>hello</p>
+            </div>
+            <div className="send-message-container">
+              <input className="w-75" type="text"></input>
+              <button className="btn btn-primary w-25">Send</button>
+            </div>
+          </div>
+          <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Live Message</button>
+          {/* <input type='text' onChange={this.handleRoomIdChange}></input>
+          <ChatRoom roomId={this.state.roomId} username={payload.username} socket={socket}></ChatRoom> */}
+        </div>
       </div>
     );
   }
 }
 
 export default ChefProfile;
+
+// live messaging button is position fixed on the bottom right corner (desktop), fixed on the middle (mobile).
+// when user clicks live messaging button, automatically join the user and chef (how do you do this? lol)
+// -> automatically assign roomId that does not overlap with other chat roomIds.
+// when user clicks live messaging button and sends message, send notifcation to chef's user profile page
