@@ -104,3 +104,6 @@ values (1, 1, 1),
 
 insert into "favorites" ("userId", "chefId")
 values (1, 1);
+
+insert into "chatRooms" ("userId", "chefId")
+values (1, 1);
