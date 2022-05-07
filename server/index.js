@@ -488,6 +488,22 @@ app.post('/api/becomeChef/dishName/:chefId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/createChatRoom/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const sql = `
+    insert into "chatRooms" ("userId", "chefId")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [userId, chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
 server.listen(process.env.PORT, () => {
