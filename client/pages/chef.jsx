@@ -45,6 +45,8 @@ class ChefProfile extends React.Component {
   componentDidMount() {
     const token = window.localStorage.getItem('user-jwt');
     const payload = decodeToken(token);
+    const { route } = this.state;
+    const chefId = route.params.get('chefId');
     this.setState({ chatRoomUsername: payload.username });
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
@@ -90,6 +92,21 @@ class ChefProfile extends React.Component {
       .catch(err => console.error(err));
 
     this.setState({ isLoaded: true });
+
+    fetch('/api/getChatRoom/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].chefId === Number(chefId)) {
+            this.setState({ chatRoomCreated: true });
+          }
+        }
+      })
+      .catch(err => console.error(err));
   }
 
   clickLiveMessageButton() {
@@ -403,7 +420,7 @@ class ChefProfile extends React.Component {
         <div className='position-fixed bottom-0 end-0 w-50'>
           {/* <input type='text' onChange={this.handleRoomIdChange}></input> */}
           <ChatRoom roomId={this.state.roomId} username={this.state.username} socket={socket} chatContainerOpened={this.state.chatContainerOpened}></ChatRoom>
-          <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Live Message</button>
+          <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Message</button>
         </div>
       </div>
     );
@@ -416,3 +433,6 @@ export default ChefProfile;
 // when user clicks live messaging button, automatically join the user and chef (how do you do this? lol)
 // -> automatically assign roomId that does not overlap with other chat roomIds.
 // when user clicks live messaging button and sends message, send notifcation to chef's user profile page
+
+// conditions for chatRoom already created
+// => amongst the chatRoom created by current user, if the current chefId exists, set chatRoomCreated to true
