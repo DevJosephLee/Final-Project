@@ -56,6 +56,22 @@ const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
 
+app.get('/api/getChatRoom/:chefId', (req, res, next) => {
+  const chefId = Number(req.params.chefId);
+  const sql = `
+    select *
+    from "chatRooms"
+    join "users" using ("userId")
+    where "chefId" = $1
+  `;
+  const params = [chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
@@ -515,8 +531,7 @@ app.get('/api/getChatRoom/', (req, res, next) => {
   const params = [userId];
   db.query(sql, params)
     .then(result => {
-      const [chatRoom] = result.rows;
-      res.json(chatRoom);
+      res.json(result.rows);
     })
     .catch(err => next(err));
 });
