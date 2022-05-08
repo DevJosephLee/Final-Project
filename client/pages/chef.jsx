@@ -8,6 +8,7 @@ import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
+import parseRoute from '../lib/parse-route';
 // eslint-disable-next-line
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
@@ -23,11 +24,14 @@ class ChefProfile extends React.Component {
       rating: 1,
       count: 0,
       avg: 0,
+      route: parseRoute(window.location.hash),
       photoUrl: 'images/testing-image.jpeg',
       isSaved: false,
       noComment: true,
       chatContainerOpened: false,
-      roomId: ''
+      roomId: '',
+      chatRoomCreated: false,
+      chatRoomUsername: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
@@ -35,11 +39,13 @@ class ChefProfile extends React.Component {
     this.handleClickSave = this.handleClickSave.bind(this);
     this.updateAvgCount = this.updateAvgCount.bind(this);
     this.clickLiveMessageButton = this.clickLiveMessageButton.bind(this);
-    this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
+    // this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
   componentDidMount() {
     const token = window.localStorage.getItem('user-jwt');
+    const payload = decodeToken(token);
+    this.setState({ chatRoomUsername: payload.username });
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
@@ -87,17 +93,39 @@ class ChefProfile extends React.Component {
   }
 
   clickLiveMessageButton() {
+    const { route } = this.state;
+    const token = window.localStorage.getItem('user-jwt');
     if (!this.state.chatContainerOpened) {
       this.setState({ chatContainerOpened: true });
     } else {
       this.setState({ chatContainerOpened: false });
     }
-    socket.emit('join_room', this.state.roomId);
+    const chefId = route.params.get('chefId');
+    // const userId = decodeToken(token).userId;
+    // const roomId = `userId=${userId}&chefId=${chefId}`;
+    if (!this.state.chatRoomCreated) {
+      fetch(`/api/createChatRoom/${chefId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': token
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ roomId: data.roomId });
+          socket.emit('join_room', data.roomId);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+    this.setState({ chatRoomCreated: true });
   }
 
-  handleRoomIdChange(event) {
-    this.setState({ roomId: event.target.value });
-  }
+  // handleRoomIdChange(event) {
+  //   this.setState({ roomId: event.target.value });
+  // }
 
   handleTextChange(event) {
     this.setState({ content: event.target.value });
@@ -162,12 +190,9 @@ class ChefProfile extends React.Component {
   }
 
   render() {
-    const token = window.localStorage.getItem('user-jwt');
+    // const token = window.localStorage.getItem('user-jwt');
     // eslint-disable-next-line
-    const payload = decodeToken(token);
-    const chatRoomContainerClass = this.state.chatContainerOpened
-      ? 'view'
-      : 'hidden';
+    // const payload = decodeToken(token);
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -376,18 +401,9 @@ class ChefProfile extends React.Component {
           })
         }
         <div className='position-fixed bottom-0 end-0 w-50'>
-          <div className={chatRoomContainerClass}>
-            <div className="chat-room-container">
-              <p>hello</p>
-            </div>
-            <div className="send-message-container">
-              <input className="w-75" type="text"></input>
-              <button className="btn btn-primary w-25">Send</button>
-            </div>
-          </div>
+          {/* <input type='text' onChange={this.handleRoomIdChange}></input> */}
+          <ChatRoom roomId={this.state.roomId} username={this.state.username} socket={socket} chatContainerOpened={this.state.chatContainerOpened}></ChatRoom>
           <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Live Message</button>
-          {/* <input type='text' onChange={this.handleRoomIdChange}></input>
-          <ChatRoom roomId={this.state.roomId} username={payload.username} socket={socket}></ChatRoom> */}
         </div>
       </div>
     );
