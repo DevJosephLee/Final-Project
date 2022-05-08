@@ -35,17 +35,29 @@ class ChatRoom extends React.Component {
   }
 
   render() {
+    const chatRoomContainerClass = this.props.chatContainerOpened
+      ? 'view'
+      : 'hidden';
     return (
-      <div>
-        <div className='chat-header'>
-          <p>Live Chat</p>
-        </div>
-        <div className='chat-body'>
+    // <div>
+    //   <div className='chat-header'>
+    //     <p>Live Chat</p>
+    //   </div>
+    //   <div className='chat-body'>
 
+      //   </div>
+      //   <div className='chat-footer'>
+      //     <input type='text' onChange={this.handleMessageChange}/>
+      //     <button onClick={this.sendMessage}>&#9658;</button>
+      //   </div>
+      // </div>
+      <div className={chatRoomContainerClass}>
+        <div className="chat-room-container">
+          <p>hello</p>
         </div>
-        <div className='chat-footer'>
-          <input type='text' onChange={this.handleMessageChange}/>
-          <button onClick={this.sendMessage}>&#9658;</button>
+        <div className="send-message-container">
+          <input className="w-75" type="text" onChange={this.handleMessageChange}></input>
+          <button className="btn btn-primary w-25" onClick={this.sendMessage}>Send</button>
         </div>
       </div>
     );
