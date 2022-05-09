@@ -526,7 +526,23 @@ app.get('/api/getChatRoom/', (req, res, next) => {
   const sql = `
     select *
     from "chatRooms"
-    where "userId" = $1
+    join "chefs" using ("chefId")
+    where "chatRooms"."userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/isUserChef/', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select "chefId"
+      from "chefs"
+     where "userId" = $1
   `;
   const params = [userId];
   db.query(sql, params)
