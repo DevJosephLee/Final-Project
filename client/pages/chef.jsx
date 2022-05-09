@@ -30,6 +30,7 @@ class ChefProfile extends React.Component {
       noComment: true,
       chatContainerOpened: false,
       roomId: '',
+      hideMessagesContainer: false,
       chatRoomCreated: false,
       liveMessageUsername: ''
     };
@@ -105,6 +106,20 @@ class ChefProfile extends React.Component {
             this.setState({ roomId: data[i].roomId });
             this.setState({ chatRoomCreated: true });
           }
+        }
+      })
+      .catch(err => console.error(err));
+
+    fetch('/api/isUserChef/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const [chef] = data;
+        if (chef !== undefined && Number(chef.chefId) === Number(chefId)) {
+          this.setState({ hideMessagesContainer: true });
         }
       })
       .catch(err => console.error(err));
@@ -209,6 +224,9 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    const messageSectionClass = this.state.hideMessagesContainer
+      ? 'hidden'
+      : 'position-fixed bottom-0 end-0 w-50';
     const chatRoomContainerClass = this.state.chatContainerOpened
       ? 'view'
       : 'hidden';
@@ -419,7 +437,7 @@ class ChefProfile extends React.Component {
             }
           })
         }
-        <div className='position-fixed bottom-0 end-0 w-50'>
+        <div className={messageSectionClass}>
           {/* <input type='text' onChange={this.handleRoomIdChange}></input> */}
           <div className={chatRoomContainerClass}>
             <ChatRoom roomId={Number(this.state.roomId)} username={this.state.liveMessageUsername} socket={socket}></ChatRoom>
