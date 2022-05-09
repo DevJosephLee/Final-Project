@@ -22,7 +22,7 @@ class UserPage extends React.Component {
       chefId: null,
       chatRooms: [],
       chatListOpened: false,
-      chatContainerOpened: true,
+      chatContainerOpened: false,
       roomId: ''
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
@@ -200,6 +200,7 @@ class UserPage extends React.Component {
   }
 
   clickMyMessagesButton() {
+
     // if (this.state.chefId !== null) {
     //   fetch(`/api/getChatRoom/${this.state.chefId}`, {
     //   })
@@ -210,7 +211,15 @@ class UserPage extends React.Component {
     //     })
     //     .catch(err => console.error(err));
     // }
-    if (!this.state.chatListOpened) {
+    // if (this.state.chatListOpened) {
+    //   this.setState({ chatListOpened: false });
+    // } else {
+    //   this.setState({ chatListOpened: true });
+    // }
+    if (!this.state.chatListOpened && !this.state.chatContainerOpened) {
+      this.setState({ chatListOpened: true });
+    } else if (this.state.chatContainerOpened) {
+      this.setState({ chatContainerOpened: false });
       this.setState({ chatListOpened: true });
     } else {
       this.setState({ chatListOpened: false });
@@ -222,11 +231,15 @@ class UserPage extends React.Component {
     this.setState({ roomId });
     socket.emit('join_room', roomId);
     this.setState({ chatContainerOpened: true });
+    this.setState({ chatListOpened: false });
   }
 
   render() {
     const chatListClass = this.state.chatListOpened
       ? 'chat-room-list'
+      : 'hidden';
+    const chatContainerClass = this.state.chatContainerOpened
+      ? 'view'
       : 'hidden';
     const createChefProfileButton = this.state.chefProfCreated
       ? <button onClick={this.goToChefProfile} className="btn btn-primary">Go to my chef profile</button>
@@ -404,7 +417,9 @@ class UserPage extends React.Component {
         </div>
         <div className='position-fixed bottom-0 end-0 w-50'>
           {/* <ChatRoomList chatRooms={this.state.chatRooms}></ChatRoomList> */}
-          <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket} chatContainerOpened={this.state.chatContainerOpened}></ChatRoom>
+          <div className={chatContainerClass}>
+            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket}></ChatRoom>
+          </div>
           <div className={chatListClass}>
             {
               this.state.chatRooms.map(chatRooms => {
