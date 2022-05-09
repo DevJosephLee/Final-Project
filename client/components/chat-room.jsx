@@ -35,9 +35,6 @@ class ChatRoom extends React.Component {
   }
 
   render() {
-    const chatRoomContainerClass = this.props.chatContainerOpened
-      ? 'view'
-      : 'hidden';
     return (
     // <div>
     //   <div className='chat-header'>
@@ -51,7 +48,7 @@ class ChatRoom extends React.Component {
       //     <button onClick={this.sendMessage}>&#9658;</button>
       //   </div>
       // </div>
-      <div className={chatRoomContainerClass}>
+      <div>
         <div className="chat-room-container">
           <p>hello</p>
         </div>
