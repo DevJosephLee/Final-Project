@@ -209,6 +209,9 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    const chatRoomContainerClass = this.state.chatContainerOpened
+      ? 'view'
+      : 'hidden';
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -418,7 +421,9 @@ class ChefProfile extends React.Component {
         }
         <div className='position-fixed bottom-0 end-0 w-50'>
           {/* <input type='text' onChange={this.handleRoomIdChange}></input> */}
-          <ChatRoom roomId={Number(this.state.roomId)} username={this.state.liveMessageUsername} socket={socket} chatContainerOpened={this.state.chatContainerOpened}></ChatRoom>
+          <div className={chatRoomContainerClass}>
+            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.liveMessageUsername} socket={socket}></ChatRoom>
+          </div>
           <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Message</button>
         </div>
       </div>
