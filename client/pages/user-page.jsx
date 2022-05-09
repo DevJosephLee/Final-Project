@@ -13,6 +13,7 @@ class UserPage extends React.Component {
     super(props);
     this.state = {
       username: null,
+      liveChatUsername: null,
       chefs: [],
       reviews: [],
       photoUrl: [],
@@ -20,7 +21,9 @@ class UserPage extends React.Component {
       chefProfCreated: false,
       chefId: null,
       chatRooms: [],
-      chatListOpened: false
+      chatListOpened: false,
+      chatContainerOpened: true,
+      roomId: ''
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.fileInputRef = React.createRef();
@@ -84,6 +87,37 @@ class UserPage extends React.Component {
     fetch('/api/chefs')
       .then(response => response.json())
       .then(totalChefs => this.setState({ totalChefs }));
+
+    fetch('/api/getChatroom/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
+      })
+      .catch(err => console.error(err));
+
+    fetch('/api/isUserChef', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        const [chef] = result;
+        if (chef !== undefined) {
+          fetch(`/api/getChatRoom/${chef.chefId}`, {
+          })
+            .then(response => response.json())
+            .then(result => {
+              this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
+            })
+            .catch(err => console.error(err));
+        }
+      })
+      .catch(err => console.error(err));
   }
 
   componentWillUnmount() {
@@ -166,15 +200,16 @@ class UserPage extends React.Component {
   }
 
   clickMyMessagesButton() {
-    if (this.state.chefId !== null) {
-      fetch(`/api/getChatRoom/${this.state.chefId}`, {
-      })
-        .then(response => response.json())
-        .then(result => {
-          this.setState({ chatRooms: result });
-        })
-        .catch(err => console.error(err));
-    }
+    // if (this.state.chefId !== null) {
+    //   fetch(`/api/getChatRoom/${this.state.chefId}`, {
+    //   })
+    //     .then(response => response.json())
+    //     .then(result => {
+    //       this.setState({ chatRooms: result });
+    //       // this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
+    //     })
+    //     .catch(err => console.error(err));
+    // }
     if (!this.state.chatListOpened) {
       this.setState({ chatListOpened: true });
     } else {
@@ -183,8 +218,10 @@ class UserPage extends React.Component {
   }
 
   clickChatRoom(event) {
-    const roomId = event.target.getAttribute('data-room-id');
+    const roomId = Number(event.target.getAttribute('data-room-id'));
+    this.setState({ roomId });
     socket.emit('join_room', roomId);
+    this.setState({ chatContainerOpened: true });
   }
 
   render() {
@@ -367,14 +404,15 @@ class UserPage extends React.Component {
         </div>
         <div className='position-fixed bottom-0 end-0 w-50'>
           {/* <ChatRoomList chatRooms={this.state.chatRooms}></ChatRoomList> */}
+          <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket} chatContainerOpened={this.state.chatContainerOpened}></ChatRoom>
           <div className={chatListClass}>
             {
               this.state.chatRooms.map(chatRooms => {
                 return (
                   <div className="d-flex align-items-center" key={chatRooms.roomId}>
                     <img className="col-3" src={chatRooms.photoUrl} />
-                    <p className="col-4">{chatRooms.username}</p>
-                    <button className="col-5" type="button" onClick={this.clickChatRoom} data-room-id={chatRooms.roomId}>Message</button>
+                    <h5 className="col-4 text-center">{chatRooms.username}</h5>
+                    <button className="col-5 btn btn-primary" type="button" onClick={this.clickChatRoom} data-room-id={chatRooms.roomId}>Message</button>
                   </div>
                 );
               })
