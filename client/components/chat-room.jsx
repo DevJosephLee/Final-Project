@@ -1,13 +1,14 @@
 import React from 'react';
 import decodeToken from '../lib/decode-token';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentMessage: '',
-      messageList: [],
-      username: ''
+      username: '',
+      messageList: []
     };
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -36,12 +37,13 @@ class ChatRoom extends React.Component {
       this.props.socket.emit('send_message', messageData);
       this.setState({ messageList: [].concat(this.state.messageList, messageData) });
     }
+    this.setState({ currentMessage: '' });
   }
 
   render() {
     return (
       <div>
-        <div className="chat-room-container">
+        <ScrollToBottom className="chat-room-container">
           {
             this.state.messageList.map(messageContent => {
               return (
@@ -52,7 +54,7 @@ class ChatRoom extends React.Component {
                     <div
                     className={messageContent.author === this.state.username ? 'message-content bg-primary' : 'message-content bg-success'}
                     >
-                      <p className='fs-4'>{messageContent.message}</p>
+                      <p>{messageContent.message}</p>
                     </div>
                   </div>
                   <div
@@ -65,9 +67,17 @@ class ChatRoom extends React.Component {
               );
             })
           }
-        </div>
+        </ScrollToBottom>
         <div className="send-message-container">
-          <input className="w-75" type="text" onChange={this.handleMessageChange}></input>
+          <input
+          className="send-message-input w-75"
+          value={this.state.currentMessage}
+          type="text"
+          onChange={this.handleMessageChange}
+          onKeyPress={event => {
+            event.key === 'Enter' && this.sendMessage();
+          }}>
+          </input>
           <button className="btn btn-primary w-25" onClick={this.sendMessage}>Send</button>
         </div>
       </div>
