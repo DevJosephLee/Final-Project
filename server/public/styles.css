@@ -40,9 +40,11 @@ body {
 .chat-room-container {
   background-color: white;
   border: 1px solid black;
+  width: 100%;
   height: 350px;
   padding: 1rem;
   z-index: 1;
+  overflow-y: scroll;
 }
 
 .send-message-container {
@@ -50,6 +52,17 @@ body {
   background-color: #6c757d;
   display: flex;
   border: 1px solid black;
+}
+
+.message-content {
+  color: white;
+  border-radius: 5%;
+  max-width: 60%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  width: auto;
+  height: auto;
+  padding: 0.5rem 0.5rem 0;
 }
 
 .default-image {
