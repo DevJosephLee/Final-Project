@@ -9,7 +9,6 @@ import decodeToken from '../lib/decode-token';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
 import parseRoute from '../lib/parse-route';
-// eslint-disable-next-line
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
@@ -40,7 +39,6 @@ class ChefProfile extends React.Component {
     this.handleClickSave = this.handleClickSave.bind(this);
     this.updateAvgCount = this.updateAvgCount.bind(this);
     this.clickLiveMessageButton = this.clickLiveMessageButton.bind(this);
-    // this.handleRoomIdChange = this.handleRoomIdChange.bind(this);
   }
 
   componentDidMount() {
@@ -134,8 +132,6 @@ class ChefProfile extends React.Component {
       this.setState({ chatContainerOpened: false });
     }
     const chefId = route.params.get('chefId');
-    // const userId = decodeToken(token).userId;
-    // const roomId = `userId=${userId}&chefId=${chefId}`;
     if (!this.state.chatRoomCreated) {
       fetch(`/api/createChatRoom/${chefId}`, {
         method: 'POST',
@@ -156,10 +152,6 @@ class ChefProfile extends React.Component {
     socket.emit('join_room', this.state.roomId);
     this.setState({ chatRoomCreated: true });
   }
-
-  // handleRoomIdChange(event) {
-  //   this.setState({ roomId: event.target.value });
-  // }
 
   handleTextChange(event) {
     this.setState({ content: event.target.value });
@@ -438,7 +430,6 @@ class ChefProfile extends React.Component {
           })
         }
         <div className={messageSectionClass}>
-          {/* <input type='text' onChange={this.handleRoomIdChange}></input> */}
           <div className={chatRoomContainerClass}>
             <ChatRoom roomId={Number(this.state.roomId)} username={this.state.liveMessageUsername} socket={socket}></ChatRoom>
           </div>
@@ -450,11 +441,3 @@ class ChefProfile extends React.Component {
 }
 
 export default ChefProfile;
-
-// live messaging button is position fixed on the bottom right corner (desktop), fixed on the middle (mobile).
-// when user clicks live messaging button, automatically join the user and chef (how do you do this? lol)
-// -> automatically assign roomId that does not overlap with other chat roomIds.
-// when user clicks live messaging button and sends message, send notifcation to chef's user profile page
-
-// conditions for chatRoom already created
-// => amongst the chatRoom created by current user, if the current chefId exists, set chatRoomCreated to true
