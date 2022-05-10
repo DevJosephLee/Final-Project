@@ -3,8 +3,6 @@ import StarRating from '../components/star-rating';
 import decodeToken from '../lib/decode-token';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
-// import ChatRoomList from '../components/chat-room-list';
-// eslint-disable-next-line
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
 const socket = io.connect('http://localhost:3001');
@@ -200,22 +198,6 @@ class UserPage extends React.Component {
   }
 
   clickMyMessagesButton() {
-
-    // if (this.state.chefId !== null) {
-    //   fetch(`/api/getChatRoom/${this.state.chefId}`, {
-    //   })
-    //     .then(response => response.json())
-    //     .then(result => {
-    //       this.setState({ chatRooms: result });
-    //       // this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
-    //     })
-    //     .catch(err => console.error(err));
-    // }
-    // if (this.state.chatListOpened) {
-    //   this.setState({ chatListOpened: false });
-    // } else {
-    //   this.setState({ chatListOpened: true });
-    // }
     if (!this.state.chatListOpened && !this.state.chatContainerOpened) {
       this.setState({ chatListOpened: true });
     } else if (this.state.chatContainerOpened) {
@@ -416,7 +398,6 @@ class UserPage extends React.Component {
           </div>
         </div>
         <div className='position-fixed bottom-0 end-0 w-50'>
-          {/* <ChatRoomList chatRooms={this.state.chatRooms}></ChatRoomList> */}
           <div className={chatContainerClass}>
             <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket}></ChatRoom>
           </div>
