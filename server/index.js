@@ -8,6 +8,9 @@ const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const { Server } = require('socket.io');
+const http = require('http');
+const cors = require('cors');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -18,11 +21,56 @@ const db = new pg.Pool({
 
 const app = express();
 
+app.use(cors());
+
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST']
+  }
+});
+
+io.on('connection', socket => {
+  // eslint-disable-next-line no-console
+  console.log(`User Connected: ${socket.id}`);
+
+  socket.on('join_room', data => {
+    socket.join(data);
+    // eslint-disable-next-line no-console
+    console.log(`User with ${socket.id} joined room: ${data}`);
+  });
+  socket.on('send_message', data => {
+    socket.to(data.roomId).emit('receive_message', data);
+  });
+  socket.on('disconnect', () => {
+    // eslint-disable-next-line no-console
+    console.log('User disconnected', socket.id);
+  });
+});
+
 app.use(staticMiddleware);
 
 const jsonMiddleware = express.json();
 
 app.use(jsonMiddleware);
+
+app.get('/api/getChatRoom/:chefId', (req, res, next) => {
+  const chefId = Number(req.params.chefId);
+  const sql = `
+    select *
+    from "chatRooms"
+    join "users" using ("userId")
+    where "chefId" = $1
+  `;
+  const params = [chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
 
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
@@ -456,9 +504,57 @@ app.post('/api/becomeChef/dishName/:chefId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/createChatRoom/:chefId', (req, res, next) => {
+  const { userId } = req.user;
+  const chefId = Number(req.params.chefId);
+  const sql = `
+    insert into "chatRooms" ("userId", "chefId")
+    values ($1, $2)
+    returning *
+  `;
+  const params = [userId, chefId];
+  db.query(sql, params)
+    .then(result => {
+      const [newChatRoom] = result.rows;
+      res.json(newChatRoom);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/getChatRoom/', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select *
+    from "chatRooms"
+    join "chefs" using ("chefId")
+    where "chatRooms"."userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/isUserChef/', (req, res, next) => {
+  const { userId } = req.user;
+  const sql = `
+    select "chefId"
+      from "chefs"
+     where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.use(errorMiddleware);
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`express server listening on port ${process.env.PORT}`);
 });

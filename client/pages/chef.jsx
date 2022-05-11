@@ -6,6 +6,12 @@ import StarRating from '../components/star-rating';
 import CuisineTypes from '../components/cuisine-types';
 import ReviewModal from '../components/review-modal';
 import decodeToken from '../lib/decode-token';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage } from '@fortawesome/free-solid-svg-icons';
+import parseRoute from '../lib/parse-route';
+import ChatRoom from '../components/chat-room';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3001');
 class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
@@ -17,19 +23,30 @@ class ChefProfile extends React.Component {
       rating: 1,
       count: 0,
       avg: 0,
+      route: parseRoute(window.location.hash),
       photoUrl: 'images/testing-image.jpeg',
       isSaved: false,
-      noComment: true
+      noComment: true,
+      chatContainerOpened: false,
+      roomId: '',
+      hideMessagesContainer: false,
+      chatRoomCreated: false,
+      liveMessageUsername: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTextChange = this.handleTextChange.bind(this);
     this.handleStarClick = this.handleStarClick.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
     this.updateAvgCount = this.updateAvgCount.bind(this);
+    this.clickLiveMessageButton = this.clickLiveMessageButton.bind(this);
   }
 
   componentDidMount() {
     const token = window.localStorage.getItem('user-jwt');
+    const payload = decodeToken(token);
+    this.setState({ liveMessageUsername: payload.username });
+    const { route } = this.state;
+    const chefId = route.params.get('chefId');
     fetch(`/api/chefs/${this.props.chefId}`)
       .then(response => response.json())
       .then(data => {
@@ -74,6 +91,66 @@ class ChefProfile extends React.Component {
       .catch(err => console.error(err));
 
     this.setState({ isLoaded: true });
+
+    fetch('/api/getChatRoom/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].chefId === Number(chefId)) {
+            this.setState({ roomId: data[i].roomId });
+            this.setState({ chatRoomCreated: true });
+          }
+        }
+      })
+      .catch(err => console.error(err));
+
+    fetch('/api/isUserChef/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        const [chef] = data;
+        if (chef !== undefined && Number(chef.chefId) === Number(chefId)) {
+          this.setState({ hideMessagesContainer: true });
+        }
+      })
+      .catch(err => console.error(err));
+  }
+
+  clickLiveMessageButton() {
+    const { route } = this.state;
+    const token = window.localStorage.getItem('user-jwt');
+    if (!this.state.chatContainerOpened) {
+      this.setState({ chatContainerOpened: true });
+    } else {
+      this.setState({ chatContainerOpened: false });
+    }
+    const chefId = route.params.get('chefId');
+    if (!this.state.chatRoomCreated) {
+      fetch(`/api/createChatRoom/${chefId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': token
+        }
+      })
+        .then(response => response.json())
+        .then(data => {
+          this.setState({ roomId: data.roomId });
+          socket.emit('join_room', data.roomId);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+    socket.emit('join_room', this.state.roomId);
+    this.setState({ chatRoomCreated: true });
   }
 
   handleTextChange(event) {
@@ -139,6 +216,12 @@ class ChefProfile extends React.Component {
   }
 
   render() {
+    const messageSectionClass = this.state.hideMessagesContainer
+      ? 'hidden'
+      : 'position-fixed bottom-0 end-0 w-50';
+    const chatRoomContainerClass = this.state.chatContainerOpened
+      ? 'view'
+      : 'hidden';
     const reviewView = this.state.noComment
       ? (
         <div className = "mt-5">
@@ -176,7 +259,7 @@ class ChefProfile extends React.Component {
         </button>
         );
     return (
-      <div className='container'>
+      <div className='container position-relative'>
         {
           this.state.chef.map(chef => {
             if (chef.avg !== null && chef.count !== 0) {
@@ -346,6 +429,12 @@ class ChefProfile extends React.Component {
             }
           })
         }
+        <div className={messageSectionClass}>
+          <div className={chatRoomContainerClass}>
+            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.liveMessageUsername} socket={socket}></ChatRoom>
+          </div>
+          <button className="btn btn-primary w-100" onClick={this.clickLiveMessageButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;Message</button>
+        </div>
       </div>
     );
   }

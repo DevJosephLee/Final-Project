@@ -1,17 +1,27 @@
 import React from 'react';
 import StarRating from '../components/star-rating';
 import decodeToken from '../lib/decode-token';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMessage } from '@fortawesome/free-solid-svg-icons';
+import ChatRoom from '../components/chat-room';
+import io from 'socket.io-client';
+const socket = io.connect('http://localhost:3001');
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       username: null,
+      liveChatUsername: null,
       chefs: [],
       reviews: [],
       photoUrl: [],
       totalChefs: [],
       chefProfCreated: false,
-      chefId: null
+      chefId: null,
+      chatRooms: [],
+      chatListOpened: false,
+      chatContainerOpened: false,
+      roomId: ''
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.fileInputRef = React.createRef();
@@ -20,6 +30,8 @@ class UserPage extends React.Component {
     this.updateChefProfilePic = this.updateChefProfilePic.bind(this);
     this.goToChefProfile = this.goToChefProfile.bind(this);
     this.clickChefUsername = this.clickChefUsername.bind(this);
+    this.clickMyMessagesButton = this.clickMyMessagesButton.bind(this);
+    this.clickChatRoom = this.clickChatRoom.bind(this);
   }
 
   componentDidMount() {
@@ -73,6 +85,37 @@ class UserPage extends React.Component {
     fetch('/api/chefs')
       .then(response => response.json())
       .then(totalChefs => this.setState({ totalChefs }));
+
+    fetch('/api/getChatroom/', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
+      })
+      .catch(err => console.error(err));
+
+    fetch('/api/isUserChef', {
+      headers: {
+        'X-Access-Token': token
+      }
+    })
+      .then(response => response.json())
+      .then(result => {
+        const [chef] = result;
+        if (chef !== undefined) {
+          fetch(`/api/getChatRoom/${chef.chefId}`, {
+          })
+            .then(response => response.json())
+            .then(result => {
+              this.setState({ chatRooms: [].concat(this.state.chatRooms, result) });
+            })
+            .catch(err => console.error(err));
+        }
+      })
+      .catch(err => console.error(err));
   }
 
   componentWillUnmount() {
@@ -154,7 +197,32 @@ class UserPage extends React.Component {
     window.location.hash = 'chefProfile?chefId=' + this.state.chefId;
   }
 
+  clickMyMessagesButton() {
+    if (!this.state.chatListOpened && !this.state.chatContainerOpened) {
+      this.setState({ chatListOpened: true });
+    } else if (this.state.chatContainerOpened) {
+      this.setState({ chatContainerOpened: false });
+      this.setState({ chatListOpened: true });
+    } else {
+      this.setState({ chatListOpened: false });
+    }
+  }
+
+  clickChatRoom(event) {
+    const roomId = Number(event.target.getAttribute('data-room-id'));
+    this.setState({ roomId });
+    socket.emit('join_room', roomId);
+    this.setState({ chatContainerOpened: true });
+    this.setState({ chatListOpened: false });
+  }
+
   render() {
+    const chatListClass = this.state.chatListOpened
+      ? 'chat-room-list'
+      : 'hidden';
+    const chatContainerClass = this.state.chatContainerOpened
+      ? 'view'
+      : 'hidden';
     const createChefProfileButton = this.state.chefProfCreated
       ? <button onClick={this.goToChefProfile} className="btn btn-primary">Go to my chef profile</button>
       : <button onClick={this.handleMakeChefProfileClick} className="btn btn-primary">Create chef profile</button>;
@@ -163,7 +231,7 @@ class UserPage extends React.Component {
       profilePictureButtonText = 'Change Profile Picture';
     }
     return (
-      <div className="container pb-5 mt-5">
+      <div className="container pb-5 mt-5 position-relative">
         <div className="text-center">
           <div className="d-flex justify-content-center">
             <img src={this.state.photoUrl} className="user-profile-picture shadow"/>
@@ -328,6 +396,25 @@ class UserPage extends React.Component {
               </form>
             </div>
           </div>
+        </div>
+        <div className='position-fixed bottom-0 end-0 w-50'>
+          <div className={chatContainerClass}>
+            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket}></ChatRoom>
+          </div>
+          <div className={chatListClass}>
+            {
+              this.state.chatRooms.map(chatRooms => {
+                return (
+                  <div className="d-flex align-items-center" key={chatRooms.roomId}>
+                    <img className="col-3" src={chatRooms.photoUrl} />
+                    <h5 className="col-4 text-center">{chatRooms.username}</h5>
+                    <button className="col-5 btn btn-primary" type="button" onClick={this.clickChatRoom} data-room-id={chatRooms.roomId}>Message</button>
+                  </div>
+                );
+              })
+            }
+          </div>
+          <button className="btn btn-primary w-100" onClick={this.clickMyMessagesButton}><FontAwesomeIcon icon={faMessage} />&nbsp;&nbsp;My Messages</button>
         </div>
       </div>
     );

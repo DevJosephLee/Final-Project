@@ -81,6 +81,15 @@ CREATE TABLE "public"."chefCuisines" (
   OIDS=FALSE
 );
 
+CREATE TABLE "public"."chatRooms" (
+  "roomId" serial NOT NULL,
+  "userId" int NOT NULL,
+  "chefId" int NOT NULL,
+  CONSTRAINT "chatRooms_pk" PRIMARY KEY ("roomId")
+) WITH (
+  OIDS=FALSE
+);
+
 
 
 
@@ -97,3 +106,6 @@ ALTER TABLE "dishes" ADD CONSTRAINT "dishes_fk0" FOREIGN KEY ("chefId") REFERENC
 
 ALTER TABLE "chefCuisines" ADD CONSTRAINT "chefCuisines_fk0" FOREIGN KEY ("chefId") REFERENCES "chefs"("chefId");
 ALTER TABLE "chefCuisines" ADD CONSTRAINT "chefCuisines_fk1" FOREIGN KEY ("cuisineId") REFERENCES "cuisines"("cuisineId");
+
+ALTER TABLE "chatRooms" ADD CONSTRAINT "chatRooms_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
+ALTER TABLE "chatRooms" ADD CONSTRAINT "chatRooms_fk1" FOREIGN KEY ("chefId") REFERENCES "chefs"("chefId");
