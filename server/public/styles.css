@@ -44,7 +44,6 @@ body {
   height: 350px;
   padding: 1rem;
   z-index: 1;
-  overflow-y: scroll;
 }
 
 .send-message-container {
@@ -62,7 +61,7 @@ body {
   word-break: break-word;
   width: auto;
   height: auto;
-  padding: 0.5rem 0.5rem 0;
+  padding: 0.6rem 0.5rem 0;
 }
 
 .default-image {
