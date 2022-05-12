@@ -72,6 +72,24 @@ app.get('/api/getChatRoom/:chefId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.post('/api/messages/', (req, res, next) => {
+  const roomId = req.body.roomId;
+  const author = req.body.author;
+  const message = req.body.message;
+  const sql = `
+    insert into "messages" ("roomId", "author", "message", "createdAt")
+    values ($1, $2, $3, current_timestamp)
+    returning *
+  `;
+  const params = [roomId, author, message];
+  db.query(sql, params)
+    .then(result => {
+      const [message] = result.rows;
+      res.json(message);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
