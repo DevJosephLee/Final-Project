@@ -90,6 +90,21 @@ app.post('/api/messages/', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/messages/:roomId', (req, res, next) => {
+  const roomId = Number(req.params.roomId);
+  const sql = `
+    select *
+    from "messages"
+    where "roomId" = $1
+  `;
+  const params = [roomId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.post('/api/auth/sign-up', (req, res, next) => {
   const { username, password } = req.body;
   if (!username || !password) {
