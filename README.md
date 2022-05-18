@@ -21,7 +21,7 @@ https://chef-connect-1.herokuapp.com/
 - Webpack
 - Heroku
 - AWS S3
-- Socket-io
+- Socket.io
 
 ## Features
 - User can create an account.
