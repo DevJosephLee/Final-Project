@@ -48,8 +48,6 @@ CREATE TABLE "public"."chefs" (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE "public"."dishes" (
 	"dishId" serial NOT NULL,
 	"chefId" int NOT NULL,
@@ -61,8 +59,6 @@ CREATE TABLE "public"."dishes" (
   OIDS=FALSE
 );
 
-
-
 CREATE TABLE "public"."cuisines" (
 	"cuisineId" serial NOT NULL,
 	"name" TEXT NOT NULL,
@@ -70,8 +66,6 @@ CREATE TABLE "public"."cuisines" (
 ) WITH (
   OIDS=FALSE
 );
-
-
 
 CREATE TABLE "public"."chefCuisines" (
 	"chefId" int NOT NULL,
@@ -94,14 +88,11 @@ CREATE TABLE "public"."messages" (
   "roomId" int NOT NULL,
   "author" TEXT NOT NULL,
   "message" TEXT NOT NULL,
-  "createdAt" timestamp with time zone NOT NULL,
-  CONSTRAINT "messages_pk" PRIMARY KEY ("roomId")
+  "createdAt" timestamp with time zone NOT NULL
+  -- CONSTRAINT "messages_pk" PRIMARY KEY ("roomId")
 ) WITH (
   OIDS=FALSE
 );
-
-
-
 
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk0" FOREIGN KEY ("userId") REFERENCES "users"("userId");
 ALTER TABLE "reviews" ADD CONSTRAINT "reviews_fk1" FOREIGN KEY ("chefId") REFERENCES "chefs"("chefId");
