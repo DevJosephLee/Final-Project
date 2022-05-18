@@ -11,7 +11,7 @@ import { faMessage } from '@fortawesome/free-solid-svg-icons';
 import parseRoute from '../lib/parse-route';
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3001');
+const socket = io.connect('https://chef-connect-1.herokuapp.com/');
 class ChefProfile extends React.Component {
   constructor(props) {
     super(props);
