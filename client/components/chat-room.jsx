@@ -12,6 +12,7 @@ class ChatRoom extends React.Component {
     };
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -37,6 +38,25 @@ class ChatRoom extends React.Component {
       this.props.socket.emit('send_message', messageData);
       this.setState({ messageList: [].concat(this.state.messageList, messageData) });
     }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    fetch('/api/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        roomId: this.props.roomId,
+        author: this.props.username,
+        message: this.state.currentMessage
+      })
+    })
+      .then(response => response.json())
+      .catch(err => {
+        console.error(err);
+      });
     this.setState({ currentMessage: '' });
   }
 
@@ -69,16 +89,18 @@ class ChatRoom extends React.Component {
           }
         </ScrollToBottom>
         <div className="send-message-container">
-          <input
-          className="send-message-input w-75"
-          value={this.state.currentMessage}
-          type="text"
-          onChange={this.handleMessageChange}
-          onKeyPress={event => {
-            event.key === 'Enter' && this.sendMessage();
-          }}>
-          </input>
-          <button className="btn btn-primary w-25" onClick={this.sendMessage}>Send</button>
+          <form onSubmit={this.handleSubmit} className="w-100">
+            <input
+              className="send-message-input w-75"
+              value={this.state.currentMessage}
+              type="text"
+              onChange={this.handleMessageChange}
+              onKeyPress={event => {
+                event.key === 'Enter' && this.sendMessage();
+              }}>
+            </input>
+            <button type="submit" className="btn btn-primary w-25" onClick={this.sendMessage}>Send</button>
+          </form>
         </div>
       </div>
     );
