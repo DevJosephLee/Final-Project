@@ -36,13 +36,13 @@ https://chef-connect-1.herokuapp.com/
 - User can see a list of their own comments. 
 - User can add a photo to their profile page.
 - User can create a chef profile.
+- User can live message chefs. 
 
 ## Preview
 ![Kapture 2022-01-26 at 16 11 24](https://user-images.githubusercontent.com/68756038/151448049-831ce9f5-6c3e-4ccc-9a44-01319b463f55.gif)
 
 
 ## Stretch Features
-- User can live message chefs. 
 - Chef user will get a notification when receiving live message.
 - User can schedule a chef using appointment calendar.
 
