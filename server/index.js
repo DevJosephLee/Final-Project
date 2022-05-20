@@ -9,7 +9,7 @@ const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
 const { Server } = require('socket.io');
-const https = require('https');
+const http = require('http');
 const cors = require('cors');
 
 const db = new pg.Pool({
@@ -23,7 +23,7 @@ const app = express();
 
 app.use(cors());
 
-const server = https.createServer(app);
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
