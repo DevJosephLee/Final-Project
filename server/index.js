@@ -8,22 +8,15 @@ const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
+const http = require('http');
+const app = express();
+const server = http.createServer(app);
+// const io = require('socket.io')(server);
 const { Server } = require('socket.io');
-const https = require('https');
+// const http = require('http');
 const cors = require('cors');
 
-const db = new pg.Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-const app = express();
-
 app.use(cors());
-
-const server = https.createServer(app);
 
 const io = new Server(server, {
   cors: {
@@ -49,6 +42,15 @@ io.on('connection', socket => {
     console.log('User disconnected', socket.id);
   });
 });
+
+const db = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+
+// const server = http.createServer(app);
 
 app.use(staticMiddleware);
 
