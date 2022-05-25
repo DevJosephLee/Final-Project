@@ -51,4 +51,8 @@ https://chef-connect-1.herokuapp.com/
 - NPM 6 or higher
 
 ## Instructions
-Continue as guest or create an account. 
+1. Clone repository
+```
+git clone git@github.com:DevJosephLee/chefconnect.git
+```
+
