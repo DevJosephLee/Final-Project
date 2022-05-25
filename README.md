@@ -47,6 +47,8 @@ https://chef-connect-1.herokuapp.com/
 - User can schedule a chef using appointment calendar.
 
 ## System Requirements
+- Node.js 14 or higher
+- NPM 6 or higher
 
 ## Instructions
 Continue as guest or create an account. 
