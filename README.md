@@ -39,11 +39,13 @@ https://chef-connect-1.herokuapp.com/
 - User can live message chefs. 
 
 ## Preview
+![Kapture 2022-05-25 at 01 18 35](https://user-images.githubusercontent.com/68756038/170216677-7f291be5-658f-4596-975e-389a52795e99.gif)
+
 ![Kapture 2022-01-26 at 16 11 24](https://user-images.githubusercontent.com/68756038/151448049-831ce9f5-6c3e-4ccc-9a44-01319b463f55.gif)
 
 
 ## Stretch Features
-- Chef user will get a notification when receiving live message.
+- User will get a notification when receiving live message.
 - User can schedule a chef using appointment calendar.
 
 ## System Requirements
@@ -54,5 +56,21 @@ https://chef-connect-1.herokuapp.com/
 1. Clone repository
 ```
 git clone git@github.com:DevJosephLee/chefconnect.git
+cd chefconnect
 ```
-
+2. Install all dependecies with NPM
+```
+npm install
+```
+3. Create copy of `.env.example`
+```
+cp .env.example
+```
+4. Start postgreSQL
+```
+sudo service postgresql start
+```
+5. Start project
+```
+npm run dev
+```
