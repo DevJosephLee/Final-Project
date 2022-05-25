@@ -11,9 +11,7 @@ const uploadsMiddleware = require('./uploads-middleware');
 const http = require('http');
 const app = express();
 const server = http.createServer(app);
-// const io = require('socket.io')(server);
 const { Server } = require('socket.io');
-// const http = require('http');
 const cors = require('cors');
 
 app.use(cors());
@@ -26,20 +24,11 @@ const io = new Server(server, {
 });
 
 io.on('connection', socket => {
-  // eslint-disable-next-line no-console
-  console.log(`User Connected: ${socket.id}`);
-
   socket.on('join_room', data => {
     socket.join(data);
-    // eslint-disable-next-line no-console
-    console.log(`User with ${socket.id} joined room: ${data}`);
   });
   socket.on('send_message', data => {
     socket.to(data.roomId).emit('receive_message', data);
-  });
-  socket.on('disconnect', () => {
-    // eslint-disable-next-line no-console
-    console.log('User disconnected', socket.id);
   });
 });
 
@@ -49,8 +38,6 @@ const db = new pg.Pool({
     rejectUnauthorized: false
   }
 });
-
-// const server = http.createServer(app);
 
 app.use(staticMiddleware);
 
