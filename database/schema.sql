@@ -85,6 +85,7 @@ CREATE TABLE "public"."chatRooms" (
 );
 
 CREATE TABLE "public"."messages" (
+  "messageId" serial NOT NULL,
   "roomId" int NOT NULL,
   "author" TEXT NOT NULL,
   "message" TEXT NOT NULL,
