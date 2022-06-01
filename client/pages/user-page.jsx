@@ -22,7 +22,8 @@ class UserPage extends React.Component {
       chatRooms: [],
       chatListOpened: false,
       chatContainerOpened: false,
-      roomId: ''
+      roomId: '',
+      messageList: []
     };
     this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.fileInputRef = React.createRef();
@@ -400,7 +401,7 @@ class UserPage extends React.Component {
         </div>
         <div className='position-fixed bottom-0 end-0 w-50'>
           <div className={chatContainerClass}>
-            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket}></ChatRoom>
+            <ChatRoom roomId={Number(this.state.roomId)} username={this.state.username} socket={socket} messageList={this.state.messageList}></ChatRoom>
           </div>
           <div className={chatListClass}>
             {

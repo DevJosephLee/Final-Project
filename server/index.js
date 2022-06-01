@@ -1,3 +1,61 @@
+// require('dotenv/config');
+// const pg = require('pg');
+// const argon2 = require('argon2');
+// const express = require('express');
+// const jwt = require('jsonwebtoken');
+// const errorMiddleware = require('./error-middleware');
+// const staticMiddleware = require('./static-middleware');
+// const ClientError = require('./client-error');
+// const authorizationMiddleware = require('./authorization-middleware');
+// const uploadsMiddleware = require('./uploads-middleware');
+// const { Server } = require('socket.io');
+// const http = require('http');
+// const cors = require('cors');
+
+// const db = new pg.Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// });
+
+// const app = express();
+
+// app.use(cors());
+
+// const server = http.createServer(app);
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST']
+//   }
+// });
+
+// io.on('connection', socket => {
+//   // eslint-disable-next-line no-console
+//   console.log(`User Connected: ${socket.id}`);
+
+//   socket.on('join_room', data => {
+//     socket.join(data);
+//     // eslint-disable-next-line no-console
+//     console.log(`User with ${socket.id} joined room: ${data}`);
+//   });
+//   socket.on('send_message', data => {
+//     socket.to(data.roomId).emit('receive_message', data);
+//   });
+//   socket.on('disconnect', () => {
+//     // eslint-disable-next-line no-console
+//     console.log('User disconnected', socket.id);
+//   });
+// });
+
+// app.use(staticMiddleware);
+
+// const jsonMiddleware = express.json();
+
+// app.use(jsonMiddleware);
+
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -54,6 +112,39 @@ app.get('/api/getChatRoom/:chefId', (req, res, next) => {
     where "chefId" = $1
   `;
   const params = [chefId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/messages/', (req, res, next) => {
+  const roomId = req.body.roomId;
+  const author = req.body.author;
+  const message = req.body.message;
+  const sql = `
+    insert into "messages" ("roomId", "author", "message", "createdAt")
+    values ($1, $2, $3, current_timestamp)
+    returning *
+  `;
+  const params = [roomId, author, message];
+  db.query(sql, params)
+    .then(result => {
+      const [message] = result.rows;
+      res.json(message);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/messages/:roomId', (req, res, next) => {
+  const roomId = Number(req.params.roomId);
+  const sql = `
+    select *
+    from "messages"
+    where "roomId" = $1
+  `;
+  const params = [roomId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);

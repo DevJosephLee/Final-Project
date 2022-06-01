@@ -35,3 +35,6 @@ values (1, 1);
 
 insert into "chatRooms" ("userId", "chefId")
 values (1, 1);
+
+insert into "messages" ("roomId", "author", "message", "createdAt")
+values (1, 'Gordon', 'testing', current_timestamp);
