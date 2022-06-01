@@ -11,8 +11,9 @@ class ChatRoom extends React.Component {
       username: '',
       route: parseRoute(window.location.hash),
       messageList: [],
-      tempMessageId: 0
-      // roomId: this.props.roomId
+      tempMessageId: 0,
+      roomId: 0
+      // messageMounted: false
     };
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
@@ -27,40 +28,43 @@ class ChatRoom extends React.Component {
     this.props.socket.on('receive_message', data => {
       this.setState({ messageList: [].concat(this.state.messageList, data) });
     });
-    fetch('/api/getChatRoom/', {
-      headers: {
-        'X-Access-Token': token
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        for (let i = 0; i < data.length; i++) {
-          if (data[i].chefId === Number(chefId)) {
-            fetch(`/api/messages/${data[i].roomId}`)
-              .then(response => response.json())
-              .then(messages => {
-                this.setState({ messageList: messages });
-              })
-              .catch(err => console.error(err));
-          }
+
+    if (route.path === 'chefProfile') {
+      fetch('/api/getChatRoom/', {
+        headers: {
+          'X-Access-Token': token
         }
       })
-      .catch(err => console.error(err));
-    // fetch(`/api/messages/${txhis.state.roomId}`, {
-    // })
-    //   .then(response => response.json())
-    //   .then(messages => {
-    //     this.setState({ messageList: messages });
-    //   })
-    //   .catch(err => console.error(err));
-    // fetch(`/api/messages/${this.state.roomId}`, {
-    // })
-    //   .then(response => response.json())
-    //   .then(messages => {
-    //     this.setState({ messageList: messages });
-    //   })
-    //   .catch(err => console.error(err));
-    // console.log(this.props.roomId);
+        .then(response => response.json())
+        .then(data => {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].chefId === Number(chefId)) {
+              fetch(`/api/messages/${data[i].roomId}`)
+                .then(response => response.json())
+                .then(messages => {
+                  this.setState({ messageList: messages });
+                })
+                .catch(err => console.error(err));
+            }
+          }
+        })
+        .catch(err => console.error(err));
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { route } = this.state;
+    if (route.path !== 'userProfile') {
+      return;
+    }
+    if (this.props.roomId !== prevProps.roomId) {
+      fetch(`/api/messages/${this.props.roomId}`)
+        .then(response => response.json())
+        .then(messages => {
+          this.setState({ messageList: messages });
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   handleMessageChange(event) {

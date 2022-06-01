@@ -215,13 +215,6 @@ class UserPage extends React.Component {
     socket.emit('join_room', roomId);
     this.setState({ chatContainerOpened: true });
     this.setState({ chatListOpened: false });
-    fetch(`/api/messages/${roomId}`, {
-    })
-      .then(response => response.json())
-      .then(messages => {
-        this.setState({ messageList: messages });
-      })
-      .catch(err => console.error(err));
   }
 
   render() {
