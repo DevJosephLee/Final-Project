@@ -13,7 +13,6 @@ class ChatRoom extends React.Component {
       messageList: [],
       tempMessageId: 0,
       roomId: 0
-      // messageMounted: false
     };
     this.handleMessageChange = this.handleMessageChange.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
