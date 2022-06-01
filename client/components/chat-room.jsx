@@ -78,7 +78,6 @@ class ChatRoom extends React.Component {
         author: this.props.username,
         message: this.state.currentMessage,
         messageId: `#${this.state.tempMessageId}`
-        // time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes() + ':' + new Date(Date.now()).getSeconds()
       };
       this.props.socket.emit('send_message', messageData);
       this.setState({ messageList: [].concat(this.state.messageList, messageData) });
@@ -121,7 +120,6 @@ class ChatRoom extends React.Component {
                   </div>
                   <div className={messageContent.author === this.state.username ? 'd-flex justify-content-end fst-italic' : 'd-flex justify-content-start fst-italic'}>
                     <p>{messageContent.author}</p>
-                    {/* {messageContent.time}&nbsp; */}
                   </div>
                 </div>
               );
