@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage } from '@fortawesome/free-solid-svg-icons';
 import ChatRoom from '../components/chat-room';
 import io from 'socket.io-client';
-const socket = io.connect('http://localhost:3001');
+const socket = io.connect('https://chef-connect-1.herokuapp.com/');
 class UserPage extends React.Component {
   constructor(props) {
     super(props);

@@ -1,3 +1,61 @@
+// require('dotenv/config');
+// const pg = require('pg');
+// const argon2 = require('argon2');
+// const express = require('express');
+// const jwt = require('jsonwebtoken');
+// const errorMiddleware = require('./error-middleware');
+// const staticMiddleware = require('./static-middleware');
+// const ClientError = require('./client-error');
+// const authorizationMiddleware = require('./authorization-middleware');
+// const uploadsMiddleware = require('./uploads-middleware');
+// const { Server } = require('socket.io');
+// const http = require('http');
+// const cors = require('cors');
+
+// const db = new pg.Pool({
+//   connectionString: process.env.DATABASE_URL,
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// });
+
+// const app = express();
+
+// app.use(cors());
+
+// const server = http.createServer(app);
+
+// const io = new Server(server, {
+//   cors: {
+//     origin: 'http://localhost:3000',
+//     methods: ['GET', 'POST']
+//   }
+// });
+
+// io.on('connection', socket => {
+//   // eslint-disable-next-line no-console
+//   console.log(`User Connected: ${socket.id}`);
+
+//   socket.on('join_room', data => {
+//     socket.join(data);
+//     // eslint-disable-next-line no-console
+//     console.log(`User with ${socket.id} joined room: ${data}`);
+//   });
+//   socket.on('send_message', data => {
+//     socket.to(data.roomId).emit('receive_message', data);
+//   });
+//   socket.on('disconnect', () => {
+//     // eslint-disable-next-line no-console
+//     console.log('User disconnected', socket.id);
+//   });
+// });
+
+// app.use(staticMiddleware);
+
+// const jsonMiddleware = express.json();
+
+// app.use(jsonMiddleware);
+
 require('dotenv/config');
 const pg = require('pg');
 const argon2 = require('argon2');
@@ -8,46 +66,35 @@ const staticMiddleware = require('./static-middleware');
 const ClientError = require('./client-error');
 const authorizationMiddleware = require('./authorization-middleware');
 const uploadsMiddleware = require('./uploads-middleware');
-const { Server } = require('socket.io');
 const http = require('http');
+const app = express();
+const server = http.createServer(app);
+const { Server } = require('socket.io');
 const cors = require('cors');
+
+app.use(cors());
+
+const io = new Server(server, {
+  cors: {
+    origin: 'https://chef-connect-1.herokuapp.com/',
+    methods: ['GET', 'POST']
+  }
+});
+
+io.on('connection', socket => {
+  socket.on('join_room', data => {
+    socket.join(data);
+  });
+  socket.on('send_message', data => {
+    socket.to(data.roomId).emit('receive_message', data);
+  });
+});
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
     rejectUnauthorized: false
   }
-});
-
-const app = express();
-
-app.use(cors());
-
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST']
-  }
-});
-
-io.on('connection', socket => {
-  // eslint-disable-next-line no-console
-  console.log(`User Connected: ${socket.id}`);
-
-  socket.on('join_room', data => {
-    socket.join(data);
-    // eslint-disable-next-line no-console
-    console.log(`User with ${socket.id} joined room: ${data}`);
-  });
-  socket.on('send_message', data => {
-    socket.to(data.roomId).emit('receive_message', data);
-  });
-  socket.on('disconnect', () => {
-    // eslint-disable-next-line no-console
-    console.log('User disconnected', socket.id);
-  });
 });
 
 app.use(staticMiddleware);
