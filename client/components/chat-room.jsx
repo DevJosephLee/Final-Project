@@ -131,10 +131,7 @@ class ChatRoom extends React.Component {
               className="send-message-input w-75"
               value={this.state.currentMessage}
               type="text"
-              onChange={this.handleMessageChange}
-              onKeyPress={event => {
-                event.key === 'Enter' && this.sendMessage();
-              }}>
+              onChange={this.handleMessageChange}>
             </input>
             <button type="submit" className="btn btn-primary w-25" onClick={this.sendMessage}>Send</button>
           </form>
@@ -143,5 +140,8 @@ class ChatRoom extends React.Component {
     );
   }
 }
+// onKeyPress = { event => {
+//   event.key === 'Enter' && this.sendMessage();
+// }}
 
 export default ChatRoom;
