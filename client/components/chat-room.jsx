@@ -140,8 +140,5 @@ class ChatRoom extends React.Component {
     );
   }
 }
-// onKeyPress = { event => {
-//   event.key === 'Enter' && this.sendMessage();
-// }}
 
 export default ChatRoom;
