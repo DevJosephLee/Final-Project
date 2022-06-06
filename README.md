@@ -36,6 +36,7 @@ https://chef-connect-1.herokuapp.com/
 - User can see a list of their own comments. 
 - User can add a photo to their profile page.
 - User can create a chef profile.
+- User can see a list of active live message rooms.
 - User can live message chefs. 
 
 ## Preview
