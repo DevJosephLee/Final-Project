@@ -4,7 +4,7 @@
 A full-stack web application for food enthusiasts who want to review chefs. 
 
 ## Inspiration
-I wanted to make an app where users can not only communicate freely with chefs, but also, easily look up information about chefs, rate, and comment about them. In the near future, I plan on implementing a feature where users can book private chefs. 
+I've always wanted to make opportunities for talented chefs out there that can work without working for a restaurant. I got the inspiration from Yelp, but for Chefs! I wanted to make an app where users can not only communicate freely with chefs, but also, easily look up information about chefs, rate, and comment about them. In the near future, I plan on implementing a feature where users can book private chefs to come cook for users at the comfort of their own home. 
 
 ## Live Demo
 https://chef-connect-1.herokuapp.com/
